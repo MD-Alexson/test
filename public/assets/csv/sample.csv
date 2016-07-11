@@ -1,0 +1,4 @@
+﻿name,email,level_name,phone,password,status,expire,expires
+Имя1,email1@gmail.com,Базовый,+380931111111,123123123,1,0,2016-07-10 22:38:44
+Имя 2,email2@gmail.com,VIP,+380931111111,62256225,1,1,2016-06-30 01:00:00
+Имя 3,email3@gmail.com,Platinum,+380931111111,qwertyqwerty,0,0,2016-07-10 22:39:52

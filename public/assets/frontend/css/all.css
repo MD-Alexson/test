@@ -1,0 +1,410 @@
+@font-face {
+    font-family: 'GothamPro';
+    src: url('../../fonts/GothamPro.eot');
+    src: url('../../fonts/GothamPro.eot') format('embedded-opentype'),
+        url('../../fonts/GothamPro.woff2') format('woff2'),
+        url('../../fonts/GothamPro.woff') format('woff'),
+        url('../../fonts/GothamPro.ttf') format('truetype'),
+        url('../../fonts/GothamPro.svg#GothamPro') format('svg');
+}
+@font-face {
+    font-family: 'GothaProLig';
+    src: url('../../fonts/GothaProLig.eot');
+    src: url('../../fonts/GothaProLig.eot') format('embedded-opentype'),
+        url('../../fonts/GothaProLig.woff2') format('woff2'),
+        url('../../fonts/GothaProLig.woff') format('woff'),
+        url('../../fonts/GothaProLig.ttf') format('truetype'),
+        url('../../fonts/GothaProLig.svg#GothaProLig') format('svg');
+}
+@font-face {
+    font-family: 'GothaProMed';
+    src: url('../../fonts/GothaProMed.eot');
+    src: url('../../fonts/GothaProMed.eot') format('embedded-opentype'),
+        url('../../fonts/GothaProMed.woff2') format('woff2'),
+        url('../../fonts/GothaProMed.woff') format('woff'),
+        url('../../fonts/GothaProMed.ttf') format('truetype'),
+        url('../../fonts/GothaProMed.svg#GothaProMed') format('svg');
+}
+@font-face {
+    font-family: 'GothaProBol';
+    src: url('../../fonts/GothaProBol.eot');
+    src: url('../../fonts/GothaProBol.eot') format('embedded-opentype'),
+        url('../../fonts/GothaProBol.woff2') format('woff2'),
+        url('../../fonts/GothaProBol.woff') format('woff'),
+        url('../../fonts/GothaProBol.ttf') format('truetype'),
+        url('../../fonts/GothaProBol.svg#GothaProBol') format('svg');
+}
+
+body {
+    font-family: "GothamPro";
+    font-size: 16px;
+}
+body#list > .container {
+}
+*{max-height: 1000000px;}
+#login {
+    background: #2e2d38;
+}
+
+#login .container{
+    margin: 40px auto;
+    padding: 40px 0px;
+    background: #fff;
+}
+
+#login_html p {
+    margin: 0px 0px 15px 0px;
+    padding: 0px 0px 0px 20px;
+}
+
+body#list {
+    
+}
+
+header.intro-header {
+    background-size: cover;
+    position: relative;
+}
+
+header.intro-header div.header_dim {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+header.intro-header div.site-heading {
+    padding: 50px 0px 15px 0px;
+}
+
+header.intro-header div.site-heading h1 {
+    font-size: 30px;
+    font-family: "GothaProLig";
+    font-weight: 400;
+}
+
+header.intro-header div.site-heading h2 {
+    font-size: 16px;
+    font-family: "GothaProLig";
+    font-weight: 400;
+}
+
+nav:not(.is-fixed) .navbar-brand {
+    padding: 10px 0px 10px 0px!important;
+    margin: 0px!important;
+    font-size: 16px;
+}
+
+nav:not(.is-fixed) span.navbar-brand a {
+    color: #fff;
+    vertical-align: middle;
+}
+
+nav:not(.is-fixed) ul.navbar-right {
+    margin: 0px!important;
+    font-size: 16px;
+}
+
+nav:not(.is-fixed) ul.navbar-right li a {
+    padding: 10px 0px 10px 10px!important;
+}
+
+nav:not(.is-fixed) ul.navbar-right li select {
+    margin: 0px 0px 0px 15px!important;
+}
+
+.post-preview {
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
+
+.post-preview .post_mask {
+    position: absolute!important;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #434343;
+    display: block;
+}
+
+.post-preview a, .post-preview a:hover {
+    text-decoration: none;
+}
+
+.post-preview img:hover {
+    cursor: pointer;
+}
+
+.post-preview h2 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.post-preview p.excerpt {
+    padding: 15px 0px 0px 0px;
+    margin: 0px;
+    font-size: 16px;
+}
+
+nav .navbar-right li select {
+    display: inline-block;
+    vertical-align: middle;
+    height: 40px;
+    margin: 10px 20px 0px 0px;
+    padding: 0px 10px 0px 10px;
+    cursor: pointer;
+}
+
+a img:hover {
+    cursor: pointer;
+}
+
+div.thumbnail_link .caption {
+    text-align: left;
+}
+.intro-header {
+    margin-bottom: 20px;
+}
+
+.container.menu {
+    font-size: 14px;
+}
+
+#post-content iframe, .video-js {
+    width: 100%!important;
+    min-height: 480px!important;
+}
+
+#post-content p {
+    word-break: normal;
+}
+
+.list-content iframe {
+    max-width: 100%;
+}
+
+.video-js .vjs-big-play-button {
+    position: absolute!important;
+    top: 50%!important;
+    left: 50%!important;
+    margin-left: -40px!important;
+    margin-top: -30px!important;
+    width: 80px!important;
+    height: 60px!important;
+    line-height: 60px!important;
+    font-size: 30px!important;
+}
+
+p.wat {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    font-weight: 300;
+    font-family: "GothamPro"!important;
+    opacity: 0.2;
+    position: absolute;
+    -webkit-text-stroke: 1px black;
+   color: #fff;
+   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+p.wat.wat1 {
+    top: 30px;
+    left: 30px;
+}
+
+p.wat.wat2 {
+    bottom: 30px;
+    right: 30px;
+}
+
+.post_form .form-group {
+    border: 0px;
+}
+
+.post_form .form-group textarea {
+    border: 1px solid #eee;
+    padding: 15px;
+}
+
+.post_form input[type=file]{
+    margin: 10px 0px 0px 0px;
+}
+
+.comment h4 {
+    padding: 0px;
+    margin: 20px 0px 10px 0px;
+    opacity: 0.8;
+}
+
+.comment h4 span.admin {
+    color: #fe8a33;
+}
+
+.comment h4 span.user {
+    color: #00dd1c;
+}
+
+.comment h4 a.destroy {
+    color: #cc0000;
+}
+
+.comment p {
+    padding: 0px 0px 20px 0px;
+    margin: 0px;
+    border-bottom: 1px solid #eee;
+}
+
+#sidebar, #post-content {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+#sidebar img {
+    max-width: 100%;
+    height: auto!important;
+}
+
+.list-content > div > p {
+    padding: 0px!important;
+    margin: 0px 0px 10px 0px!important;
+}
+
+#ent_list {
+    margin-bottom: 40px;
+}
+
+#ent_list hr {
+    margin: 7px 0px;
+}
+
+#ent_list hr:last-child {
+    display: none;
+}
+
+#ent_list .post-title {
+    font-size: 24px!important;
+    font-family: "GothaProLig";
+    font-weight: 400;
+}
+
+footer {
+    margin: 10px 0px 0px 0px!important;
+    padding: 20px 0px!important;
+    border-top: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    background: #fafafa;
+}
+
+footer.fixed {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+}
+
+.copyright {
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+}
+
+#clock_wrap {
+    text-align: center;
+}
+
+#clock {
+    display: inline-block;
+}
+
+#clock > div > strong {
+    display: inline-block;
+    width: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+
+#clock > div > span {
+    display: inline-block;
+    width: 70px;
+    text-align: center;
+}
+
+#clock > div:first-child > span {
+    background: url(../../images/clock.png);
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+ul.files {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.files li {
+    margin-bottom: 5px;
+    list-style: none;
+}
+
+ul.files li a {
+    display: block;
+}
+
+ul.files li a img {
+    width: 52px;
+    margin-right: 10px;
+}
+
+.btn.btn-circle {
+    padding: 0px;
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+    border-radius: 20px;
+    margin: 0px 0px 15px 0px;
+}
+
+@media screen and (max-width: 1200px) {
+    p.wat {
+        font-size: 24px;
+        line-height: 24px;
+    }
+}
+@media screen and (min-width: 1201px) and (max-width: 1600px) {
+    p.wat {
+        font-size: 32px;
+        line-height: 32px;
+    }
+}
+@media screen and (min-width: 1601px) and (max-width: 2000px) {
+    p.wat {
+        font-size: 42px;
+        line-height: 42px;
+    }
+}
+@media screen and (min-width: 2001px) and (max-width: 2400px) {
+    p.wat {
+        font-size: 60px;
+        line-height: 60px;
+    }
+}
+@media screen and (min-width: 2401px){
+    p.wat {
+        font-size: 120px;
+        line-height: 120px;
+    }
+}
