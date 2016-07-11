@@ -12,7 +12,7 @@ function folderSize($folder, $cloud = false)
             $file_size += Storage::size($file);
         }
     } else {
-        chdir('/var/www/abc/master/storage/app/'.$folder);
+        chdir(base_path('storage/app/'.$folder));
         $file_size = exec('du -s -B1 | cut -f1');
     }
     return (int) $file_size;
