@@ -12,7 +12,6 @@ use Request;
 use Session;
 use Storage;
 use Validator;
-use function translit;
 
 class PaymentsController extends Controller
 {

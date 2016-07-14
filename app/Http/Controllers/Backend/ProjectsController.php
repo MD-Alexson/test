@@ -269,12 +269,8 @@ class ProjectsController extends Controller
         }
 
         $project->save();
-
-        if(Request::has('preview')){
-            return redirect(getPreviewLink('project', $project->domain));
-        } else {
-            return redirect('/settings')->with('popup_ok', ['Редактирование проекта', 'Настройки проекта успешно сохранены!']);
-        }
+        
+        return redirect('/settings')->with('popup_ok', ['Редактирование проекта', 'Настройки проекта успешно сохранены!']);
     }
 
     public function delete()

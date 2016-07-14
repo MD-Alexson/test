@@ -174,9 +174,15 @@ div.thumbnail_link .caption {
     font-size: 14px;
 }
 
-#post-content iframe, .video-js {
+#post-content iframe {
     width: 100%!important;
-    min-height: 480px!important;
+    min-height: 422px!important;
+}
+
+.video-js {
+    width: 100%!important;
+    height: auto;
+    min-height: 422px!important;
 }
 
 #post-content p {

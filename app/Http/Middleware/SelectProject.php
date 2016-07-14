@@ -26,7 +26,6 @@ class SelectProject
         }
         if(!Session::has('perpage') || empty(Session::get('perpage'))) {
             Session::put('perpage', 10);
-            Session::save();
         }
         sortDefaults();
         return $next($request);

@@ -10,7 +10,6 @@ use Request;
 use Session;
 use Storage;
 use Validator;
-use function translit;
 
 class WebinarsController extends Controller
 {
@@ -85,7 +84,7 @@ class WebinarsController extends Controller
 
         $web = new Webinar();
         $web->name = htmlspecialchars(Request::input('name'));
-        $web->url = translit(strtolower(htmlspecialchars(Request::input('url'))));
+        $web->url = str_slug(strtolower(htmlspecialchars(Request::input('url'))));
         $web->sub = htmlspecialchars(Request::input('sub'));
 
         if(Webinar::where('project_domain', $project->domain)->where('url', $web->url)->count()){
@@ -154,7 +153,7 @@ class WebinarsController extends Controller
         $old_url = $web->url;
 
         $web->name = htmlspecialchars(Request::input('name'));
-        $web->url = translit(strtolower(htmlspecialchars(Request::input('url'))));
+        $web->url = str_slug(strtolower(htmlspecialchars(Request::input('url'))));
         $web->sub = htmlspecialchars(Request::input('sub'));
 
         if(Webinar::where('project_domain', $project->domain)->where('url', $web->url)->where('url', "!=", $old_url)->count()){

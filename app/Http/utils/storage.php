@@ -1,15 +1,11 @@
 <?php
 
-use App\User;
-use App\Video;
-use App\File;
-
 function folderSize($folder, $cloud = false)
 {
     if($cloud){
         $file_size = 0;
-        foreach (Storage::allFiles($folder) as $file) {
-            $file_size += Storage::size($file);
+        foreach (\Storage::allFiles($folder) as $file) {
+            $file_size += \Storage::size($file);
         }
     } else {
         chdir(base_path('storage/app/'.$folder));
@@ -31,7 +27,7 @@ function maxSpace($user_id = false)
     if(!$user_id){
         $user_id = Auth::guard('backend')->id();
     }
-    $user = User::findOrFail($user_id);
+    $user = App\User::findOrFail($user_id);
     return $user->plan->space * 1024 * 1024 * 1024;
 }
 
@@ -58,15 +54,15 @@ function imageSave($image, $path, $width, $height = false)
     }
 
     if (!file_exists($path)) {
-        Storage::makeDirectory($path, 0775, true, true);
+        \Storage::makeDirectory($path, 0775, true, true);
     }
 
     $rnd_file = str_random(8).'.'.$ext;
     $full     = $path.$rnd_file;
     if($height){
-        $img = Image::make(\File::get($image))->fit($width, $height);
+        $img = \Image::make(\File::get($image))->fit($width, $height);
     } else {
-        $img = Image::make(\File::get($image))->widen($width);
+        $img = \Image::make(\File::get($image))->widen($width);
     }
     $img->save("/tmp/".$rnd_file);
 
@@ -79,7 +75,7 @@ function imageSave($image, $path, $width, $height = false)
         $return_path = false;
     } else {
         $img         = $img->stream();
-        Storage::put($full, $img->__toString());
+        \Storage::put($full, $img->__toString());
         $return_path = $full;
     }
 
@@ -97,7 +93,7 @@ function fileSave($file, $post)
     }
     $ext      = strtolower($file->getClientOriginalExtension());
     $name     = $file->getClientOriginalName();
-    $filename = translit(pathinfo($name, PATHINFO_FILENAME));
+    $filename = str_slug(pathinfo($name, PATHINFO_FILENAME));
     $name     = $filename.'.'.$ext;
     $extensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'zip', 'rar', '7z', 'png', 'jpg', 'jpeg', 'gif', 'mpga', 'txt', 'mp3', 'mp4', 'avi', 'psd', 'ai', 'cdr', 'tiff'];
     if (!in_array($ext, $extensions)) {
@@ -105,17 +101,17 @@ function fileSave($file, $post)
     }
 
     $path = "/".Auth::guard('backend')->id().'/'.$post->category->project->domain.'/posts/'.$post->id.'/';
-    if (!Storage::exists($path)) {
-        Storage::makeDirectory($path, 0775, true, true);
+    if (!\Storage::exists($path)) {
+        \Storage::makeDirectory($path, 0775, true, true);
     }
 
-    if(Storage::exists($path.$name)){
+    if(\Storage::exists($path.$name)){
         $name = str_random(2)."_".$name;
     }
 
     $full_path = $path.$name;
-    if (Storage::put($full_path, file_get_contents($file))) {
-        $file       = new File();
+    if (\Storage::put($full_path, file_get_contents($file))) {
+        $file       = new App\File();
         $file->name = $name;
         $file->path = $full_path;
         $file->type = $ext;
@@ -138,7 +134,7 @@ function fileSaveHW($file, $homework)
     }
     $ext      = strtolower($file->getClientOriginalExtension());
     $name     = $file->getClientOriginalName();
-    $filename = translit(pathinfo($name, PATHINFO_FILENAME));
+    $filename = str_slug(pathinfo($name, PATHINFO_FILENAME));
     $name     = $filename.'.'.$ext;
     $extensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'zip', 'rar', '7z', 'png', 'jpg', 'jpeg', 'gif', 'mpga', 'txt', 'mp3', 'mp4', 'avi', 'psd', 'ai', 'cdr', 'tiff'];
     if (!in_array($ext, $extensions)) {
@@ -146,18 +142,18 @@ function fileSaveHW($file, $homework)
     }
 
     $path = "/".$owner_id.'/'.$homework->post->category->project->domain.'/posts/'.$homework->post->id.'/homeworks/'.$homework->suser->id.'/';
-    if (!Storage::exists($path)) {
-        Storage::makeDirectory($path, 0775, true, true);
+    if (!\Storage::exists($path)) {
+        \Storage::makeDirectory($path, 0775, true, true);
     }
 
-    if(Storage::exists($path.$name)){
+    if(\Storage::exists($path.$name)){
         $name = str_random(2)."_".$name;
     }
 
     $full_path = $path.$name;
-    if (Storage::put($full_path, file_get_contents($file))) {
-        if(Storage::exists($homework->file_path)){
-            Storage::delete($homework->file_path);
+    if (\Storage::put($full_path, file_get_contents($file))) {
+        if(\Storage::exists($homework->file_path)){
+            \Storage::delete($homework->file_path);
         }
 
         $homework->file_path = $full_path;
@@ -167,12 +163,12 @@ function fileSaveHW($file, $homework)
 }
 
 function fileDelete($file_id){
-    $file = File::findOrFail($file_id);
+    $file = App\File::findOrFail($file_id);
     if($file->post->category->project->user->id !== Auth::guard('backend')->id()){
         return false;
     }
-    if(Storage::exists($file->path)){
-        Storage::delete($file->path);
+    if(\Storage::exists($file->path)){
+        \Storage::delete($file->path);
     }
     $file->delete();
 }
@@ -188,7 +184,7 @@ function videoSave($file, $post)
     }
     $ext      = strtolower($file->getClientOriginalExtension());
     $name     = $file->getClientOriginalName();
-    $filename = translit(pathinfo($name, PATHINFO_FILENAME));
+    $filename = str_slug(pathinfo($name, PATHINFO_FILENAME));
     $name     = $filename.'.'.$ext;
     $extensions = ['mp4'];
     if (!in_array($ext, $extensions)) {
@@ -196,17 +192,17 @@ function videoSave($file, $post)
     }
 
     $path = "/".Auth::guard('backend')->id().'/'.$post->category->project->domain.'/posts/'.$post->id.'/';
-    if (!Storage::exists($path)) {
-        Storage::makeDirectory($path, 0775, true, true);
+    if (!\Storage::exists($path)) {
+        \Storage::makeDirectory($path, 0775, true, true);
     }
 
-    if(Storage::exists($path.$name)){
+    if(\Storage::exists($path.$name)){
         $name = str_random(2)."_".$name;
     }
 
     $full_path = $path.$name;
-    if (Storage::put($full_path, file_get_contents($file))) {
-        $video       = new Video();
+    if (\Storage::put($full_path, file_get_contents($file))) {
+        $video       = new App\Video();
         $video->name = $name;
         $video->path = $full_path;
         $video->type = $ext;
@@ -216,12 +212,12 @@ function videoSave($file, $post)
 }
 
 function videoDelete($video_id){
-    $video = Video::findOrFail($video_id);
+    $video = App\Video::findOrFail($video_id);
     if($video->post->category->project->user->id !== Auth::guard('backend')->id()){
         return false;
     }
-    if(Storage::exists($video->path)){
-        Storage::delete($video->path);
+    if(\Storage::exists($video->path)){
+        \Storage::delete($video->path);
     }
     $video->delete();
 }
