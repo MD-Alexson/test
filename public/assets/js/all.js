@@ -427,6 +427,11 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
+    
+    $(".add-material form").on('submit', function(){
+        $("#loading_screen").fadeIn(200);
+        $('body').css('overflow', 'hidden');
+    });
 });
 $(window).load(function () {
     // cabinet main page vertical align

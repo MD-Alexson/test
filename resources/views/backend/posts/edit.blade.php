@@ -250,7 +250,7 @@
                                 @endif
                             </div>
                             <div class="add-mat-left">
-                                <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра категории отображается на странице со списком категорий</div>">?</span></div>
+                                <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра публикации отображается на странице со списком п</div>">?</span></div>
                             </div>
                             <div class="add-mat-right">
                                 <div class="select-block inline-button" style="margin-right: 10px;">
@@ -355,7 +355,6 @@
                         <br/>
                         <div class="add-mat-right-holder">
                             <button class="green-button float-left" type="submit">Сохранить</button>
-                            <button class="white-button float-left" type="submit">Предпросмотр</button>
                         </div>
                     </fieldset>
                 </form>
@@ -605,13 +604,59 @@
             }
             $.uniform.update();
         });
-        $(".green-button[type=submit]").on('click', function(e){
-            $(".add-material form").attr('target', "");
-            $("input[name=preview]").remove();
-        });
-        $(".white-button[type=submit]").on('click', function(e){
-            $(".add-material form").attr('target', "_blank");
-            $(".add-material form").append("<input type='hidden' name='preview' value='1'>");
+        
+        var loading = $('#loading_screen');
+        var percent = $('#loading_screen span');
+        percent.css({'font-weight':'700', 'font-size':'22px'});
+
+        $('.add-material form').ajaxForm({
+            dataType: 'json',
+            beforeSend: function() {
+                loading.fadeIn(200);
+                var percentVal = '0%';
+                percent.html(percentVal);
+            },
+            uploadProgress: function(event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                percent.html(percentVal);
+            },
+            success: function(data){
+                if(data.error){
+                    $("#popup_ajax_errors .popup-min-title").text("Ошибка:");
+                    $("#popup_ajax_errors ul").html("");
+                    $("#popup_ajax_errors ul").append("<li>- "+data.error+"</li>");
+                    loading.fadeOut(200);
+                    $('body').css('overflow', 'auto');
+                    $.fancybox("#popup_ajax_errors");
+                } else if(data.success) {
+                    window.location.reload();
+                } else {
+                    $("#popup_ajax_errors .popup-min-title").text("Ошибка сервера:");
+                    $("#popup_ajax_errors ul").html("");
+                    $("#popup_ajax_errors ul").append("<li>Неизвестная ошибка сервера! Обратитесь в техподдержку</li>");
+                    loading.fadeOut(200);
+                    $('body').css('overflow', 'auto');
+                    $.fancybox("#popup_ajax_errors");
+                }
+            },
+            error: function(data){
+                var errorsJSON = jQuery.parseJSON(data.responseText);
+                var errors = $.map(errorsJSON, function(el){
+                    return el;
+                });
+                if(errors.length === 1){
+                    $("#popup_ajax_errors .popup-min-title").text("Ошибка:");
+                } else {
+                    $("#popup_ajax_errors .popup-min-title").text("Ошибки:");
+                }
+                $("#popup_ajax_errors ul").html("");
+                errors.forEach(function(element){
+                    $("#popup_ajax_errors ul").append("<li>- "+element+"</li>");
+                });
+                loading.fadeOut(200);
+                $('body').css('overflow', 'auto');
+                $.fancybox("#popup_ajax_errors");
+            }
         });
     });
 </script>

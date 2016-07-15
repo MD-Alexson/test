@@ -248,7 +248,6 @@
                             <br/>
                         <div class="add-mat-right-holder">
                             <button class="green-button float-left" type="submit">Сохранить</button>
-                            <button class="white-button float-left" type="submit">Предпросмотр</button>
                         </div>
                     </fieldset>
                 </form>
@@ -418,15 +417,6 @@
         $("select[name=sch2type]").val(sch2type);
 
         $("select").selectmenu('refresh');
-
-        $(".green-button[type=submit]").on('click', function(e){
-            $(".add-material form").attr('target', "");
-            $("input[name=preview]").remove();
-        });
-        $(".white-button[type=submit]").on('click', function(e){
-            $(".add-material form").attr('target', "_blank");
-            $(".add-material form").append("<input type='hidden' name='preview' value='1'>");
-        });
     });
 </script>
 @include('backend.inc.sidebar')

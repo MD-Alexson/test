@@ -12,7 +12,12 @@ use Request;
 use Session;
 use Storage;
 use Validator;
+use function fileDelete;
+use function fileSave;
 use function getTimePlus;
+use function imageSave;
+use function videoDelete;
+use function videoSave;
 
 class PostsController extends Controller
 {
@@ -76,7 +81,8 @@ class PostsController extends Controller
             asset("assets/js/datetime.js"),
             asset('assets/js/ckeditor/ckeditor.js'),
             asset('assets/js/ckeditor/adapters/jquery.js'),
-            asset('assets/js/ckeditor/init.js')
+            asset('assets/js/ckeditor/init.js'),
+            "https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"
             ];
         return view('backend.posts.add')->with('data', $data)->with('project', $project);
     }
@@ -94,7 +100,8 @@ class PostsController extends Controller
             asset("assets/js/datetime.js"),
             asset('assets/js/ckeditor/ckeditor.js'),
             asset('assets/js/ckeditor/adapters/jquery.js'),
-            asset('assets/js/ckeditor/init.js')
+            asset('assets/js/ckeditor/init.js'),
+            "https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"
             ];
         return view('backend.posts.edit')->with('data', $data)->with('post', $post)->with('project', $project);
     }
@@ -118,14 +125,13 @@ class PostsController extends Controller
 
     // HANDLERS
 
-    public function store()
+    public function store(\Illuminate\Http\Request $request)
     {
-        Request::flash();
-        $v = Validator::make(Request::all(), ['name' => 'required|max:255'], $this->messages);
-
-        if ($v->fails()) {
-            return redirect()->back()->withErrors($v);
-        }
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ], $this->messages);
+        
+        $arr = [];
 
         $project = Project::findOrFail(Session::get('selected_project'));
 
@@ -141,7 +147,9 @@ class PostsController extends Controller
         if(Request::has('scheduled') && !empty(Request::input('scheduled'))){
             $post->scheduled = strtotime(htmlspecialchars(Request::input('scheduled'))) - (int) htmlspecialchars(Request::input('offset'));
             if($post->scheduled <= 0 || $post->scheduled > 2147483647){
-                return redirect()->back()->with('popup_info', ['Ошибка', 'Вы ввели некорректную дату!']);
+                $arr['error'] = "Вы ввели некорректную дату!";
+                echo json_encode($arr);
+                exit();
             }
         } else {
             $post->scheduled = getTimePlus();
@@ -176,25 +184,30 @@ class PostsController extends Controller
         
         $category = Category::findOrFail((int) Request::input('category_id'));
         if($category->project->user->id !== Auth::guard('backend')->id()){
-            return redirect()->back()->with('popup_info', ['Ошибка', 'Вы выбрали не вашу категорию!']);
+            $arr['error'] = "Вы выбрали не вашу категорию!";
+            echo json_encode($arr);
+            exit();
         }
         $post->category()->associate($category);
 
         $post->order = (int) $category->posts()->max('order') + 1;
         $post->order_all = (int) $project->posts()->max('order_all') + 1;
-
+        
         $post->save();
-
+        
         if(!empty (Request::input('parent_image'))){
             $image_raw = htmlspecialchars(Request::input('parent_image'));
             $image_name = explode('/', $image_raw);
             $image_name = $image_name[count($image_name) - 1];
             $folder_path = "/".Auth::guard('backend')->id().'/'.$project->domain.'/posts/'.$post->id.'/';
             if (!file_exists($folder_path)) {
-                \Storage::makeDirectory($folder_path, 0775, true, true);
+                Storage::makeDirectory($folder_path, 0775, true, true);
             }
             $db_path = $folder_path.$image_name;
-            if (\Storage::copy($image_raw, $db_path)){
+            $full_path = storage_path("app".$db_path);
+            if(filter_var($image_raw, FILTER_VALIDATE_URL) && copy($image_raw, $full_path)){
+                $post->image = $db_path;
+            } else if (\Storage::copy($image_raw, $db_path)){
                 $post->image = $db_path;
             }
         } else if (Request::hasFile('image') && empty (Request::input('image_select'))) {
@@ -235,7 +248,9 @@ class PostsController extends Controller
             foreach($levels as $id => $state){
                 $level = Level::findOrFail((int) $id);
                 if ($level->project->user->id !== Auth::guard('backend')->id()) {
-                    return redirect()->back()->with('popup_info', ['Ошибка', 'Вы выбрали не ваш уровень!']);
+                    $arr['error'] = "Вы выбрали не ваш уровень!";
+                    echo json_encode($arr);
+                    exit();
                 }
                 array_push($post_levels, $id);
             }
@@ -248,7 +263,9 @@ class PostsController extends Controller
             foreach($homeworks as $id => $state){
                 $homework = Post::findOrFail((int) $id);
                 if ($homework->category->project->user->id !== Auth::guard('backend')->id()) {
-                    return redirect()->back()->with('popup_info', ['Ошибка', 'Вы выбрали не вашу публикацию!']);
+                    $arr['error'] = "Вы выбрали не вашу публикацию!";
+                    echo json_encode($arr);
+                    exit();
                 }
                 array_push($post_homeworks, $id);
             }
@@ -268,28 +285,28 @@ class PostsController extends Controller
                 videoSave($video, $post);
             }
         }
-        if(Request::has('preview')){
-            return redirect(getPreviewLink('post', $post->id));
-        } else {
-            return redirect('/posts');
-        }
+        $arr['success'] = true;
+        echo json_encode($arr);
+        exit();
     }
 
-    public function update($post_id)
+    public function update(\Illuminate\Http\Request $request, $post_id)
     {
-        Request::flash();
-        $v = Validator::make(Request::all(), ['name' => 'required|max:255'], $this->messages);
-
-        if ($v->fails()) {
-            return redirect()->back()->withErrors($v);
-        }
-
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ], $this->messages);
+        
+        $arr = [];
+        
         $project = Project::findOrFail(Session::get('selected_project'));
 
         $post = Post::findOrFail($post_id);
         if($post->category->project->user->id !== Auth::guard('backend')->id()){
-            return redirect()->back()->with('popup_info', ['Ошибка', 'Это не ваша публикация!']);
+            $arr['error'] = "Это не ваша публикация!";
+            echo json_encode($arr);
+            exit();
         }
+        
         $post->name = htmlspecialchars(Request::input('name'));
 
         $post->excerpt = htmlentities(Request::input('excerpt'));
@@ -297,15 +314,18 @@ class PostsController extends Controller
         $post->embed = htmlentities(Request::input('embed'));
 
         $post->status = htmlspecialchars(Request::input('status'));
-
+        
         if(Request::has('scheduled') && !empty(Request::input('scheduled'))){
             $post->scheduled = strtotime(htmlspecialchars(Request::input('scheduled'))) - (int) htmlspecialchars(Request::input('offset'));
             if($post->scheduled <= 0 || $post->scheduled > 2147483647){
-                return redirect()->back()->with('popup_info', ['Ошибка', 'Вы ввели некорректную дату!']);
+                $arr['error'] = "Вы ввели некорректную дату!";
+                echo json_encode($arr);
+                exit();
             }
         } else {
             $post->scheduled = getTimePlus();
         }
+        
         $post->sch2num = htmlspecialchars(Request::input('sch2num'));
         $post->sch2type = htmlspecialchars(Request::input('sch2type'));
         switch($post->sch2type){
@@ -348,11 +368,14 @@ class PostsController extends Controller
 
         $category = Category::findOrFail((int) Request::input('category_id'));
         if($category->project->user->id !== Auth::guard('backend')->id()){
-            return redirect()->back()->with('popup_info', ['Ошибка', 'Вы выбрали не вашу категорию!']);
+            $arr['error'] = "Вы выбрали не вашу категорию!";
+            echo json_encode($arr);
+            exit();
         }
         $post->category()->associate($category);
 
         $post->save();
+        
 
         if (Request::has('image_remove')) {
             if (Storage::exists($post->image)) {
@@ -430,7 +453,9 @@ class PostsController extends Controller
             foreach($levels as $id => $state){
                 $level = Level::findOrFail((int) $id);
                 if ($level->project->user->id !== Auth::guard('backend')->id()) {
-                    return redirect()->back()->with('popup_info', ['Ошибка', 'Вы выбрали не ваш уровень!']);
+                    $arr['error'] = "Вы выбрали не ваш уровень!";
+                    echo json_encode($arr);
+                    exit();
                 }
                 array_push($post_levels, $id);
             }
@@ -443,7 +468,9 @@ class PostsController extends Controller
             foreach($homeworks as $id => $state){
                 $homework = Post::findOrFail((int) $id);
                 if ($homework->category->project->user->id !== Auth::guard('backend')->id()) {
-                    return redirect()->back()->with('popup_info', ['Ошибка', 'Вы выбрали не вашу публикацию!']);
+                    $arr['error'] = "Вы выбрали не вашу публикацию!";
+                    echo json_encode($arr);
+                    exit();
                 }
                 array_push($post_homeworks, $id);
             }
@@ -487,11 +514,9 @@ class PostsController extends Controller
             $video = Request::file('video');
             videoSave($video, $post);
         }
-        if(Request::has('preview')){
-            return redirect(getPreviewLink('post', $post->id));
-        } else {
-            return redirect()->back()->with('popup_ok', ['Настройки публикации', 'Настройки публикации успешно сохранены!']);
-        }
+        
+        $arr['success'] = true;
+        echo json_encode($arr);
     }
 
     public function batch()

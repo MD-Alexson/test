@@ -88,6 +88,17 @@
     });
 </script>
 @endif
+<div id="popup_ajax_errors" class="popup-min">
+    <div class="popup-min-content">
+        <div class="popup-min-title"></div>
+        <div class="popup-min-text">
+            <ul></ul>
+        </div>
+    </div>
+    <div class="popup-min-bottom">
+        <button class="green-button close">Закрыть</button>
+    </div>
+</div>
 <div id="popup_message" class="popup-min">
     <div class="popup-min-top">
         <div class="popup-min-title">Напишите нам</div>
@@ -119,3 +130,4 @@
         <button class="green-button close">Закрыть</button>
     </div>
 </div>
+<div id="loading_screen"><span>Загрузка</span></div>
