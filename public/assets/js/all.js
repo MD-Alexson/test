@@ -240,6 +240,19 @@ $(document).ready(function () {
     $('.fancybox').fancybox({
         closeBtn: false
     });
+    $('.fancybox-big').fancybox({
+        closeBtn: false,
+        width: 960,
+        height: 518,
+        autoDimensions: false,
+        autoSize:false,
+        afterShow: function(){
+            $("body").css({'overflow':'hidden'});
+        },
+        afterClose: function(){
+            $("body").css({'overflow':'auto'});
+        }
+    });
     $('.popup-min button.close').on('click', function (e) {
         e.stopPropagation();
         $.fancybox.close();

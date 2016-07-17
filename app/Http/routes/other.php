@@ -36,7 +36,5 @@ Route::get('/not', function(){
 });
 
 Route::group(['middleware' => ['csrf'], 'namespace' => 'Shared', 'domain' => 'partners.'.config('app.domain')], function() {
-
     Route::get('/', "PartnersController@index");
-
 });
