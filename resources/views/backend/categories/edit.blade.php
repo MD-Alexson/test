@@ -261,7 +261,6 @@
         $("#input[name=image]").val("");
         $(".image_path").text("");
         $("form").append("<input type='hidden' name='image_remove' value='1'>");
-        return false;
     }
     function removeThumbnail128(){
         $("input[name=thumbnail_128_select]").val("{{ asset('assets/images/thumbnails/categories/1.png') }}");

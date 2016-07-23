@@ -166,7 +166,6 @@
         $("#input[name=image]").val("");
         $(".image_path").text("");
         $("form").append("<input type='hidden' name='image_remove' value='1'>");
-        return false;
     }
     $(document).ready(function () {
         $("input[name=url]").keyup(function(){

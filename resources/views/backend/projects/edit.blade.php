@@ -257,7 +257,6 @@
                         <br/>
                         <div class="add-mat-right-holder">
                             <button class="green-button float-left" type="submit">Сохранить</button>
-                            <button class="white-button float-left" type="submit">Предпросмотр</button>
                             <a href="#popup_project_delete" class="grey-button float-right fancybox">Удалить проект</a>
                         </div>
                     </fieldset>
@@ -272,7 +271,6 @@
         $("#input[name=image]").val("");
         $(".image_path").text("");
         $("form").append("<input type='hidden' name='image_remove' value='1'>");
-        return false;
     }
     $(document).ready(function () {
 

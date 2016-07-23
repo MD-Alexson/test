@@ -175,7 +175,6 @@
             $("#login_form input[type=password]").show();
             $("#login_form input[type=text]").hide();
         }
-        return false;
     }
     $(document).ready(function () {
         $("#login_form input[type=password]").on('change', function () {
