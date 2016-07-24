@@ -141,6 +141,11 @@ class PostsController extends Controller
         $post->excerpt = htmlentities(Request::input('excerpt'));
         $post->post_html = htmlentities(Request::input('post_html'));
         $post->embed = htmlentities(Request::input('embed'));
+        
+        if(Request::has('upsale')){
+            $post->upsale = true;
+        }
+        $post->upsale_text = htmlentities(Request::input('upsale_text'));
 
         $post->status = htmlspecialchars(Request::input('status'));
 
@@ -312,6 +317,13 @@ class PostsController extends Controller
         $post->excerpt = htmlentities(Request::input('excerpt'));
         $post->post_html = htmlentities(Request::input('post_html'));
         $post->embed = htmlentities(Request::input('embed'));
+        
+        if(Request::has('upsale')){
+            $post->upsale = true;
+        } else {
+            $post->upsale = false;
+        }
+        $post->upsale_text = htmlentities(Request::input('upsale_text'));
 
         $post->status = htmlspecialchars(Request::input('status'));
         

@@ -32,6 +32,12 @@
                     @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
                 @elseif($category->upsale)
                     <?php echo html_entity_decode($category->upsale_text); ?>
+                @elseif($category->posts()->where('upsale', true)->count())
+                    @if(!empty($category->category_html))
+                    <?php echo html_entity_decode($category->category_html); ?>
+                    <br/>
+                    @endif
+                    @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
                 @else
                 <p style="color: #cc0000">Вы не имеете доступа к данной категории!</p>
                 <a href='/'>На главную</a>
@@ -51,6 +57,12 @@
                     @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
                 @elseif($category->upsale)
                     <?php echo html_entity_decode($category->upsale_text); ?>
+                @elseif($category->posts()->where('upsale', true)->count())
+                    @if(!empty($category->category_html))
+                    <?php echo html_entity_decode($category->category_html); ?>
+                    <br/>
+                    @endif
+                    @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
                 @else
                 <p style="color: #cc0000">Вы не имеете доступа к данной категории!</p>
                 <a href='/'>На главную</a>

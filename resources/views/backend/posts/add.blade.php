@@ -164,6 +164,20 @@
                                 </div>
                             </div>
                             <div class="add-mat-left">
+                                <div class="add-mat-text tooltip-holder">Добавить апсейл <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Например, если у пользователя неподходящий уровень доступа, ему можно показать предложение повысить тарифный план или другое сообщение</div>">?</span></div>
+                            </div>
+                            <div class="add-mat-right">
+                                <div class="check-list">
+                                    <div class="check-block">
+                                        <input name="upsale" type="checkbox" class="check" id="ch1">
+                                        <label for="ch1" class="check-label">Показывать текст для пользователей с неподходящим уровнем доступа:</label>
+                                    </div>
+                                </div>
+                                <div style="display: none;" id="upsale">
+                                    <textarea cols="30" rows="10" class="textarea ckedit" placeholder="Введите текст" name="upsale_text">{{ Request::old('upsale_text') }}</textarea>
+                                </div>
+                            </div>
+                            <div class="add-mat-left">
                                 <div class="add-mat-text tooltip-holder">Фон шапки <span class="tooltip-icon" data-content="<div class='popover-inner-text'>Максимальное разрешение 1920х400. Изображения более высокого разрешения будут сжиматься или обрезаться<br/><br/>Использовано места: {{ formatBytes(folderSize("/".Auth::guard('backend')->user()->id."/")) }} / {{ Auth::guard('backend')->user()->plan->space }} Гб</div>">?</span></div>
                             </div>
                             <div class="add-mat-right">
@@ -446,6 +460,14 @@
                 $("#homework_required").find('input.check').prop('checked', false);
                 $.uniform.update();
                 $("#homework_required").slideUp(200);
+            }
+        });
+        
+        $("input[name=upsale]").on('change', function () {
+            if ($(this).prop('checked')) {
+                $("#upsale").slideDown(200);
+            } else {
+                $("#upsale").slideUp(200);
             }
         });
 

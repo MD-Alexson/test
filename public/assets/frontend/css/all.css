@@ -81,13 +81,15 @@ header.intro-header div.site-heading {
 
 header.intro-header div.site-heading h1 {
     font-size: 30px;
-    font-family: "GothaProLig";
+    font-family: "Russo One", "GothaProLig", sans-serif;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
     font-weight: 400;
 }
 
 header.intro-header div.site-heading h2 {
-    font-size: 16px;
-    font-family: "GothaProLig";
+    font-size: 20px;
+    font-family: "Russo One", "GothaProLig", sans-serif;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
     font-weight: 400;
 }
 

@@ -14,7 +14,7 @@ function frontendSelectLevel($project, $level_id){
                 }
             }
 
-            if($cat->upsale && !in_array($cat->id, $allowed['categories'])){
+            if(($cat->upsale && !in_array($cat->id, $allowed['categories'])) || ($cat->posts()->where('upsale', true)->count() && !in_array($cat->id, $allowed['categories']))){
                 array_push($allowed['categories'], $cat->id);
             }
         }
@@ -27,7 +27,7 @@ function frontendSelectLevel($project, $level_id){
                 }
             }
 
-            if($post->category->upsale && !in_array($post->id, $allowed['posts'])){
+            if(($post->category->upsale && !in_array($post->id, $allowed['posts'])) || ($post->upsale && !in_array($post->id, $allowed['posts']))){
                 array_push($allowed['posts'], $post->id);
             }
         }

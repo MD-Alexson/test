@@ -34,6 +34,8 @@
                         @endforeach
                     </p>
                     @endif
+                @elseif($post->upsale)
+                    <?php echo html_entity_decode($post->upsale_text); ?>
                 @elseif($post->category->upsale)
                     <?php echo html_entity_decode($post->category->upsale_text); ?>
                 @else
@@ -57,6 +59,8 @@
                         @endforeach
                     </p>
                     @endif
+                @elseif($post->upsale)
+                    <?php echo html_entity_decode($post->upsale_text); ?>
                 @elseif($post->category->upsale)
                     <?php echo html_entity_decode($post->category->upsale_text); ?>
                 @else

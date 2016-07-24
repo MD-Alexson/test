@@ -216,7 +216,7 @@
                                     <label class="white-button inline-button" for="thumbnail_128">Загрузить миниатюру</label>
                                     <p class='thumbnail_128_path'></p>
                                     <input type="file" name="thumbnail_128" id="thumbnail_128" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                    <input type='hidden' name='thumbnail_128_select' value='{{ asset('assets/images/thumbnails/categories/1.png') }}'>
+                                    <input type='hidden' name='thumbnail_128_select' value=''>
                                     <div class="add-mat-thumbnail-wrap">
                                         @if(pathTo($category->thumbnail_128, 'imagepath'))
                                         <img src="{{ url(pathTo($category->thumbnail_128, 'imagepath')) }}" alt="image" class="add-mat-image">
