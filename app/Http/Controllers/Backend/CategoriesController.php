@@ -109,6 +109,12 @@ class CategoriesController extends Controller
         $cat->excerpt = htmlentities(Request::input('excerpt'));
         $cat->category_html = htmlentities(Request::input('category_html'));
         $cat->upsale_text = htmlentities(Request::input('upsale_text'));
+        
+        if(Request::has('sidebar')){
+            $cat->sidebar = true;
+        }
+        $cat->sidebar_type = (int) Request::input('sidebar_type');
+        $cat->sidebar_html = htmlentities(Request::input('sidebar_html'));
 
         $cat->status = htmlspecialchars(Request::input('status'));
         
@@ -227,6 +233,14 @@ class CategoriesController extends Controller
         $cat->excerpt = htmlentities(Request::input('excerpt'));
         $cat->category_html = htmlentities(Request::input('category_html'));
         $cat->upsale_text = htmlentities(Request::input('upsale_text'));
+        
+        if(Request::has('sidebar')){
+            $cat->sidebar = true;
+        } else {
+            $cat->sidebar = false;
+        }
+        $cat->sidebar_type = (int) Request::input('sidebar_type');
+        $cat->sidebar_html = htmlentities(Request::input('sidebar_html'));
 
         $cat->status = htmlspecialchars(Request::input('status'));
 

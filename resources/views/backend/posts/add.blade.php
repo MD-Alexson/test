@@ -164,6 +164,42 @@
                                 </div>
                             </div>
                             <div class="add-mat-left">
+                                <div class="add-mat-text">Боковая панель</div>
+                            </div>
+                            <div class="add-mat-right">
+                                <div class="check-list">
+                                    <div class="check-block">
+                                        @if($project->sidebar)
+                                        <input name="sidebar" type="checkbox" class="check" id="chside" checked="checked">
+                                        @else
+                                        <input name="sidebar" type="checkbox" class="check" id="chside">
+                                        @endif
+                                        <label for="chside" class="check-label tooltip-holder">Отображать сайдбар <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>В сайдбаре (боковой панели) вы можете добавить контент, который будет отображаться на каждой странице проекта справа. Например, контакты или любую другую информацию</div>">?</span></label>
+                                    </div>
+                                </div>
+                                @if($project->sidebar)
+                                <div id="sidebar_type">
+                                @else
+                                <div id="sidebar_type" style="display: none;">
+                                @endif
+                                    <label style="display: block; margin-bottom: 10px; cursor: pointer">
+                                        <input name="sidebar_type" value="0" type="radio" class="radio" checked="checked">&nbsp;&nbsp;&nbsp;Как на главной проекта
+                                    </label>
+                                    <div class="clearfix"></div>
+                                    <label style="display: block; margin-bottom: 10px; cursor: pointer">
+                                        <input name="sidebar_type" value="1" type="radio" class="radio">&nbsp;&nbsp;&nbsp;Как в категории
+                                    </label>
+                                    <div class="clearfix"></div>
+                                    <label style="display: block; cursor: pointer">
+                                        <input name="sidebar_type" value="2" type="radio" class="radio">&nbsp;&nbsp;&nbsp;Другой:
+                                    </label>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div id="sidebar_html_field" style="display: none; margin-top: 20px;">
+                                    <textarea cols="30" rows="10" class="textarea ckedit" placeholder="Введите контент для сайдбара" name="sidebar_html">{{ Request::old('sidebar_html') }}</textarea>
+                                </div>
+                            </div>
+                            <div class="add-mat-left">
                                 <div class="add-mat-text tooltip-holder">Добавить апсейл <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Например, если у пользователя неподходящий уровень доступа, ему можно показать предложение повысить тарифный план или другое сообщение</div>">?</span></div>
                             </div>
                             <div class="add-mat-right">
@@ -460,6 +496,24 @@
                 $("#homework_required").find('input.check').prop('checked', false);
                 $.uniform.update();
                 $("#homework_required").slideUp(200);
+            }
+        });
+        $("input[name=sidebar]").on('change', function(){
+            if($(this).prop('checked')){
+                $("#sidebar_type").slideDown();
+                if(parseInt($("input[name=sidebar_type]:checked").val()) === 2){
+                    $("#sidebar_html_field").slideDown();
+                }
+            } else {
+                $("#sidebar_type").slideUp();
+                $("#sidebar_html_field").slideUp();
+            }
+        });
+        $("input[name=sidebar_type]").on('change', function(){
+            if(parseInt($(this).val()) === 2){
+                $("#sidebar_html_field").slideDown();
+            } else {
+                $("#sidebar_html_field").slideUp();
             }
         });
         

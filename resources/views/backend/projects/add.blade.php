@@ -292,7 +292,6 @@
             if($(this).prop('checked')){
                 $("#sidebar_html_field").slideDown();
             } else {
-                $("#sidebar_html_field textarea").val("");
                 $("#sidebar_html_field").slideUp();
             }
         });

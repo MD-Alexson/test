@@ -5,11 +5,21 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
     Route::get("/", function(){
         return redirect('/users');
     });
-    Route::get('/cp', function(){
-        foreach(\App\User::where('expires', 1465689599)->get() as $user){
-            $user->expires = 1468281599;
-            $user->status = true;
-            $user->save();
+    Route::get("/side", function(){
+        $projects = \App\Project::where('sidebar', true)->get();
+        foreach($projects as $project){
+            foreach($project->categories as $cat){
+                $cat->sidebar = true;
+                $cat->sidebar_type = 0;
+                $cat->sidebar_html = $project->sidebar_html;
+                $cat->save();
+            }
+            foreach($project->posts as $post){
+                $post->sidebar = true;
+                $post->sidebar_type = 0;
+                $post->sidebar_html = $project->sidebar_html;
+                $post->save();
+            }
         }
     });
     Route::get("/users", "UsersController@index");

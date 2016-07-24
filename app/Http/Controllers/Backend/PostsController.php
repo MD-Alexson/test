@@ -146,6 +146,12 @@ class PostsController extends Controller
             $post->upsale = true;
         }
         $post->upsale_text = htmlentities(Request::input('upsale_text'));
+        
+        if(Request::has('sidebar')){
+            $post->sidebar = true;
+        }
+        $post->sidebar_type = (int) Request::input('sidebar_type');
+        $post->sidebar_html = htmlentities(Request::input('sidebar_html'));
 
         $post->status = htmlspecialchars(Request::input('status'));
 
@@ -324,6 +330,14 @@ class PostsController extends Controller
             $post->upsale = false;
         }
         $post->upsale_text = htmlentities(Request::input('upsale_text'));
+        
+        if(Request::has('sidebar')){
+            $post->sidebar = true;
+        } else {
+            $post->sidebar = false;
+        }
+        $post->sidebar_type = (int) Request::input('sidebar_type');
+        $post->sidebar_html = htmlentities(Request::input('sidebar_html'));
 
         $post->status = htmlspecialchars(Request::input('status'));
         

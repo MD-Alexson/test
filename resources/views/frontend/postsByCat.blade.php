@@ -21,7 +21,7 @@
     @include('frontend.inc.menu')
     <div class="container">
         <div class="row list-content">
-            @if($project->sidebar)
+            @if($category->sidebar)
             <div class="col-xs-8">
                 <a href="javascript: history.back();" class="btn btn-default btn-circle"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                 @if(frontendCheckLevel($category, Session::get('level_id')))
@@ -44,7 +44,11 @@
                 @endif
             </div>
             <div class="col-xs-4" id="sidebar">
+                @if($category->sidebar_type === 1)
+                <?php echo html_entity_decode($category->sidebar_html); ?>
+                @else
                 <?php echo html_entity_decode($project->sidebar_html); ?>
+                @endif
             </div>
             @else
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
