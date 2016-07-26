@@ -5,6 +5,7 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
     Route::get("/", function(){
         return redirect('/users');
     });
+    
     Route::get("/users", "UsersController@index");
     Route::get("/users/sort/{order_by}/{order}", "UsersController@sort");
     Route::get('/users/add', 'UsersController@add');

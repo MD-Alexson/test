@@ -26,7 +26,7 @@ class ProjectsController extends Controller
         'password.required' => "Вы не ввели пароль!"
     ];
 
-    private $domains = ['admin', 'k16', 'k17', 'k18', 'k19', 'k20', 'k21', 'k22', 'k23', 'k24', 'k25', 'blog', 'info', 'partners', 'dmitriy', 'maletskyi', 'kovpak', 'dima', 'support', 'www', 'faq'];
+    private $domains = ['admin', 'k17', 'k18', 'k19', 'k20', 'k21', 'k22', 'k23', 'k24', 'k25', 'blog', 'info', 'partners', 'dmitriy', 'maletskyi', 'kovpak', 'dima', 'support', 'www', 'faq'];
 
     // VIEWS
 
@@ -167,6 +167,8 @@ class ProjectsController extends Controller
         $cat = new Category();
         $cat->name = "Категория по-умолчанию";
         $cat->project()->associate($project);
+        $cat->sidebar = $project->sidebar;
+        $cat->sidebar_type = 0;
         $cat->header_dim = $project->header_dim;
         if(!empty ($project->image)){
             $image_raw = htmlspecialchars($project->image);
