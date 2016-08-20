@@ -32,7 +32,7 @@ class CategoriesController extends Controller
         $data['title']         = "Категории / ".$project->name;
         $data['assets']['css'] = [asset("assets/css/datetime.css")];
         $data['assets']['js']  = [asset("assets/js/datetime.js")];
-        $categories            = $project->categories()->orderBy(\Session::get('sort.categories.order_by'), \Session::get('sort.categories.order'))->get();
+        $categories            = $project->categories()->orderBy(\Session::get('sort.categories.order_by'), \Session::get('sort.categories.order'))->where('parent', -1)->get();
         return view('backend.categories.index')->with('data', $data)->with('project', $project)->with('categories', $categories);
     }
 
@@ -86,8 +86,7 @@ class CategoriesController extends Controller
         $project               = Project::findOrFail(Session::get('selected_project'));
         $data['title']         = "Порядок категорий / ".$project->name;
         $data['assets']['js']  = [asset("assets/js/jqui_sortable.min.js"), asset("assets/js/sortable.min.js")];
-        $categories            = $project->categories()->orderBy('order', 'asc')->get();
-        return view('backend.categories.order')->with('data', $data)->with('project', $project)->with('categories', $categories);
+        return view('backend.categories.order')->with('data', $data)->with('project', $project);
     }
 
     // HANDLERS
@@ -109,6 +108,8 @@ class CategoriesController extends Controller
         $cat->excerpt = htmlentities(Request::input('excerpt'));
         $cat->category_html = htmlentities(Request::input('category_html'));
         $cat->upsale_text = htmlentities(Request::input('upsale_text'));
+        
+        $cat->parent = (int) htmlspecialchars(Request::input('parent'));
         
         if(Request::has('sidebar')){
             $cat->sidebar = true;
@@ -233,6 +234,8 @@ class CategoriesController extends Controller
         $cat->excerpt = htmlentities(Request::input('excerpt'));
         $cat->category_html = htmlentities(Request::input('category_html'));
         $cat->upsale_text = htmlentities(Request::input('upsale_text'));
+        
+        $cat->parent = (int) htmlspecialchars(Request::input('parent'));
         
         if(Request::has('sidebar')){
             $cat->sidebar = true;
@@ -470,11 +473,24 @@ class CategoriesController extends Controller
         $cats = Request::all();
         $order = 1;
         foreach ($cats['list'] as $cat_id => $parent) {
-            $category = Category::findOrFail($cat_id);
-            $category->order = $order;
-            $category->save();
-            $order++;
+            if(!$parent || $parent === null || $parent === "null"){
+                $category = Category::findOrFail($cat_id);
+                $category->order = $order;
+                $category->parent = -1;
+                $category->save();
+                $order++;
+            }
         }
+        foreach ($cats['list'] as $cat_id => $parent) {
+            if($parent > 0){
+                $category = Category::findOrFail($cat_id);
+                $category->order = $order;
+                $category->parent = (int) $parent;
+                $category->save();
+                $order++;
+            }
+        }
+        return $cats;
     }
     
     /* -- */

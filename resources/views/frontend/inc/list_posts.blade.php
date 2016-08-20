@@ -5,11 +5,11 @@
 <a href='javascript:void(0);' class="row post-preview" style="opacity: 0.5">
 @elseif($ent->status === "scheduled2" && Session::get('guard') === 'frontend' && $sch2 > getTime())
 <a href='javascript:void(0);' class="row post-preview" style="opacity: 0.5">
-@elseif(Session::get('guard') === 'frontend' && $link === 'posts' && !frontendCheckHomeworks($ent))
+@elseif(Session::get('guard') === 'frontend' && !frontendCheckHomeworks($ent))
 <a href='javascript:void(0);' class="row post-preview" style="opacity: 0.5">
 <?php $hw = true; ?>
 @else
-<a href='/{{ $link }}/{{ $ent->id }}' class="row post-preview">
+<a href='/posts/{{ $ent->id }}' class="row post-preview">
 @endif
     @if($ent->thumbnail_size)
     <div class='col-sm-12'>
@@ -31,7 +31,7 @@
         @if(pathTo($ent->thumbnail_128, 'imagepath'))
         <img src='{{ pathTo($ent->thumbnail_128, 'imagepath') }}' class='img img-responsive img-thumbnail'>
         @else
-        <img src='{{ asset('assets/images/thumbnails/'.$link.'/1.png') }}' class='img img-responsive img-thumbnail'>
+        <img src='{{ asset('assets/images/thumbnails/posts/1.png') }}' class='img img-responsive img-thumbnail'>
         @endif
     </div>
     <div class='col-sm-10'>

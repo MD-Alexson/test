@@ -29,7 +29,7 @@
                     <?php echo html_entity_decode($category->category_html); ?>
                     <br/>
                     @endif
-                    @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
+                    @include('frontend.inc.list_posts', ['entities' => $posts])
                 @elseif($category->upsale)
                     <?php echo html_entity_decode($category->upsale_text); ?>
                 @elseif($category->posts()->where('upsale', true)->count())
@@ -37,7 +37,7 @@
                     <?php echo html_entity_decode($category->category_html); ?>
                     <br/>
                     @endif
-                    @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
+                    @include('frontend.inc.list_posts', ['entities' => $posts])
                 @else
                 <p style="color: #cc0000">Вы не имеете доступа к данной категории!</p>
                 <a href='/'>На главную</a>
@@ -58,7 +58,7 @@
                     <?php echo html_entity_decode($category->category_html); ?>
                     <br/>
                     @endif
-                    @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
+                    @include('frontend.inc.list_posts', ['entities' => $posts])
                 @elseif($category->upsale)
                     <?php echo html_entity_decode($category->upsale_text); ?>
                 @elseif($category->posts()->where('upsale', true)->count())
@@ -66,7 +66,7 @@
                     <?php echo html_entity_decode($category->category_html); ?>
                     <br/>
                     @endif
-                    @include('frontend.inc.list', ['entities' => $posts, 'link' => 'posts'])
+                    @include('frontend.inc.list_posts', ['entities' => $posts])
                 @else
                 <p style="color: #cc0000">Вы не имеете доступа к данной категории!</p>
                 <a href='/'>На главную</a>

@@ -4,11 +4,11 @@
     <section class="cabinet-content">
         @include('backend.inc.header')
         <div class="content-main">
-            @if($categories->count())
+            @if($project->categories->count())
             <div class="project-top">
                 <div class="project-left">
                     <div class="project-top-title">Порядок категорий</div>
-                    <div class="project-top-num">{{ $categories->count() }}</div>
+                    <div class="project-top-num">{{ $project->categories->count() }}</div>
                 </div>
                 <div class="project-right">
                     <a href="/categories/add" class="green-button">Добавить категорию</a>
@@ -19,9 +19,16 @@
             </div>
             <div class="material-block">
                 <ol class="sortable">
-                    @foreach($categories as $category)
+                    @foreach($project->categories()->orderBy('order', 'asc')->where('parent', -1)->get() as $category)
                     <li id="list_{{ $category->id }}" data-id="{{ $category->id }}">
                         <div>{{ $category->name }}</div>
+                        <ol>
+                            @foreach($project->categories()->orderBy('order', 'asc')->where('parent', $category->id)->get() as $sub)
+                            <li id="list_{{ $sub->id }}" data-id="{{ $sub->id }}">
+                                <div>{{ $sub->name }}</div>
+                            </li>
+                            @endforeach
+                        </ol>
                     </li>
                     @endforeach
                 </ol>
@@ -58,6 +65,7 @@
         $.ajax({
             url: '/categories/order_change/?' + nestedArray,
             success: function (data) {
+                console.log(data);
                 $.fancybox("#popup_ok");
             }
         });
@@ -67,7 +75,7 @@
             handle: 'div',
             items: 'li',
             toleranceElement: '> div',
-            maxLevels: 1
+            maxLevels: 2
         });
     });
 </script>

@@ -31,7 +31,7 @@
                 <?php echo html_entity_decode($project->dashboard_html); ?>
                 <br/>
                 @endif
-                @include('frontend.inc.list', ['entities' => $cats, 'link' => 'categories'])
+                @include('frontend.inc.list_cats', ['entities' => $cats])
             </div>
             <div class="col-xs-4" id="sidebar">
                 <?php echo html_entity_decode($project->sidebar_html); ?>
@@ -42,7 +42,7 @@
                 <?php echo html_entity_decode($project->dashboard_html); ?>
                 <br/>
                 @endif
-                @include('frontend.inc.list', ['entities' => $cats, 'link' => 'categories'])
+                @include('frontend.inc.list_cats', ['entities' => $cats])
             </div>
             @endif
         </div>

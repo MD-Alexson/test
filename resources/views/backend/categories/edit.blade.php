@@ -90,6 +90,19 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="add-mat-left">
+                            <div class="add-mat-text tooltip-holder">Родительская категория</div>
+                        </div>
+                        <div class="add-mat-right">
+                            <div class="select-block">
+                                <select class="styled" name="parent">
+                                    <option value="-1">—</option>
+                                    @foreach($project->categories()->where('parent', -1)->where('id', '!=', $category->id)->get() as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="add-mat-optional-title">Дополнительные настройки</div>
                         <div id="optional">
                             <div class="add-mat-left">
@@ -471,6 +484,7 @@
 
         var sch2type = "{{ $category->sch2type }}";
         $("select[name=sch2type]").val(sch2type);
+        $("select[name=parent]").val("{{ $category->parent }}");
 
         $("select").selectmenu('refresh');
     });

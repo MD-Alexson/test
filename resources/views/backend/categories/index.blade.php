@@ -173,6 +173,66 @@
                                 </div>
                             </td>
                         </tr>
+                            @foreach($project->categories()->orderBy(\Session::get('sort.categories.order_by'), \Session::get('sort.categories.order'))->where('parent', $category->id)->get() as $sub)
+                            <tr class="row" data-id="{{ $sub->id }}" id="row{{ $sub->id }}" style='border-left: 5px solid #ccc;'>
+                                <td><input name="check" type="checkbox" class="check"></td>
+                                <td>-></td>
+                                <td>
+                                    <a class="table-title" href="/categories/{{ $sub->id }}/edit">{{ $sub->name }}</a>
+                                </td>
+                                <td style="text-align: center">
+                                    <a href="/posts/by_category/{{ $sub->id }}">{{ $sub->posts->count() }}</a>
+                                </td>
+                                <td>
+                                    @if($sub->levels->count())
+                                    <div class="table_levels">
+                                        @if($sub->levels->count() > 1)
+                                        <div class="whitefade"></div>
+                                        <style>
+                                            #row<?php echo $sub->id; ?> .table_levels:hover > div:not(.whitefade){
+                                                border-bottom: 2px solid #ccc;
+                                            }
+                                        </style>
+                                        @endif
+                                        <div>
+                                            @foreach($sub->levels as $level)
+                                            <a href='/categories/by_level/{{ $level->id }}'>- {{ $level->name }}</a><br/>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    @else
+                                    <strong>—</strong>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($sub->status === 'published')
+                                    <span style='color: #72c01d;'>Опубликовано</span>
+                                    @elseif($sub->status === 'draft')
+                                    Черновик
+                                    @elseif($sub->status === 'scheduled')
+                                    Запланировано на:<br/><span class='toLocalTime' style='font-weight: 700'>{{ getDateTime($sub->scheduled) }}</span>
+                                        @if($sub->comingsoon)
+                                        <br/>
+                                        - Отображать дату
+                                        @endif
+                                    @elseif($sub->status === 'scheduled2')
+                                    Запланировано (от даты регистрации пользователя):<br/>
+                                    через <strong>{{ $sub->sch2num }} {{ $sub->sch2typename }}</strong>
+                                        @if($sub->comingsoon)
+                                        <br/>
+                                        - Отображать дату
+                                        @endif
+                                    @endif
+                                </td>
+                                <td style="text-align: center">
+                                    <div class="cab-icons">
+                                        <a href="{{ getPreviewLink('category', $sub->id) }}" class="cab-icon cab-icon1" target="_blank"></a>
+                                        <a href="/categories/{{ $sub->id }}/edit" class="cab-icon cab-icon2"></a>
+                                        <a href="#popup_category_delete" class="cab-icon cab-icon3 fancybox category-delete"></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                         @endforeach
                     </table>
                 </div>
