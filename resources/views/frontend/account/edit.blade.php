@@ -24,7 +24,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                <a href="javascript: history.back();" class="btn btn-default btn-circle"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                <div class="col-sm-1" style="padding-left: 0px;">
+                    <a href="javascript: history.back();" class="btn btn-default btn-circle"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                </div>
+                <div class="col-sm-11 text-right" style="padding-right: 0px;">
+                    <!--<a href="/account/comments" class="btn btn-default">Мои комментарии ({{ $user->comments()->count() }})</a>-->
+                    <!--<a href="/account/homeworks" class="btn btn-default">Мои домашние задания ({{ $user->homeworks()->count() }})</a>-->
+                </div>
                 <form method="post" action="{{ action("Frontend\AccountController@update", ['domain' => $project->domain]) }}">
                     {{ csrf_field() }}
                     <div class="row control-group">

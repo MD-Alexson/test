@@ -161,6 +161,14 @@ nav .navbar-right li select {
     cursor: pointer;
 }
 
+#menu ul.nav.navbar-nav > li > a {
+    color: #000;
+}
+
+#menu ul.nav.navbar-nav > li > a:hover {
+    color: #777;
+}
+
 a img:hover {
     cursor: pointer;
 }

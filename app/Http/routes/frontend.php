@@ -25,6 +25,11 @@ Route::group(['middleware' => ['sid', 'front'], 'namespace' => 'Frontend', 'doma
     Route::get('/', "AccountController@mainPage");
     Route::get('/account', "AccountController@edit");
     Route::post('/account', "AccountController@update");
+    Route::get('/account/comments', "AccountController@comments");
+    Route::get('/account/comments/{comment_id}/destroy', "AccountController@commentDestroy")->where('comment_id', '[0-9]+');
+    Route::get('/account/homeworks', "AccountController@homeworks");
+    Route::post('/account/homeworks/{homework_id}/update', "AccountController@homeworkUpdate")->where('homework_id', '[0-9]+');
+    Route::get('/account/homeworks/{homework_id}/destroy', "AccountController@homeworkDestroy")->where('homework_id', '[0-9]+');
     Route::get('/categories', "CategoriesController@index");
     Route::get('/categories/{cat_id}', "CategoriesController@show")->where('cat_id', '[0-9]+');
     Route::get('/posts', "PostsController@index");
@@ -63,6 +68,11 @@ Route::group(['middleware' => ['remote', 'sid', 'front'], 'namespace' => 'Fronte
     Route::get('/', "AccountController@mainPage");
     Route::get('/account', "AccountController@edit");
     Route::post('/account', "AccountController@update");
+    Route::get('/account/comments', "AccountController@comments");
+    Route::get('/account/comments/{comment_id}/destroy', "AccountController@commentDestroy")->where('comment_id', '[0-9]+');
+    Route::get('/account/homeworks', "AccountController@homeworks");
+    Route::post('/account/homeworks/{homework_id}/update', "AccountController@homeworkUpdate")->where('homework_id', '[0-9]+');
+    Route::get('/account/homeworks/{homework_id}/destroy', "AccountController@homeworkDestroy")->where('homework_id', '[0-9]+');
     Route::get('/categories', "CategoriesController@index");
     Route::get('/categories/{cat_id}', "CategoriesController@show");
     Route::get('/posts', "PostsController@index");

@@ -140,7 +140,7 @@ class PostsController extends Controller
         $homework->save();
 
         if($homework->checked){
-            return redirect('/posts/'.$post->id)->with('popup_info', ['Домашнее задание', 'Вы успешно подтвердили домашнее задание!! Оно будет проверенно администратором']);
+            return redirect('/posts/'.$post->id)->with('popup_info', ['Домашнее задание', 'Вы успешно подтвердили домашнее задание! Оно будет проверенно администратором']);
         } else {
             return redirect('/posts/'.$post->id)->with('popup_info', ['Домашнее задание', 'Вы успешно подтвердили домашнее задание!']);
         }

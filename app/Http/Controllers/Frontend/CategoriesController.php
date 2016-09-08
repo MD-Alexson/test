@@ -50,7 +50,14 @@ class CategoriesController extends Controller
         }
         usort($posts, "cmp");
         
-        return view('frontend.postsByCat')->with('data', $data)->with('posts', $posts)->with('category', $category)->with('project', $project)->with('menu', $menu);
+        $cats = [];
+        $allowed = Request::input('allowed')['categories'];
+        foreach ($allowed as $cat_id){
+            $cat = Category::findOrFail($cat_id);
+            array_push($cats, $cat);
+        }
+        
+        return view('frontend.postsByCat')->with('data', $data)->with('posts', $posts)->with('cats', $cats)->with('category', $category)->with('project', $project)->with('menu', $menu);
     }
 
 }

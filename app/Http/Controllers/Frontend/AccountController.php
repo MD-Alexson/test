@@ -241,7 +241,7 @@ class AccountController extends Controller
         }
         $user = Auth::guard('frontend')->user();
         $menu = Request::input('allowed')['categories'];
-        return view('frontend.account')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
+        return view('frontend.account.edit')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
     }
 
     public function update($domain){
@@ -285,6 +285,50 @@ class AccountController extends Controller
 
         $user->save();
         return redirect('/account')->with('popup_info', ['Редактировать аккаунт', 'Настройки аккаунта сохранены успешно!']);
+    }
+    
+    public function comments($domain){
+        $project = Project::findOrFail($domain);
+        $data['header_bg'] = config("app.url")."/assets/images/thumbnails/headers/0.jpg";
+        if(!empty($project->image)){
+            $data['header_bg'] = pathTo($project->image, "imagepath");
+        }
+        $data['title'] = 'Мои комментарии / '. $project->name;
+        $guard = Session::get('guard');
+        if($guard !== 'frontend'){
+            return redirect('/');
+        }
+        $user = Auth::guard('frontend')->user();
+        $menu = Request::input('allowed')['categories'];
+        return view('frontend.account.comments')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
+    }
+    
+    public function commentDestroy($domain, $comment_id){
+        $project = Project::findOrFail($domain);
+        $comment = \App\Comment::findOrFail($comment_id);
+        if($comment->commentable->id !== \Auth::guard('frontend')->id()){
+            exit('Не ваш комментарий! Как вы сюда попали?');
+        } elseif ($comment->project->domain !== $domain){
+            exit('Комментарий не из этого проекта!');
+        }
+        $comment->delete();
+        return redirect()->back();
+    }
+    
+    public function homeworks($domain){
+        $project = Project::findOrFail($domain);
+        $data['header_bg'] = config("app.url")."/assets/images/thumbnails/headers/0.jpg";
+        if(!empty($project->image)){
+            $data['header_bg'] = pathTo($project->image, "imagepath");
+        }
+        $data['title'] = 'Мои домашние задания / '. $project->name;
+        $guard = Session::get('guard');
+        if($guard !== 'frontend'){
+            return redirect('/');
+        }
+        $user = Auth::guard('frontend')->user();
+        $menu = Request::input('allowed')['categories'];
+        return view('frontend.account.homeworks')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
     }
 
 }
