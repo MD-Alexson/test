@@ -17,4 +17,15 @@ $(document).ready(function(){
         }
         $(this).text(localTime);
     });
+    $("#post-content iframe").each(function(){
+        if(!$(this).attr('allowfullscreen')){
+            $(this).attr('allowfullscreen', "");
+        }
+        if(!$(this).attr('mozallowfullscreen')){
+            $(this).attr('mozallowfullscreen', "");
+        }
+        if(!$(this).attr('webkitallowfullscreen')){
+            $(this).attr('webkitallowfullscreen', "");
+        }
+    });
 });
