@@ -50,7 +50,7 @@ class CategoriesController extends Controller
         return view('backend.categories.index_by_level')->with('data', $data)->with('project', $project)->with('categories', $categories)->with('level', $level);
     }
 
-    public function add()
+    public function add($level_id = false)
     {
         $project       = Project::findOrFail(Session::get('selected_project'));
         $data['title']        = "Добавить категорию / ".$project->name;
@@ -61,7 +61,13 @@ class CategoriesController extends Controller
             asset('assets/js/ckeditor/adapters/jquery.js'),
             asset('assets/js/ckeditor/init.js')
             ];
-        return view('backend.categories.add')->with('data', $data)->with('project', $project);
+        if($level_id){
+            $level = \App\Level::find($level_id);
+            if(!$level || $level->project->domain !== $project->domain){
+                exit('Неправильный уровень доступа!');
+            }
+        }
+        return view('backend.categories.add')->with('data', $data)->with('project', $project)->with('level_id', $level_id);
     }
 
     public function edit($cat_id)

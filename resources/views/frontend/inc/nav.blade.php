@@ -1,58 +1,52 @@
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand"><a href="/">{{ $project->name }}</a> / <a href="/logout"><span class="fa fa-fw fa-sign-out"></span></a></span>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                @if(Session::get('guard') === 'backend')
-                <li>
-                    <a href="{{ config('app.url') }}/account"><span class="fa fa-fw fa-user"></span> {{ Auth::guard(Session::get('guard'))->user()->name }} (Администратор)</a>
-                </li>
-                <li>
-                    <select name='level'>
-                        @foreach($project->levels as $lvl)
-                        <option value='{{ $lvl->id }}'>{{ $lvl->name }}</option>
-                        @endforeach
-                    </select>
-                </li>
-                <script type='text/javascript'>
-                    $(document).ready(function(){
-                        $("select[name=level]").val({{ Session::get('level_id') }});
-                        $("select[name=level]").on('change', function () {
-                            var level_id = $(this).val();
-                            var request = $.ajax({
-                                url: "/select/" + level_id,
-                                type: "GET"
-                            });
-                            request.success(function(){
-                                window.location.reload(true);
-                            });
-                            request.fail(function (jqXHR, textStatus) {
-                                alert("Ошибка: " + textStatus);
-                            });
-
-                        });
-                    });
-                </script>
-                @else
-                <li>
-                    @if(Auth::guard('frontend')->user()->level->hidden)
-                    <a href="/account"><span class="fa fa-fw fa-user"></span> {{ Auth::guard(Session::get('guard'))->user()->name }}</a>
-                    @else
-                    <a href="/account"><span class="fa fa-fw fa-user"></span> {{ Auth::guard(Session::get('guard'))->user()->name }} ({{ Auth::guard('frontend')->user()->level->name }})</a>
-                    @endif
-                </li>
-                @endif
-            </ul>
+<div class="bs-component">
+    <div class="navbar navbar-warning">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-warning-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)">Brand</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-warning-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="javascript:void(0)">Active</a></li>
+                    <li><a href="javascript:void(0)">Link</a></li>
+                    <li class="dropdown">
+                        <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
+                            <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">Action</a></li>
+                            <li><a href="javascript:void(0)">Another action</a></li>
+                            <li><a href="javascript:void(0)">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Dropdown header</li>
+                            <li><a href="javascript:void(0)">Separated link</a></li>
+                            <li><a href="javascript:void(0)">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group is-empty">
+                        <input type="text" class="form-control col-md-8" placeholder="Search">
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="javascript:void(0)">Link</a></li>
+                    <li class="dropdown">
+                        <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
+                            <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">Action</a></li>
+                            <li><a href="javascript:void(0)">Another action</a></li>
+                            <li><a href="javascript:void(0)">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</nav>
+</div>

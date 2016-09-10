@@ -19,6 +19,34 @@
                         <div class="add-mat-right">
                             <input type="text" class="input input-long" placeholder="Введите название категории" name="name" required="required" maxlength="255" value="{{ Request::old('name') }}">
                         </div>
+                        <div class="add-mat-left">
+                            <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра категории отображается на странице со списком категорий</div>">?</span></div>
+                        </div>
+                        <div class="add-mat-right">
+                            <div class="select-block inline-button" style="margin-right: 10px;">
+                                <select class="styled" name="thumbnail_size">
+                                    <option value="0">Маленькая (128px)</option>
+                                    <option value="1">Большая (750px)</option>
+                                </select>
+                            </div>
+                            <div id="thumbnail_128_tab">
+                                <a href="#popup_thumbs" class="blue-button inline-button fancybox" style="margin-right: 10px;">Выбрать миниатюру</a>
+                                <label class="white-button inline-button" for="thumbnail_128">Загрузить миниатюру</label>
+                                <p class='thumbnail_128_path'></p>
+                                <input type="file" name="thumbnail_128" id="thumbnail_128" style='display: none' accept="image/jpeg,image/png,image/gif">
+                                <input type='hidden' name='thumbnail_128_select' value='{{ asset('assets/images/thumbnails/categories/1.png') }}'>
+                                <div class="add-mat-thumbnail-wrap">
+                                    <img src="{{ asset('assets/images/thumbnails/categories/1.png') }}" alt="image" class="add-mat-image">
+                                    <a style="display: none;" href="javascript: removeThumbnail128();" class="white-button">Удалить миниатюру</a>
+                                </div>
+                            </div>
+                            <div id="thumbnail_750_tab" style="display: none">
+                                <label class="white-button inline-button" for="thumbnail_750">Загрузить миниатюру</label>
+                                <p class='thumbnail_750_path'></p>
+                                <input type="file" name="thumbnail_750" id="thumbnail_750" style='display: none' accept="image/jpeg,image/png,image/gif">
+                                <a style="display: none;" href="javascript: removeThumbnail750();" class="white-button">Удалить миниатюру</a>
+                            </div>
+                        </div>
                         <div class="add-mat-title">Настройки</div>
                         <div class="add-mat-left">
                             <div class="add-mat-text">Статус</div>
@@ -210,34 +238,6 @@
                                 </div>
                                 @endif
                             </div>
-                            <div class="add-mat-left">
-                                <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра категории отображается на странице со списком категорий</div>">?</span></div>
-                            </div>
-                            <div class="add-mat-right">
-                                <div class="select-block inline-button" style="margin-right: 10px;">
-                                    <select class="styled" name="thumbnail_size">
-                                        <option value="0">Маленькая (128px)</option>
-                                        <option value="1">Большая (750px)</option>
-                                    </select>
-                                </div>
-                                <div id="thumbnail_128_tab">
-                                    <a href="#popup_thumbs" class="blue-button inline-button fancybox" style="margin-right: 10px;">Выбрать миниатюру</a>
-                                    <label class="white-button inline-button" for="thumbnail_128">Загрузить миниатюру</label>
-                                    <p class='thumbnail_128_path'></p>
-                                    <input type="file" name="thumbnail_128" id="thumbnail_128" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                    <input type='hidden' name='thumbnail_128_select' value='{{ asset('assets/images/thumbnails/categories/1.png') }}'>
-                                    <div class="add-mat-thumbnail-wrap">
-                                        <img src="{{ asset('assets/images/thumbnails/categories/1.png') }}" alt="image" class="add-mat-image">
-                                        <a style="display: none;" href="javascript: removeThumbnail128();" class="white-button">Удалить миниатюру</a>
-                                    </div>
-                                </div>
-                                <div id="thumbnail_750_tab" style="display: none">
-                                    <label class="white-button inline-button" for="thumbnail_750">Загрузить миниатюру</label>
-                                    <p class='thumbnail_750_path'></p>
-                                    <input type="file" name="thumbnail_750" id="thumbnail_750" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                    <a style="display: none;" href="javascript: removeThumbnail750();" class="white-button">Удалить миниатюру</a>
-                                </div>
-                            </div>
                         </div>
                         <br/>
                         <div class="add-mat-right-holder">
@@ -404,9 +404,14 @@
         $("input[name=offset]").val(offset);
 
         @if (Request::old('appearing'))
-                $("select[name=appearing] option[value=1]").prop('selected', true);
-        $("select[name=appearing]").selectmenu("refresh");
-                @endif
+            $("select[name=appearing] option[value=1]").prop('selected', true);
+            $("select[name=appearing]").selectmenu("refresh");
+        @endif
+        
+        @if($level_id)
+        $("#lvl{{ $level_id }}").prop('checked', true);
+        $.uniform.update();
+        @endif
     });
 </script>
 @include('backend.inc.sidebar')

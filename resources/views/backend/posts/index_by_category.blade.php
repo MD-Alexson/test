@@ -11,8 +11,9 @@
                     <div class="project-top-num">{{ $category->posts->count() }}</div>
                 </div>
                 <div class="project-right">
-                    <a href="/posts/add" class="green-button float-right">Добавить публикацию</a>
+                    <a href="/posts/add/category/{{ $category->id }}" class="green-button float-right">Добавить публикацию</a>
                     <a href="/posts/by_category/{{ $category->id }}/order" class="white-button float-right">Порядок отображения</a>
+                    <a href="{{ getPreviewLink('category', $category->id) }}" class="white-button float-right" target="_blank">Предпросмотр</a>
                 </div>
             </div>
             <div class="content-back">
@@ -236,7 +237,7 @@
                 <div class="add-project-title">У вас пока нет публикаций<br/>в данной категории</div>
                 <div class="add-project-text">Создайте новую публикацию</div>
                 <div class="add-project-button">
-                    <a href="/posts/add" class="green-button">Создать публикацию</a>
+                    <a href="/posts/add/category/{{ $category->id }}" class="green-button">Создать публикацию</a>
                 </div>
                 <a href="javascript: history.back()">Назад</a>
             </div>

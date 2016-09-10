@@ -13,6 +13,7 @@
                 <div class="project-right">
                     <a href="/categories/add" class="green-button float-right">Добавить категорию</a>
                     <a href="/categories/order" class="white-button float-right">Порядок отображения</a>
+                    <a href="{{ getPreviewLink('project', $project->domain) }}" class="white-button float-right" target="_blank">Предпросмотр</a>
                 </div>
             </div>
             <div class="material-block">

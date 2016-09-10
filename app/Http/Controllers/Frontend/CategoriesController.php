@@ -26,7 +26,7 @@ class CategoriesController extends Controller
             $cat = Category::findOrFail($cat_id);
             array_push($cats, $cat);
         }
-        return view('frontend.categories')->with('data', $data)->with('cats', $cats)->with('project', $project)->with('menu', $menu);
+        return view('frontend_old.categories')->with('data', $data)->with('cats', $cats)->with('project', $project)->with('menu', $menu);
     }
 
     public function show($domain, $cat_id){
@@ -57,7 +57,7 @@ class CategoriesController extends Controller
             array_push($cats, $cat);
         }
         
-        return view('frontend.postsByCat')->with('data', $data)->with('posts', $posts)->with('cats', $cats)->with('category', $category)->with('project', $project)->with('menu', $menu);
+        return view('frontend_old.postsByCat')->with('data', $data)->with('posts', $posts)->with('cats', $cats)->with('category', $category)->with('project', $project)->with('menu', $menu);
     }
 
 }

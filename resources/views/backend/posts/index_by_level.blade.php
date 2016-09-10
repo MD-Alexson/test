@@ -11,7 +11,8 @@
                     <div class="project-top-num">{{ $level->posts->count() }}</div>
                 </div>
                 <div class="project-right">
-                    <a href="/posts/add" class="green-button">Добавить публикацию</a>
+                    <a href="/posts/add/level/{{ $level->id }}" class="green-button float-right">Добавить публикацию</a>
+                    <a href="{{ getPreviewLink('project', $project->domain) }}" class="white-button float-right" target="_blank">Предпросмотр</a>
                 </div>
             </div>
             <div class="content-back">
@@ -232,7 +233,7 @@
                 <div class="add-project-title">У вас пока нет публикаций<br/>с данным уровнем доступа</div>
                 <div class="add-project-text">Создайте новую публикацию</div>
                 <div class="add-project-button">
-                    <a href="/posts/add" class="green-button">Создать публикацию</a>
+                    <a href="/posts/add/level/{{ $level->id }}" class="green-button">Создать публикацию</a>
                 </div>
                 <a href="javascript: history.back()">Назад</a>
             </div>

@@ -69,7 +69,7 @@ class PostsController extends Controller
         return view('backend.posts.index_by_level')->with('data', $data)->with('project', $project)->with('posts', $posts)->with('level', $level);
     }
 
-    public function add()
+    public function add($with = false, $with_id = false)
     {
         $project       = Project::findOrFail(Session::get('selected_project'));
         if(!$project->categories->count()){
@@ -84,7 +84,22 @@ class PostsController extends Controller
             asset('assets/js/ckeditor/init.js'),
             "https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"
             ];
-        return view('backend.posts.add')->with('data', $data)->with('project', $project);
+        if($with && $with_id){
+            if($with === 'level'){
+                $level = \App\Level::find($with_id);
+                if(!$level || $level->project->domain !== $project->domain){
+                    exit('Неправильный уровень доступа');
+                }
+            } else if($with === 'category'){
+                $cat = \App\Category::find($with_id);
+                if(!$cat || $cat->project->domain !== $project->domain){
+                    exit('Неправильная категория');
+                }
+            } else {
+                exit('Неправильная ссылка');
+            }
+        }
+        return view('backend.posts.add')->with('data', $data)->with('project', $project)->with('with', $with)->with('with_id', $with_id);
     }
 
     public function edit($post_id)

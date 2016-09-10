@@ -20,6 +20,34 @@
                             <input type="text" class="input input-long" placeholder="Введите название публикации" name="name" required="required" maxlength="255" value="{{ Request::old('name') }}">
                         </div>
                         <div class="add-mat-left">
+                            <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра публикации отображается на странице со списком публикаций</div>">?</span></div>
+                        </div>
+                        <div class="add-mat-right">
+                            <div class="select-block inline-button" style="margin-right: 10px;">
+                                <select class="styled" name="thumbnail_size">
+                                    <option value="0">Маленькая (128px)</option>
+                                    <option value="1">Большая (750px)</option>
+                                </select>
+                            </div>
+                            <div id="thumbnail_128_tab">
+                                <a href="#popup_thumbs" class="blue-button inline-button fancybox" style="margin-right: 10px;">Выбрать миниатюру</a>
+                                <label class="white-button inline-button" for="thumbnail_128">Загрузить миниатюру</label>
+                                <p class='thumbnail_128_path'></p>
+                                <input type="file" name="thumbnail_128" id="thumbnail_128" style='display: none' accept="image/jpeg,image/png,image/gif">
+                                <input type='hidden' name='thumbnail_128_select' value='{{ asset('assets/images/thumbnails/posts/1.png') }}'>
+                                <div class="add-mat-thumbnail-wrap">
+                                    <img src="{{ asset('assets/images/thumbnails/posts/1.png') }}" alt="image" class="add-mat-image">
+                                    <a style="display: none;" href="javascript: removeThumbnail128();" class="white-button">Удалить миниатюру</a>
+                                </div>
+                            </div>
+                            <div id="thumbnail_750_tab" style="display: none">
+                                <label class="white-button inline-button" for="thumbnail_750">Загрузить миниатюру</label>
+                                <p class='thumbnail_750_path'></p>
+                                <input type="file" name="thumbnail_750" id="thumbnail_750" style='display: none' accept="image/jpeg,image/png,image/gif">
+                                <a style="display: none;" href="javascript: removeThumbnail750();" class="white-button">Удалить миниатюру</a>
+                            </div>
+                        </div>
+                        <div class="add-mat-left">
                             <div class="add-mat-text tooltip-holder">Содержание <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Добавьте содержание вашей публикации. Разместите здесь Ваш продукт, текст, фото, вставьте видео из популярных сервисов, например youtube или vimeo или другую информацию</div>">?</span></div>
                         </div>
                         <div class="add-mat-right">
@@ -235,34 +263,6 @@
                                         <div class="add-mat-image-dark"></div>
                                     </div>
                                     <a href="javascript: removeImage();" class='white-button'>Удалить изображение</a>
-                                </div>
-                            </div>
-                            <div class="add-mat-left">
-                                <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра публикации отображается на странице со списком публикаций</div>">?</span></div>
-                            </div>
-                            <div class="add-mat-right">
-                                <div class="select-block inline-button" style="margin-right: 10px;">
-                                    <select class="styled" name="thumbnail_size">
-                                        <option value="0">Маленькая (128px)</option>
-                                        <option value="1">Большая (750px)</option>
-                                    </select>
-                                </div>
-                                <div id="thumbnail_128_tab">
-                                    <a href="#popup_thumbs" class="blue-button inline-button fancybox" style="margin-right: 10px;">Выбрать миниатюру</a>
-                                    <label class="white-button inline-button" for="thumbnail_128">Загрузить миниатюру</label>
-                                    <p class='thumbnail_128_path'></p>
-                                    <input type="file" name="thumbnail_128" id="thumbnail_128" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                    <input type='hidden' name='thumbnail_128_select' value='{{ asset('assets/images/thumbnails/posts/1.png') }}'>
-                                    <div class="add-mat-thumbnail-wrap">
-                                        <img src="{{ asset('assets/images/thumbnails/posts/1.png') }}" alt="image" class="add-mat-image">
-                                        <a style="display: none;" href="javascript: removeThumbnail128();" class="white-button">Удалить миниатюру</a>
-                                    </div>
-                                </div>
-                                <div id="thumbnail_750_tab" style="display: none">
-                                    <label class="white-button inline-button" for="thumbnail_750">Загрузить миниатюру</label>
-                                    <p class='thumbnail_750_path'></p>
-                                    <input type="file" name="thumbnail_750" id="thumbnail_750" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                    <a style="display: none;" href="javascript: removeThumbnail750();" class="white-button">Удалить миниатюру</a>
                                 </div>
                             </div>
                             <div class="add-mat-left">
@@ -565,7 +565,9 @@
         $("input[name=offset]").val(offset);
 
         $("select[name=category_id]").on("selectmenuselect", function(){
-            levelsUpdate(cats);
+            @if($with !== 'level')
+                levelsUpdate(cats);
+            @endif
             if(parent_trigger){
                 parentImageUpdate();
             }
@@ -624,9 +626,19 @@
                 $.fancybox("#popup_ajax_errors");
             }
         });
+        
+        @if($with === 'category' && $with_id)
+            $("select[name=category_id]").val("{{ $with_id }}");
+            $("select").selectmenu('refresh');
+        @elseif($with === 'level' && $with_id)
+            $("#lvl{{ $with_id }}").prop('checked', true);
+            $.uniform.update();
+        @endif
     });
     $(window).load(function(){
-        levelsUpdate(cats);
+        @if($with !== 'level')
+            levelsUpdate(cats);    
+        @endif
         parentImageUpdate();
     });
 </script>

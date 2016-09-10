@@ -33,6 +33,7 @@ Route::group(['middleware' => ['sid', 'auth:backend', 'csrf'], 'namespace' => 'B
     Route::get('/categories/order_change', 'CategoriesController@order')->middleware(['status', 'project']);
     Route::get('/categories/by_level/{level_id}', 'CategoriesController@indexByLevel')->middleware(['status', 'project']);
     Route::get('/categories/add', 'CategoriesController@add')->middleware(['status', 'project']);
+    Route::get('/categories/add/level/{level_id}', 'CategoriesController@add')->middleware(['status', 'project'])->where('level_id', '[0-9]+');
     Route::post('/categories/store', 'CategoriesController@store')->middleware(['status', 'project']);
     Route::get('/categories/{cat_id}/edit', 'CategoriesController@edit')->middleware(['status', 'project']);
     Route::post('/categories/{cat_id}/update', 'CategoriesController@update')->middleware(['status', 'project']);
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['sid', 'auth:backend', 'csrf'], 'namespace' => 'B
     Route::get('/posts/by_category/{cat_id}/order_change', 'PostsController@order')->middleware(['status', 'project']);
     Route::get('/posts/by_level/{level_id}', 'PostsController@indexByLevel')->middleware(['status', 'project']);
     Route::get('/posts/add', 'PostsController@add')->middleware(['status', 'project']);
+    Route::get('/posts/add/{with}/{with_id}', 'PostsController@add')->middleware(['status', 'project'])->where('with_id', '[0-9]+');
     Route::post('/posts/store', 'PostsController@store')->middleware(['status', 'project']);
     Route::get('/posts/{post_id}/edit', 'PostsController@edit')->middleware(['status', 'project']);
     Route::post('/posts/{post_id}/update', 'PostsController@update')->middleware(['status', 'project']);

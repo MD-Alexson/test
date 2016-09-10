@@ -11,7 +11,8 @@
                     <div class="project-top-num">{{ $categories->count() }}</div>
                 </div>
                 <div class="project-right">
-                    <a href="/categories/add" class="green-button">Добавить категорию</a>
+                    <a href="/categories/add/level/{{ $level->id }}" class="green-button float-right">Добавить категорию</a>
+                    <a href="{{ getPreviewLink('project', $project->domain) }}" class="white-button float-right" target="_blank">Предпросмотр</a>
                 </div>
             </div>
             <div class="content-back">
@@ -181,7 +182,7 @@
                 <div class="add-project-img"><img src="{{ asset('assets/images/add-publications.png') }}" alt=""></div>
                 <div class="add-project-title">Нет категорий с данным уровнем доступа</div>
                 <div class="add-project-button">
-                    <a href="/categories" class="green-button">Ко всем категориям</a>
+                    <a href="/categories/add/level/{{ $level->id }}" class="green-button">Создать</a>
                 </div>
             </div>
             @else
