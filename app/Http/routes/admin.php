@@ -45,7 +45,7 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
         }
         $cats = \App\Category::all();
         foreach ($cats as $cat){
-            switch ($cat>thumbnail){
+            switch ($cat->thumbnail){
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/1.png":
                     $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
                     break;
