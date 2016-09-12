@@ -61,6 +61,33 @@ header .divider {
     background: #fff;
 }
 
+#content h1 {
+    font-size: 28px;
+    line-height: normal;
+}
+
+#content h2 {
+    font-size: 24px;
+    line-height: normal;
+    font-weight: 400
+}
+
+#content h3 {
+    font-size: 20px;
+    line-height: normal;
+}
+
+#content p {
+    font-size: 16px;
+    line-height: normal;
+    font-weight: normal;
+}
+
+#content li {
+    font-size: 16px;
+    line-height: normal;
+}
+
 .row.cards .card {
     margin-bottom: 30px;
 }
@@ -76,6 +103,33 @@ header .divider {
 
 .card.post {
     border-top: 3px solid #3f729b;
+}
+
+.card .card-image {
+    min-height: 184px;
+}
+
+.card .card-content .card-content-1 {
+    min-height: 82px;
+    display: table;
+    width: 100%;
+}
+
+.card .card-content .card-content-1 h5 {
+    border-bottom: 0px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.card .card-content .card-content-2 {
+    min-height: 76px;
+    display: table;
+    width: 100%;
+}
+
+.card .card-content .card-content-2 p {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .card .card-btn {

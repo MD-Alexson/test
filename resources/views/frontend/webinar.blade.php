@@ -25,7 +25,7 @@
             </div>
         </div>
     </header>
-    <div class="container">
+    <div class="container" id="content">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1 col-xs-12">
                 @if($web->timer)

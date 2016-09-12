@@ -20,7 +20,7 @@
                             <input type="text" class="input input-long" placeholder="Введите название категории" name="name" required="required" maxlength="255" value="{{ Request::old('name') }}">
                         </div>
                         <div class="add-mat-left">
-                            <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра категории отображается на странице со списком категорий</div>">?</span></div>
+                            <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра категории отображается на странице со списком категорий. Рекомендуемый размер - <strong>300x184px</strong>, соотношение сторон - <strong>16:10</strong></div>">?</span></div>
                         </div>
                         <div class="add-mat-right">
                             <div id="thumbnail_tab">
@@ -31,6 +31,12 @@
                                 <input type='hidden' name='thumbnail_select' value='{{ asset('assets/images/thumbnails/categories/1.jpg') }}'>
                                 <div class="add-mat-thumbnail-wrap">
                                     <img src="{{ asset('assets/images/thumbnails/categories/1.jpg') }}" alt="image" class="add-mat-image">
+                                    <div class="check-list" id='thumbnail_save_prop' style='display: none;'>
+                                        <div class="check-block">
+                                            <input name="thumbnail_save_prop" type="checkbox" class="check" id="thumbnail_save_prop_check">
+                                            <label for="thumbnail_save_prop_check" class="check-label">Сохранять пропорции (не обрезать 16:10)</label>
+                                        </div>
+                                    </div>
                                     <a style="display: none;" href="javascript: removeThumbnail();" class="white-button">Удалить миниатюру</a>
                                 </div>
                             </div>
@@ -242,15 +248,16 @@
         $("#selected_image").hide();
         $("input[name=parent_image]").val('');
         $("input[name=image_select]").val('');
-        $("input[name=image]").val();
+        $("input[name=image]").val("");
         $("p.image_path").text("");
     }
     function removeThumbnail(){
         $("input[name=thumbnail_select]").val("{{ asset('assets/images/thumbnails/categories/1.jpg') }}");
         $("#thumbnail_tab img").attr('src', "{{ asset('assets/images/thumbnails/categories/1.jpg') }}");
-        $("input[name=thumbnail]").val();
+        $("input[name=thumbnail]").val("");
         $("p.thumbnail_path").text("");
         $("#thumbnail_tab img").show();
+        $("#thumbnail_save_prop").hide();
         $("a[href='javascript: removeThumbnail();']").hide();
     }
     $(document).ready(function () {
@@ -274,6 +281,7 @@
             $("p.thumbnail_path").text($(this).val());
             $("input[name=thumbnail_select]").val("");
             $("#thumbnail_tab img").hide();
+            $("#thumbnail_save_prop").show();
             $("a[href='javascript: removeThumbnail();']").show();
         });
         $("#popup_thumbs .thumb_choose a").on("click", function () {

@@ -20,7 +20,7 @@
                             <input type="text" class="input input-long" placeholder="Введите название публикации" name="name" required="required" maxlength="255" value="{{ $post->name }}">
                         </div>
                         <div class="add-mat-left">
-                            <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра публикации отображается на странице со списком п</div>">?</span></div>
+                            <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра категории отображается на странице со списком категорий. Рекомендуемый размер - <strong>300x184px</strong>, соотношение сторон - <strong>16:10</strong></div>">?</span></div>
                         </div>
                         <div class="add-mat-right">
                             <div id="thumbnail_tab">
@@ -33,9 +33,15 @@
                                     @if(pathTo($post->thumbnail, 'imagepath'))
                                     <img src="{{ url(pathTo($post->thumbnail, 'imagepath')) }}" alt="image" class="add-mat-image">
                                     @else
-                                    <img src="{{ asset('assets/images/thumbnails/posts/1.png') }}" alt="image" class="add-mat-image">
+                                    <img src="{{ asset('assets/images/thumbnails/posts/1.jpg') }}" alt="image" class="add-mat-image">
                                     @endif
-                                    @if($post->thumbnail !== asset('assets/images/thumbnails/posts/1.png'))
+                                    <div class="check-list" id='thumbnail_save_prop' style='display: none;'>
+                                        <div class="check-block">
+                                            <input name="thumbnail_save_prop" type="checkbox" class="check" id="thumbnail_save_prop_check">
+                                            <label for="thumbnail_save_prop_check" class="check-label">Сохранять пропорции (не обрезать 16:10)</label>
+                                        </div>
+                                    </div>
+                                    @if($post->thumbnail !== asset('assets/images/thumbnails/posts/1.jpg'))
                                     <a href="javascript: removeThumbnail();" class="white-button">Удалить миниатюру</a>
                                     @else
                                     <a style="display: none" href="javascript: removeThumbnail();" class="white-button">Удалить миниатюру</a>
@@ -426,11 +432,12 @@
         $("form").append("<input type='hidden' name='image_remove' value='1'>");
     }
     function removeThumbnail(){
-        $("input[name=thumbnail_select]").val("{{ asset('assets/images/thumbnails/posts/1.png') }}");
-        $("#thumbnail_tab img").attr('src', "{{ asset('assets/images/thumbnails/posts/1.png') }}");
-        $("input[name=thumbnail]").val();
+        $("input[name=thumbnail_select]").val("{{ asset('assets/images/thumbnails/posts/1.jpg') }}");
+        $("#thumbnail_tab img").attr('src', "{{ asset('assets/images/thumbnails/posts/1.jpg') }}");
+        $("input[name=thumbnail]").val("");
         $("p.thumbnail_path").text("");
         $("#thumbnail_tab img").show();
+        $("#thumbnail_save_prop").hide();
         $("a[href='javascript: removeThumbnail();']").hide();
         $("form").append("<input type='hidden' name='thumbnail_remove' value='1'>");
     }
@@ -459,6 +466,7 @@
             $("p.thumbnail_path").text($(this).val());
             $("input[name=thumbnail_select]").val("");
             $("#thumbnail_tab img").hide();
+            $("#thumbnail_save_prop").show();
             $("a[href='javascript: removeThumbnail();']").show();
         });
         $("#popup_thumbs .thumb_choose a").on("click", function () {
@@ -467,7 +475,7 @@
             $("p.thumbnail_path").text("");
             $("input[name=thumbnail_select]").val($(this).children("img").attr('src'));
             $("#thumbnail_tab img").attr('src', $(this).children("img").attr('src'));
-            if($(this).children("img").attr('src') !== "{{ asset('assets/images/thumbnails/posts/1.png') }}"){
+            if($(this).children("img").attr('src') !== "{{ asset('assets/images/thumbnails/posts/1.jpg') }}"){
                 $("a[href='javascript: removeThumbnail();']").show();
             } else {
                 $("a[href='javascript: removeThumbnail();']").hide();

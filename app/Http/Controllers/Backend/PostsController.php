@@ -254,7 +254,11 @@ class PostsController extends Controller
 
         if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/posts/'.$post->id.'/';
-            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            if(Request::has('thumbnail_save_prop')){
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            } else {
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300, 184);
+            }
             if ($image_save) {
                 $post->thumbnail = $image_save;
             }
@@ -450,7 +454,11 @@ class PostsController extends Controller
 
         if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/posts/'.$post->id.'/';
-            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            if(Request::has('thumbnail_save_prop')){
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            } else {
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300, 184);
+            }
             if ($image_save) {
                 if (Storage::exists($post->thumbnail)) {
                     Storage::delete($post->thumbnail);

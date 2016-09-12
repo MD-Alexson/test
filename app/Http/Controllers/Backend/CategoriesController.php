@@ -182,7 +182,11 @@ class CategoriesController extends Controller
 
         if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/categories/'.$cat->id.'/';
-            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            if(Request::has('thumbnail_save_prop')){
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            } else {
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300, 184);
+            }
             if ($image_save) {
                 $cat->thumbnail = $image_save;
             }
@@ -306,7 +310,11 @@ class CategoriesController extends Controller
 
         if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/categories/'.$cat->id.'/';
-            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            if(Request::has('thumbnail_save_prop')){
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300);
+            } else {
+                $image_save = imageSave(Request::file('thumbnail'), $path, 300, 184);
+            }
             if ($image_save) {
                 if (Storage::exists($cat->thumbnail)) {
                     Storage::delete($cat->thumbnail);

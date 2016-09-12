@@ -16,7 +16,7 @@
         </div>
     </header>
     @include('frontend.inc.menu')
-    <div class="container">
+    <div class="container" id="content">
         <div class="row">
             @if($post->sidebar)
             <div class="col-xs-8">

@@ -28,16 +28,20 @@ if(!$thumbnail){
             </div>
         </div>
         <div class="card-content text-center">
-            <h5>{{ $post->name }}</h5>
-            @if(!empty($post->excerpt))
-            <p>{{ $post->excerpt }}</p>
-            @endif
-            @if($post->status === "scheduled" && $post->comingsoon)
-            <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($post->scheduled) }}</span>
-            @elseif($post->status === "scheduled2" && Session::get('guard') === 'frontend' && $post->comingsoon)
-                <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $post->sch2num, $post->sch2type); ?>
-                <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($sch2) }}</span>
-            @endif
+            <div class='card-content-1'>
+                <h5>{{ $post->name }}</h5>
+            </div>
+            <div class='card-content-2'>
+                @if(!empty($post->excerpt))
+                <p>{{ $post->excerpt }}</p>
+                @endif
+                @if($post->status === "scheduled" && $post->comingsoon)
+                <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($post->scheduled) }}</span>
+                @elseif($post->status === "scheduled2" && Session::get('guard') === 'frontend' && $post->comingsoon)
+                    <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $post->sch2num, $post->sch2type); ?>
+                    <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($sch2) }}</span>
+                @endif
+            </div>
         </div>
         <div class="card-btn text-center">
             @if($post->status === "scheduled")

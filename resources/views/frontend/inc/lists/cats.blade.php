@@ -28,16 +28,20 @@ if(!$thumbnail){
             </div>
         </div>
         <div class="card-content text-center">
-            <h5>{{ $cat->name }}</h5>
-            @if(!empty($cat->excerpt))
-            <p>{{ $cat->excerpt }}</p>
-            @endif
-            @if($cat->status === "scheduled" && $cat->comingsoon)
-            <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($cat->scheduled) }}</span>
-            @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend' && $cat->comingsoon)
-                <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $cat->sch2num, $cat->sch2type); ?>
-                <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($sch2) }}</span>
-            @endif
+            <div class='card-content-1'>
+                <h5>{{ $cat->name }}</h5>
+            </div>
+            <div class='card-content-2'>
+                @if(!empty($cat->excerpt))
+                <p>{{ $cat->excerpt }}</p>
+                @endif
+                @if($cat->status === "scheduled" && $cat->comingsoon)
+                <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($cat->scheduled) }}</span>
+                @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend' && $cat->comingsoon)
+                    <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $cat->sch2num, $cat->sch2type); ?>
+                    <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($sch2) }}</span>
+                @endif
+            </div>
         </div>
         <div class="card-btn text-center">
             @if($cat->status === "scheduled")
