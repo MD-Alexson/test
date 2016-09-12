@@ -105,31 +105,8 @@ header .divider {
     border-top: 3px solid #3f729b;
 }
 
-.card .card-image {
-    min-height: 184px;
-}
-
-.card .card-content .card-content-1 {
-    min-height: 82px;
-    display: table;
-    width: 100%;
-}
-
 .card .card-content .card-content-1 h5 {
     border-bottom: 0px;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.card .card-content .card-content-2 {
-    min-height: 76px;
-    display: table;
-    width: 100%;
-}
-
-.card .card-content .card-content-2 p {
-    display: table-cell;
-    vertical-align: middle;
 }
 
 .card .card-btn {
