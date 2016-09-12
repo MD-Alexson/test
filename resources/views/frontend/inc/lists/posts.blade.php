@@ -15,12 +15,9 @@ if(!$thumbnail){
         <div class="card-image">
             <div class="view overlay hm-white-slight z-depth-1">
                 <img src="{{ $thumbnail }}" class="img-responsive" alt="">
-                @if($post->stripe)
-                <div class='stripe stripe_{{ $post->stripe }}'></div>
-                @endif
-                @if($post->status === "scheduled")
-                <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
-                @elseif($post->status === "scheduled2" && Session::get('guard') === 'frontend')
+                @if(Auth::guard('backend')->check())
+                <a href="/posts/{{ $post->id }}"><div class="mask waves-effect"></div></a>
+                @elseif($post->status === "scheduled" || $post->status === "scheduled2")
                 <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
                 @else
                 <a href="/posts/{{ $post->id }}"><div class="mask waves-effect"></div></a>
@@ -36,17 +33,19 @@ if(!$thumbnail){
                 <p>{{ $post->excerpt }}</p>
                 @endif
                 @if($post->status === "scheduled" && $post->comingsoon)
-                <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($post->scheduled) }}</span>
+                <br/>
+                <p style='font-size: 14px;'>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000;">{{ getDateTime($post->scheduled) }}</span></p>
                 @elseif($post->status === "scheduled2" && Session::get('guard') === 'frontend' && $post->comingsoon)
                     <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $post->sch2num, $post->sch2type); ?>
-                    <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($sch2) }}</span>
+                    <br/>
+                    <p>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000">{{ getDateTime($sch2) }}</span></p>
                 @endif
             </div>
         </div>
         <div class="card-btn text-center">
-            @if($post->status === "scheduled")
-            <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
-            @elseif($post->status === "scheduled2" && Session::get('guard') === 'frontend')
+            @if(Auth::guard('backend')->check())
+            <a href="/posts/{{ $post->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
+            @elseif($post->status === "scheduled" || $post->status === "scheduled2")
             <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
             @else
             <a href="/posts/{{ $post->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>

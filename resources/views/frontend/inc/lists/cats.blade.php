@@ -18,9 +18,9 @@ if(!$thumbnail){
         <div class="card-image">
             <div class="view overlay hm-white-slight z-depth-1">
                 <img src="{{ $thumbnail }}" class="img-responsive" alt="">
-                @if($cat->status === "scheduled")
-                <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
-                @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend')
+                @if(Auth::guard('backend')->check())
+                <a href="/categories/{{ $cat->id }}"><div class="mask waves-effect"></div></a>
+                @elseif($cat->status === "scheduled" || $cat->status === "scheduled2")
                 <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
                 @else
                 <a href="/categories/{{ $cat->id }}"><div class="mask waves-effect"></div></a>
@@ -36,17 +36,19 @@ if(!$thumbnail){
                 <p>{{ $cat->excerpt }}</p>
                 @endif
                 @if($cat->status === "scheduled" && $cat->comingsoon)
-                <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($cat->scheduled) }}</span>
+                <br/>
+                <p style='font-size: 14px;'>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000;">{{ getDateTime($cat->scheduled) }}</span></p>
                 @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend' && $cat->comingsoon)
                     <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $cat->sch2num, $cat->sch2type); ?>
-                    <span class="toLocalTime" style="color: #cc0000">{{ getDateTime($sch2) }}</span>
+                    <br/>
+                    <p>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000">{{ getDateTime($sch2) }}</span></p>
                 @endif
             </div>
         </div>
         <div class="card-btn text-center">
-            @if($cat->status === "scheduled")
-            <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
-            @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend')
+            @if(Auth::guard('backend')->check())
+            <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
+            @elseif($cat->status === "scheduled" || $cat->status === "scheduled2")
             <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
             @else
             <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>

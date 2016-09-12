@@ -26,9 +26,11 @@
                     <ul class="dropdown-menu">
                         <li data-id="{{ $cat_id }}"><a href="/categories/{{ $cat_id }}">{{ $cat->name }}</a>
                         <li role="separator" class="divider"></li>
-                        @foreach(\App\Category::where('parent', $cat_id)->orderBy('order', 'asc')->select('id', 'name')->get() as $sub)
-                        <li data-id="{{ $sub->id }}"><a href="/categories/{{ $sub->id }}">{{ $sub->name }}</a>
-                            @endforeach
+                        @foreach(\App\Category::where('parent', $cat_id)->orderBy('order', 'asc')->select('id', 'name', 'status')->get() as $sub)
+                            @if(in_array($sub->id, Request::input('allowed')['categories']) && $sub->status === "published")
+                                <li data-id="{{ $sub->id }}"><a href="/categories/{{ $sub->id }}">{{ $sub->name }}</a>
+                            @endif
+                        @endforeach
                     </ul>
                 </li>
                 @else

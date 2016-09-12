@@ -21,7 +21,7 @@
             @if($post->sidebar)
             <div class="col-xs-8">
                 <a href="javascript: history.back();" class="btn btn-default btn-circle"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-                @if(frontendCheckLevel($post, Session::get('level_id')))
+                @if(frontendCheckLevel($post, Session::get('level_id')) && ($post->status === 'published' || Auth::guard('backend')->check()))
                     @if(Session::get('guard') === 'backend' || frontendCheckHomeworks($post))
                     @include('frontend.inc.content')
                     @else
@@ -52,7 +52,7 @@
             @else
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
                 <a href="javascript: history.back();" class="btn btn-default btn-circle"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-                @if(frontendCheckLevel($post, Session::get('level_id')))
+                @if(frontendCheckLevel($post, Session::get('level_id')) && ($post->status === 'published' || Auth::guard('backend')->check()))
                     @if(Session::get('guard') === 'backend' || frontendCheckHomeworks($post))
                     @include('frontend.inc.content')
                     @else
