@@ -47,34 +47,34 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
         foreach ($cats as $cat){
             switch ($cat>thumbnail){
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/1.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/2.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/2.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/2.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/3.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/3.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/3.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/4.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/4.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/4.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/5.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/5.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/5.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/6.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/7.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/8.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/9.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
                     break;
                 case "https://abckabinet.ru/assets/images/thumbnails/categories/10.png":
-                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    $cat->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
                     break;
             }
             $cat->save();
