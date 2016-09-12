@@ -15,6 +15,9 @@ if(!$thumbnail){
         <div class="card-image">
             <div class="view overlay hm-white-slight z-depth-1">
                 <img src="{{ $thumbnail }}" class="img-responsive" alt="">
+                @if($post->stripe)
+                <div class='stripe stripe_{{ $post->stripe }}'></div>
+                @endif
                 @if(Auth::guard('backend')->check())
                 <a href="/posts/{{ $post->id }}"><div class="mask waves-effect"></div></a>
                 @elseif($post->status === "scheduled" || $post->status === "scheduled2")
