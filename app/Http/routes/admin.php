@@ -6,6 +6,81 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
         return redirect('/users');
     });
     
+    Route::get('/upd', function(){
+        $posts = \App\Post::all();
+        foreach($posts as $post){
+            switch ($post->thumbnail){
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/1.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/1.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/2.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/2.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/3.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/3.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/4.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/4.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/5.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/5.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/6.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/6.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/7.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/7.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/8.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/8.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/9.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/9.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/posts/10.png":
+                    $post->thumbnail = "https://abckabinet.ru/assets/images/thumbnails/posts/10.jpg";
+                    break;
+            }
+            $post->save();
+        }
+        $cats = \App\Category::all();
+        foreach ($cats as $cat){
+            switch ($cat>thumbnail){
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/1.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/2.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/2.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/3.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/3.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/4.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/4.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/5.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/5.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/6.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/7.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/8.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/9.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    break;
+                case "https://abckabinet.ru/assets/images/thumbnails/categories/10.png":
+                    $cat>thumbnail = "https://abckabinet.ru/assets/images/thumbnails/categories/1.jpg";
+                    break;
+            }
+            $cat->save();
+        }
+    });
+    
     Route::get("/users", "UsersController@index");
     Route::get("/users/sort/{order_by}/{order}", "UsersController@sort");
     Route::get('/users/add', 'UsersController@add');
