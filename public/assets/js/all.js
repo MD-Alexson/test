@@ -240,6 +240,7 @@ $(document).ready(function () {
     $('.fancybox').fancybox({
         closeBtn: false
     });
+    $(".fancybox-thumbs").fancybox({'width':640, height: 'auto', 'autoSize' : false});
     $('.fancybox-big').fancybox({
         closeBtn: false,
         width: 960,

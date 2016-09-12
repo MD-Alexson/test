@@ -19,9 +19,9 @@
                         <p>Если email не в папка "Входяшие", проверьте папку "СПАМ"</p>
                     </div>
                 </div>
-                @include('frontend.inc.auth_footer')
             </div>
         </div>
     </div>
+    @include('frontend.inc.footer')
 </body>
 @endsection

@@ -34,14 +34,13 @@
                             </div>
                             <br>
                             @if($project->levels()->where('open', true)->count())
-                            <button type="submit" class="btn btn-default btn-success col-xs-6">Войти</button>
-                            <a href="/register" class="btn btn-default btn-info col-xs-6">Регистрация</a>
+                            <button type="submit" class="btn btn-default btn-success col-xs-6 no-margin">Войти</button>
+                            <a href="/register" class="btn btn-default btn-info col-xs-6 no-margin">Регистрация</a>
+                            <div class='clearfix'></div>
                             @else
                             <button type="submit" class="btn btn-default btn-success btn-block">Войти</button>
                             @endif
-                            <br/>
-                            <br/>
-                            <a href="/pass" class="password_link text-right" style="display: block">Забыли пароль?</a>
+                            <a href="/pass" class="password_link text-right" style="display: block; margin-top: 15px;">Забыли пароль?</a>
                         </form>
                     </div>
                     <div class="col-md-6" id="login_html">
@@ -67,21 +66,20 @@
                             </div>
                             <br>
                             @if($project->levels()->where('open', true)->count())
-                            <button type="submit" class="btn btn-default btn-success col-xs-6">Войти</button>
-                            <a href="/register" class="btn btn-default btn-info col-xs-6">Регистрация</a>
+                            <button type="submit" class="btn btn-default btn-success col-xs-6 no-margin">Войти</button>
+                            <a href="/register" class="btn btn-default btn-info col-xs-6 no-margin">Регистрация</a>
+                            <div class='clearfix'></div>
                             @else
                             <button type="submit" class="btn btn-default btn-success btn-block">Войти</button>
                             @endif
-                            <br/>
-                            <br/>
-                            <a href="/pass" class="password_link text-right" style="display: block">Забыли пароль?</a>
+                            <a href="/pass" class="password_link text-right" style="display: block; margin-top: 15px;">Забыли пароль?</a>
                         </form>
                     </div>
                     @endif
                 </div>
-                @include('frontend.inc.auth_footer')
             </div>
         </div>
     </div>
+    @include('frontend.inc.footer')
 </body>
 @endsection

@@ -169,6 +169,12 @@ class PostsController extends Controller
         $post->sidebar_html = htmlentities(Request::input('sidebar_html'));
 
         $post->status = htmlspecialchars(Request::input('status'));
+        
+        if(Request::input('stripe') && Request::input('stripe') !== 0 && Request::input('stripe') !== "0"){
+            $post->stripe = htmlspecialchars(Request::input('stripe'));
+        } else {
+            $post->stripe = null;
+        }
 
         if(Request::has('scheduled') && !empty(Request::input('scheduled'))){
             $post->scheduled = strtotime(htmlspecialchars(Request::input('scheduled'))) - (int) htmlspecialchars(Request::input('offset'));
@@ -246,26 +252,14 @@ class PostsController extends Controller
             $post->image = htmlspecialchars(Request::input('image_select'));
         }
 
-        $post->thumbnail_size = (int) Request::input('thumbnail_size');
-
-        if (Request::hasFile('thumbnail_128')) {
+        if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/posts/'.$post->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_128'), $path, 128, 128);
+            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
             if ($image_save) {
-                $post->thumbnail_128 = $image_save;
+                $post->thumbnail = $image_save;
             }
-        } else if(strlen(Request::input('thumbnail_128_select'))){
-            $post->thumbnail_128 = htmlspecialchars(Request::input('thumbnail_128_select'));
-        }
-        
-        if (Request::hasFile('thumbnail_750')) {
-            $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/posts/'.$post->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_750'), $path, 750, 750);
-            if ($image_save) {
-                $post->thumbnail_750 = $image_save;
-            }
-        } else {
-            $post->thumbnail_size = 0;
+        } else if(strlen(Request::input('thumbnail_select'))){
+            $post->thumbnail = htmlspecialchars(Request::input('thumbnail_select'));
         }
 
         $levels = Request::input('levels');
@@ -356,6 +350,12 @@ class PostsController extends Controller
 
         $post->status = htmlspecialchars(Request::input('status'));
         
+        if(Request::input('stripe') && Request::input('stripe') !== 0 && Request::input('stripe') !== "0"){
+            $post->stripe = htmlspecialchars(Request::input('stripe'));
+        } else {
+            $post->stripe = null;
+        }
+        
         if(Request::has('scheduled') && !empty(Request::input('scheduled'))){
             $post->scheduled = strtotime(htmlspecialchars(Request::input('scheduled'))) - (int) htmlspecialchars(Request::input('offset'));
             if($post->scheduled <= 0 || $post->scheduled > 2147483647){
@@ -441,51 +441,27 @@ class PostsController extends Controller
             $post->image = htmlspecialchars(Request::input('image_select'));
         }
 
-        if (Request::has('thumbnail_128_remove')) {
-            if (Storage::exists($post->thumbnail_128)) {
-                Storage::delete($post->thumbnail_128);
+        if (Request::has('thumbnail_remove')) {
+            if (Storage::exists($post->thumbnail)) {
+                Storage::delete($post->thumbnail);
             }
-            $post->thumbnail_128 = "";
+            $post->thumbnail = "";
         }
 
-        if (Request::has('thumbnail_750_remove')) {
-            if (Storage::exists($post->thumbnail_750)) {
-                Storage::delete($post->thumbnail_750);
-            }
-            $post->thumbnail_750 = "";
-        }
-
-        $post->thumbnail_size = (int) Request::input('thumbnail_size');
-
-        if (Request::hasFile('thumbnail_128')) {
+        if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/posts/'.$post->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_128'), $path, 128, 128);
+            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
             if ($image_save) {
-                if (Storage::exists($post->thumbnail_128)) {
-                    Storage::delete($post->thumbnail_128);
+                if (Storage::exists($post->thumbnail)) {
+                    Storage::delete($post->thumbnail);
                 }
-                $post->thumbnail_128 = $image_save;
+                $post->thumbnail = $image_save;
             }
-        } else if(strlen(Request::input('thumbnail_128_select'))){
-            if (Storage::exists($post->thumbnail_128)) {
-                Storage::delete($post->thumbnail_128);
+        } else if(strlen(Request::input('thumbnail_select'))){
+            if (Storage::exists($post->thumbnail)) {
+                Storage::delete($post->thumbnail);
             }
-            $post->thumbnail_128 = htmlspecialchars(Request::input('thumbnail_128_select'));
-        }
-        
-        if (Request::hasFile('thumbnail_750')) {
-            $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/posts/'.$post->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_750'), $path, 750, 750);
-            if ($image_save) {
-                if (Storage::exists($post->thumbnail_750)) {
-                    Storage::delete($post->thumbnail_750);
-                }
-                $post->thumbnail_750 = $image_save;
-            }
-        }
-        
-        if($post->thumbnail_size && !strlen($post->thumbnail_750)){
-            $post->thumbnail_size = 0;
+            $post->thumbnail = htmlspecialchars(Request::input('thumbnail_select'));
         }
 
         $levels = Request::input('levels');

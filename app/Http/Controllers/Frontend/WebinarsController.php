@@ -24,6 +24,6 @@ class WebinarsController extends Controller
         if($web->timer){
             $data['assets']['js'] = [asset('/assets/js/jquery.countdown.min.js')];
         }
-        return view('frontend_old.webinar')->with('data', $data)->with('web', $web)->with('project', $project);
+        return view('frontend.webinar')->with('data', $data)->with('web', $web)->with('project', $project);
     }
 }

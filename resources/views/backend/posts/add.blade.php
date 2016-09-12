@@ -23,28 +23,16 @@
                             <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра публикации отображается на странице со списком публикаций</div>">?</span></div>
                         </div>
                         <div class="add-mat-right">
-                            <div class="select-block inline-button" style="margin-right: 10px;">
-                                <select class="styled" name="thumbnail_size">
-                                    <option value="0">Маленькая (128px)</option>
-                                    <option value="1">Большая (750px)</option>
-                                </select>
-                            </div>
-                            <div id="thumbnail_128_tab">
-                                <a href="#popup_thumbs" class="blue-button inline-button fancybox" style="margin-right: 10px;">Выбрать миниатюру</a>
-                                <label class="white-button inline-button" for="thumbnail_128">Загрузить миниатюру</label>
-                                <p class='thumbnail_128_path'></p>
-                                <input type="file" name="thumbnail_128" id="thumbnail_128" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                <input type='hidden' name='thumbnail_128_select' value='{{ asset('assets/images/thumbnails/posts/1.png') }}'>
+                            <div id="thumbnail_tab">
+                                <a href="#popup_thumbs" class="blue-button inline-button fancybox-thumbs" style="margin-right: 10px;">Выбрать миниатюру</a>
+                                <label class="white-button inline-button" for="thumbnail">Загрузить миниатюру</label>
+                                <p class='thumbnail_path'></p>
+                                <input type="file" name="thumbnail" id="thumbnail" style='display: none' accept="image/jpeg,image/png,image/gif">
+                                <input type='hidden' name='thumbnail_select' value='{{ asset('assets/images/thumbnails/posts/1.jpg') }}'>
                                 <div class="add-mat-thumbnail-wrap">
-                                    <img src="{{ asset('assets/images/thumbnails/posts/1.png') }}" alt="image" class="add-mat-image">
-                                    <a style="display: none;" href="javascript: removeThumbnail128();" class="white-button">Удалить миниатюру</a>
+                                    <img src="{{ asset('assets/images/thumbnails/posts/1.jpg') }}" alt="image" class="add-mat-image">
+                                    <a style="display: none;" href="javascript: removeThumbnail();" class="white-button">Удалить миниатюру</a>
                                 </div>
-                            </div>
-                            <div id="thumbnail_750_tab" style="display: none">
-                                <label class="white-button inline-button" for="thumbnail_750">Загрузить миниатюру</label>
-                                <p class='thumbnail_750_path'></p>
-                                <input type="file" name="thumbnail_750" id="thumbnail_750" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                <a style="display: none;" href="javascript: removeThumbnail750();" class="white-button">Удалить миниатюру</a>
                             </div>
                         </div>
                         <div class="add-mat-left">
@@ -162,6 +150,19 @@
                         </div>
                         <div class="add-mat-optional-title">Дополнительные настройки</div>
                         <div id="optional">
+                            <div class="add-mat-left">
+                                <div class="add-mat-text tooltip-holder">Атрибут <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Строчка, которая будет показыватся поверх миниатюры</div>">?</span></div>
+                            </div>
+                            <div class="add-mat-right">
+                                <div class="select-block">
+                                    <select class="styled" name="stripe">
+                                        <option value="0">Не использовать</option>
+                                        <option value="soon">"Скоро будет"</option>
+                                        <option value="updated">"Обновлено"</option>
+                                        <option value="new">"Новинка"</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="add-mat-left">
                                 <div class="add-mat-text tooltip-holder">Краткое описание <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Краткое описание, которое отображается в списке публикаций</div>">?</span></div>
                             </div>
@@ -365,18 +366,13 @@
         $("p.image_path").text("");
         parent_trigger = false;
     }
-    function removeThumbnail128(){
-        $("input[name=thumbnail_128_select]").val("{{ asset('assets/images/thumbnails/posts/1.png') }}");
-        $("#thumbnail_128_tab img").attr('src', "{{ asset('assets/images/thumbnails/posts/1.png') }}");
-        $("input[name=thumbnail_128]").val();
-        $("p.thumbnail_128_path").text("");
-        $("#thumbnail_128_tab img").show();
-        $("a[href='javascript: removeThumbnail128();']").hide();
-    }
-    function removeThumbnail750(){
-        $("input[name=thumbnail_750]").val();
-        $("p.thumbnail_750_path").text("");
-        $("a[href='javascript: removeThumbnail750();']").hide();
+    function removeThumbnail(){
+        $("input[name=thumbnail_select]").val("{{ asset('assets/images/thumbnails/posts/1.jpg') }}");
+        $("#thumbnail_tab img").attr('src', "{{ asset('assets/images/thumbnails/posts/1.jpg') }}");
+        $("input[name=thumbnail]").val();
+        $("p.thumbnail_path").text("");
+        $("#thumbnail_tab img").show();
+        $("a[href='javascript: removeThumbnail();']").hide();
     }
     $(document).ready(function () {
         $("input[name=image]").on('change', function () {
@@ -396,37 +392,24 @@
             parent_trigger = false;
             $.fancybox.close();
         });
-        $("select[name=thumbnail_size]").on('selectmenuselect', function(){
-            if($(this).val() === "1"){
-                $("#thumbnail_128_tab").hide();
-                $("#thumbnail_750_tab").show();
-            } else {
-                $("#thumbnail_750_tab").hide();
-                $("#thumbnail_128_tab").show();
-            }
-        });
-        $("input[name=thumbnail_128]").on('change', function () {
-            $("p.thumbnail_128_path").text($(this).val());
-            $("input[name=thumbnail_128_select]").val("");
-            $("#thumbnail_128_tab img").hide();
-            $("a[href='javascript: removeThumbnail128();']").show();
+        $("input[name=thumbnail]").on('change', function () {
+            $("p.thumbnail_path").text($(this).val());
+            $("input[name=thumbnail_select]").val("");
+            $("#thumbnail_tab img").hide();
+            $("a[href='javascript: removeThumbnail();']").show();
         });
         $("#popup_thumbs .thumb_choose a").on("click", function () {
-            $("#thumbnail_128_tab img").show();
-            $("input[name=thumbnail_128]").val("");
-            $("p.thumbnail_128_path").text("");
-            $("input[name=thumbnail_128_select]").val($(this).children("img").attr('src'));
-            $("#thumbnail_128_tab img").attr('src', $(this).children("img").attr('src'));
-            if($(this).children("img").attr('src') !== "{{ asset('assets/images/thumbnails/posts/1.png') }}"){
-                $("a[href='javascript: removeThumbnail128();']").show();
+            $("#thumbnail_tab img").show();
+            $("input[name=thumbnail]").val("");
+            $("p.thumbnail_path").text("");
+            $("input[name=thumbnail_select]").val($(this).children("img").attr('src'));
+            $("#thumbnail_tab img").attr('src', $(this).children("img").attr('src'));
+            if($(this).children("img").attr('src') !== "{{ asset('assets/images/thumbnails/posts/1.jpg') }}"){
+                $("a[href='javascript: removeThumbnail();']").show();
             } else {
-                $("a[href='javascript: removeThumbnail128();']").hide();
+                $("a[href='javascript: removeThumbnail();']").hide();
             }
             $.fancybox.close();
-        });
-        $("input[name=thumbnail_750]").on('change', function () {
-            $("p.thumbnail_750_path").text($(this).val());
-            $("a[href='javascript: removeThumbnail750();']").show();
         });
         $("input[name=header_dim]").on('change', function(){
             parent_trigger = false;
@@ -674,34 +657,49 @@
     <div class="popup-min-content" style="padding: 0px;">
         <div class="thumb_choose">
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/1.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/1.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/2.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/2.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/3.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/3.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/4.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/4.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/5.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/5.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/6.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/6.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/7.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/7.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/8.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/8.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/9.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/9.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/posts/10.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/posts/10.jpg') }}">
+            </a>
+            <a href="javascript: void(0);">
+                <img src="{{ asset('assets/images/thumbnails/posts/11.jpg') }}">
+            </a>
+            <a href="javascript: void(0);">
+                <img src="{{ asset('assets/images/thumbnails/posts/12.jpg') }}">
+            </a>
+            <a href="javascript: void(0);">
+                <img src="{{ asset('assets/images/thumbnails/posts/13.jpg') }}">
+            </a>
+            <a href="javascript: void(0);">
+                <img src="{{ asset('assets/images/thumbnails/posts/14.jpg') }}">
+            </a>
+            <a href="javascript: void(0);">
+                <img src="{{ asset('assets/images/thumbnails/posts/15.jpg') }}">
             </a>
             <div class="clearfix"></div>
         </div>

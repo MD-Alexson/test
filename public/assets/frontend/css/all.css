@@ -1,72 +1,27 @@
-@font-face {
-    font-family: 'GothamPro';
-    src: url('../../fonts/GothamPro.eot');
-    src: url('../../fonts/GothamPro.eot') format('embedded-opentype'),
-        url('../../fonts/GothamPro.woff2') format('woff2'),
-        url('../../fonts/GothamPro.woff') format('woff'),
-        url('../../fonts/GothamPro.ttf') format('truetype'),
-        url('../../fonts/GothamPro.svg#GothamPro') format('svg');
-}
-@font-face {
-    font-family: 'GothaProLig';
-    src: url('../../fonts/GothaProLig.eot');
-    src: url('../../fonts/GothaProLig.eot') format('embedded-opentype'),
-        url('../../fonts/GothaProLig.woff2') format('woff2'),
-        url('../../fonts/GothaProLig.woff') format('woff'),
-        url('../../fonts/GothaProLig.ttf') format('truetype'),
-        url('../../fonts/GothaProLig.svg#GothaProLig') format('svg');
-}
-@font-face {
-    font-family: 'GothaProMed';
-    src: url('../../fonts/GothaProMed.eot');
-    src: url('../../fonts/GothaProMed.eot') format('embedded-opentype'),
-        url('../../fonts/GothaProMed.woff2') format('woff2'),
-        url('../../fonts/GothaProMed.woff') format('woff'),
-        url('../../fonts/GothaProMed.ttf') format('truetype'),
-        url('../../fonts/GothaProMed.svg#GothaProMed') format('svg');
-}
-@font-face {
-    font-family: 'GothaProBol';
-    src: url('../../fonts/GothaProBol.eot');
-    src: url('../../fonts/GothaProBol.eot') format('embedded-opentype'),
-        url('../../fonts/GothaProBol.woff2') format('woff2'),
-        url('../../fonts/GothaProBol.woff') format('woff'),
-        url('../../fonts/GothaProBol.ttf') format('truetype'),
-        url('../../fonts/GothaProBol.svg#GothaProBol') format('svg');
-}
-
 body {
-    font-family: "GothamPro";
-    font-size: 16px;
-}
-body#list > .container {
-}
-*{max-height: 1000000px;}
-#login {
-    background: #2e2d38;
+    font-family: "Roboto", sans-serif;
 }
 
-#login .container{
-    margin: 40px auto;
-    padding: 40px 0px;
-    background: #fff;
+.navbar-fixed-top {
+    padding: 0px;
+    margin: 0px;
 }
 
-#login_html p {
-    margin: 0px 0px 15px 0px;
-    padding: 0px 0px 0px 20px;
+.navbar-fixed-top a {
+    color: rgba(255,255,255,.84);
 }
 
-body#list {
-    
-}
-
-header.intro-header {
-    background-size: cover;
+header {
+    margin-top: 60px;
+    padding: 30px 0px;
+    text-align: center;
+    color: #fff;
     position: relative;
+    background-position: center center;
+    background-size: cover;
 }
 
-header.intro-header div.header_dim {
+.header_dim {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -75,113 +30,110 @@ header.intro-header div.header_dim {
     background: rgba(0, 0, 0, 0.5);
 }
 
-header.intro-header div.site-heading {
-    padding: 50px 0px 15px 0px;
-}
-
-header.intro-header div.site-heading h1 {
+header h1 {
+    font-family: "Russo One";
     font-size: 30px;
-    font-family: "Russo One", "GothaProLig", sans-serif;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
-    font-weight: 400;
-}
-
-header.intro-header div.site-heading h2 {
-    font-size: 20px;
-    font-family: "Russo One", "GothaProLig", sans-serif;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
-    font-weight: 400;
-}
-
-nav:not(.is-fixed) .navbar-brand {
-    padding: 10px 0px 10px 0px!important;
-    margin: 0px!important;
-    font-size: 16px;
-}
-
-nav:not(.is-fixed) span.navbar-brand a {
-    color: #fff;
-    vertical-align: middle;
-}
-
-nav:not(.is-fixed) ul.navbar-right {
-    margin: 0px!important;
-    font-size: 16px;
-}
-
-nav:not(.is-fixed) ul.navbar-right li a {
-    padding: 10px 0px 10px 10px!important;
-}
-
-nav:not(.is-fixed) ul.navbar-right li select {
-    margin: 0px 0px 0px 15px!important;
-}
-
-.post-preview {
+    position: relative;
     margin: 0px;
     padding: 0px;
-    position: relative;
 }
 
-.post-preview .post_mask {
-    position: absolute!important;
+header h3 {
+    font-family: "Russo One";
+    font-size: 20px;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+
+header span {
+    font-family: "Russo One";
+    font-size: 20px;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+
+header .divider {
+    margin: 15px auto;
+    height: 2px;
+    width: 10%;
+    background: #fff;
+}
+
+.row.cards .card {
+    margin-bottom: 30px;
+}
+
+.card {
+    position: relative;
+    padding-bottom: 82px;
+}
+
+.card.cat {
+    border-top: 3px solid #fec819;
+}
+
+.card.post {
+    border-top: 3px solid #3f729b;
+}
+
+.card .card-btn {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+}
+
+.card .stripe  {
+    position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background: #434343;
-    display: block;
+    background-position: center 5px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.card .stripe.stripe_soon {
+    background-image: url(../img/stripe_soon.png);
+}
+.card .stripe.stripe_updated {
+    background-image: url(../img/stripe_updated.png);
+}
+.card .stripe.stripe_new {
+    background-image: url(../img/stripe_new.png);
 }
 
-.post-preview a, .post-preview a:hover {
-    text-decoration: none;
+.thin .row.cards .card .card-content {
+    padding: 5px 10px;
 }
 
-.post-preview img:hover {
-    cursor: pointer;
+.row.cards .card .card-content h5 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
 }
 
-.post-preview h2 {
-    margin: 0px;
-    padding: 0px;
-}
-
-.post-preview p.excerpt {
-    padding: 15px 0px 0px 0px;
-    margin: 0px;
-    font-size: 16px;
-}
-
-nav .navbar-right li select {
-    display: inline-block;
-    vertical-align: middle;
-    height: 40px;
-    margin: 10px 20px 0px 0px;
-    padding: 0px 10px 0px 10px;
-    cursor: pointer;
-}
-
-#menu ul.nav.navbar-nav > li > a {
-    color: #000;
-}
-
-#menu ul.nav.navbar-nav > li > a:hover {
-    color: #777;
-}
-
-a img:hover {
-    cursor: pointer;
-}
-
-div.thumbnail_link .caption {
-    text-align: left;
-}
-.intro-header {
-    margin-bottom: 20px;
-}
-
-.container.menu {
+.row.cards .card .card-content p {
     font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+}
+
+#sidebar img {
+    max-width: 100%;
+    height: auto!important;
+}
+
+#menu.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+#menu.navbar .navbar-collapse {
+  text-align: center;
 }
 
 #post-content iframe {
@@ -238,101 +190,23 @@ p.wat.wat2 {
     right: 30px;
 }
 
-.post_form .form-group {
-    border: 0px;
-}
-
-.post_form .form-group textarea {
-    border: 1px solid #eee;
-    padding: 15px;
-}
-
-.post_form input[type=file]{
-    margin: 10px 0px 0px 0px;
-}
-
-.comment h4 {
-    padding: 0px;
-    margin: 20px 0px 10px 0px;
-    opacity: 0.8;
-}
-
-.comment h4 span.admin {
-    color: #fe8a33;
-}
-
-.comment h4 span.user {
-    color: #00dd1c;
-}
-
-.comment h4 a.destroy {
-    color: #cc0000;
-}
-
-.comment p {
-    padding: 0px 0px 20px 0px;
-    margin: 0px;
-    border-bottom: 1px solid #eee;
-}
-
-#sidebar, #post-content {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    -ms-word-break: break-all;
-    word-break: break-all;
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-}
-
-#sidebar img {
-    max-width: 100%;
-    height: auto!important;
-}
-
-.list-content > div > p {
-    padding: 0px!important;
-    margin: 0px 0px 10px 0px!important;
-}
-
-#ent_list {
-    margin-bottom: 40px;
-}
-
-#ent_list hr {
-    margin: 7px 0px;
-}
-
-#ent_list hr:last-child {
-    display: none;
-}
-
-#ent_list .post-title {
-    font-size: 24px!important;
-    font-family: "GothaProLig";
-    font-weight: 400;
+#login_wrap {
+    padding: 20px 0px;
 }
 
 footer {
-    margin: 10px 0px 0px 0px!important;
-    padding: 20px 0px!important;
-    border-top: 2px solid #eee;
-    border-bottom: 2px solid #eee;
-    background: #fafafa;
+    border-top: 2px solid #aaa;
+    background-image: url(../img/footer.jpg);
+    padding: 20px 0px;
 }
 
-footer.fixed {
-    position: fixed;
-    left: 0px;
-    bottom: 0px;
-    width: 100%;
+footer p.copyright {
+    font-weight: 400;
 }
 
-.copyright {
+footer ul, footer p {
     margin: 0px;
     padding: 0px;
-    font-size: 14px;
 }
 
 #clock_wrap {
@@ -385,13 +259,42 @@ ul.files li a img {
     margin-right: 10px;
 }
 
-.btn.btn-circle {
+.post_form .form-group {
+    border: 0px;
+}
+
+.post_form .form-group textarea {
+    border: 1px solid #eee;
+    padding: 15px;
+}
+
+.post_form input[type=file]{
+    margin: 10px 0px 0px 0px;
+}
+
+.comment h4 {
     padding: 0px;
-    width: 40px;
-    height: 40px;
-    line-height: 38px;
-    border-radius: 20px;
-    margin: 0px 0px 15px 0px;
+    margin: 20px 0px 10px 0px;
+    opacity: 0.8;
+    font-size: 20px;
+}
+
+.comment h4 span.admin {
+    color: #fe8a33;
+}
+
+.comment h4 span.user {
+    color: #00dd1c;
+}
+
+.comment h4 a.destroy {
+    color: #cc0000;
+}
+
+.comment p {
+    padding: 0px 0px 20px 0px;
+    margin: 0px;
+    border-bottom: 1px solid #eee;
 }
 
 @media screen and (max-width: 1200px) {

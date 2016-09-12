@@ -1,52 +1,46 @@
 @extends('frontend.app')
 @section('content')
-<body id="list">
-    <?php echo html_entity_decode($project->body_start_user_code); ?>
-    
     @include('frontend.inc.nav')
     <header class="intro-header" style="background-image: url({{ $data['header_bg'] }})">
         @if($project->header_dim)
         <div class='header_dim'></div>
         @endif
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="site-heading">
-                        <h1>{{ $project->name }}</h1>
-                        @if(!empty($project->header_text))
-                        <hr class="small">
-                        <h2>{{ $project->header_text }}</h2>
-                        @endif
-                    </div>
+                <div class="col-xs-12 col-md-10 col-md-offset-1">
+                    <h1>{{ $project->name }}</h1>
+                    @if(!empty($project->header_text))
+                    <div class="divider"></div>
+                    <h3>{{ $project->header_text }}</h3>
+                    @endif
                 </div>
             </div>
         </div>
     </header>
     @include('frontend.inc.menu')
-    <div class="container">
-        <div class="row list-content">
+    <div class="container" id="content">
+        <div class="row">
             @if($project->sidebar)
-            <div class="col-xs-8">
+            <div class="col-md-8 thin">
                 @if(!empty($project->dashboard_html))
                 <?php echo html_entity_decode($project->dashboard_html); ?>
                 <br/>
                 @endif
-                @include('frontend.inc.list_posts', ['entities' => $posts])
+                @include('frontend.inc.lists.posts', ['posts' => $posts])
             </div>
-            <div class="col-xs-4" id="sidebar">
+            <div class="col-md-4" id="sidebar">
                 <?php echo html_entity_decode($project->sidebar_html); ?>
             </div>
             @else
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 wide">
                 @if(!empty($project->dashboard_html))
                 <?php echo html_entity_decode($project->dashboard_html); ?>
                 <br/>
                 @endif
-                @include('frontend.inc.list_posts', ['entities' => $posts])
+                @include('frontend.inc.lists.posts', ['posts' => $posts])
             </div>
             @endif
         </div>
     </div>
     @include('frontend.inc.footer')
-</body>
 @endsection

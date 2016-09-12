@@ -1,8 +1,5 @@
 @extends('frontend.app')
-@section('content')
-<body id="post-content">
-    <?php echo html_entity_decode($project->body_start_user_code); ?>
-    
+@section('content')    
     @if(Auth::guard(Session::get('guard'))->check())
         @include('frontend.inc.nav')
     @else
@@ -18,9 +15,10 @@
                     <div class="site-heading">
                         <h1>{{ $web->name }}</h1>
                         @if(!empty($web->sub))
-                        <hr class="small">
-                        <h2>{{ $web->sub }}</h2>
+                        <div class="divider"></div>
+                        <h3>{{ $web->sub }}</h3>
                         @endif
+                        <br/>
                         <span class='toLocalTime'>{{ getDatetime($web->date) }}</span>
                     </div>
                 </div>
@@ -31,6 +29,8 @@
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1 col-xs-12">
                 @if($web->timer)
+                <br/>
+                <br/>
                 <div id='clock_wrap'>
                     <div id='clock'>
                         <div>
@@ -83,5 +83,4 @@
         </div>
     </div>
     @include('frontend.inc.footer')
-</body>
 @endsection

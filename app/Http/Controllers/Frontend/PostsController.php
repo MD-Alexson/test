@@ -36,7 +36,7 @@ class PostsController extends Controller
             $post = Post::findOrFail($post_id);
             array_push($posts, $post);
         }
-        return view('frontend_old.posts')->with('data', $data)->with('posts', $posts)->with('project', $project)->with('menu', $menu);
+        return view('frontend.posts')->with('data', $data)->with('posts', $posts)->with('project', $project)->with('menu', $menu);
     }
 
     public function show($domain, $post_id){
@@ -48,7 +48,7 @@ class PostsController extends Controller
         }
         $data['title'] = $post->name." / ".$project->name;
         $menu = Request::input('allowed')['categories'];
-        return view('frontend_old.post')->with('data', $data)->with('post', $post)->with('project', $project)->with('menu', $menu);
+        return view('frontend.post')->with('data', $data)->with('post', $post)->with('project', $project)->with('menu', $menu);
     }
     
     /* -- */

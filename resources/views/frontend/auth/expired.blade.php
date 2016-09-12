@@ -18,9 +18,9 @@
                         <?php echo html_entity_decode($project->deactivated_html); ?>
                     </div>
                 </div>
-                @include('frontend.inc.auth_footer')
             </div>
         </div>
     </div>
+    @include('frontend.inc.footer')
 </body>
 @endsection

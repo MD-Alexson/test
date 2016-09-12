@@ -38,7 +38,7 @@ class AccountController extends Controller
     public function loginView($domain){
         $project = Project::findOrFail($domain);
         $data['title'] = 'Вход / '. $project->name;
-        return view('frontend_old.auth.login')->with('project', $project)->with('data', $data);
+        return view('frontend.auth.login')->with('project', $project)->with('data', $data);
     }
 
     public function login($domain){
@@ -62,7 +62,7 @@ class AccountController extends Controller
     public function registerView($domain){
         $project = Project::findOrFail($domain);
         $data['title'] = 'Регистрация / '. $project->name;
-        return view('$sub.auth.register')->with('project', $project)->with('data', $data);
+        return view('frontend.auth.register')->with('project', $project)->with('data', $data);
     }
 
     public function register($domain){
@@ -100,7 +100,7 @@ class AccountController extends Controller
     public function passwordView($domain){
         $project = Project::findOrFail($domain);
         $data['title'] = 'Восстановление пароля / '. $project->name;
-        return view('$sub.auth.pass')->with('project', $project)->with('data', $data);
+        return view('frontend.auth.pass')->with('project', $project)->with('data', $data);
     }
 
     public function password($domain){
@@ -150,7 +150,7 @@ class AccountController extends Controller
     public function passwordSentView($domain){
         $project = Project::findOrFail($domain);
         $data['title'] = 'Восстановление пароля / '. $project->name;
-        return view('$sub.auth.pass_sent')->with('project', $project)->with('data', $data);
+        return view('frontend.auth.pass_sent')->with('project', $project)->with('data', $data);
     }
 
     public function passwordChangeView($domain, $key){
@@ -160,7 +160,7 @@ class AccountController extends Controller
             return redirect('/pass')->with('popup_info', ['Внимание!', 'Данный ключ недействителен! Попробуйте восстановить пароль еще раз']);
         }
         $data['title'] = 'Восстановление пароля / '. $project->name;
-        return view('$sub.auth.pass_change')->with('project', $project)->with('data', $data)->with('passdata', $passdata);
+        return view('frontend.auth.pass_change')->with('project', $project)->with('data', $data)->with('passdata', $passdata);
     }
 
     public function passwordChange($domain, $key){
@@ -225,7 +225,7 @@ class AccountController extends Controller
         if(Session::has('guard') && Auth::guard(Session::get('guard'))->user()->status){
             return redirect('/');
         }
-        return view('$sub.auth.expired')->with('project', $project)->with('data', $data);
+        return view('frontend.auth.expired')->with('project', $project)->with('data', $data);
     }
 
     public function edit($domain){
@@ -241,7 +241,7 @@ class AccountController extends Controller
         }
         $user = Auth::guard('frontend')->user();
         $menu = Request::input('allowed')['categories'];
-        return view('$sub.account.edit')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
+        return view('frontend.account.edit')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
     }
 
     public function update($domain){
@@ -300,7 +300,7 @@ class AccountController extends Controller
         }
         $user = Auth::guard('frontend')->user();
         $menu = Request::input('allowed')['categories'];
-        return view('$sub.account.comments')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
+        return view('frontend.account.comments')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
     }
     
     public function commentDestroy($domain, $comment_id){
@@ -328,7 +328,7 @@ class AccountController extends Controller
         }
         $user = Auth::guard('frontend')->user();
         $menu = Request::input('allowed')['categories'];
-        return view('$sub.account.homeworks')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
+        return view('frontend.account.homeworks')->with('project', $project)->with('data', $data)->with('user', $user)->with('menu', $menu);
     }
 
 }

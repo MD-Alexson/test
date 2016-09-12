@@ -2503,6 +2503,10 @@ label.error {
     padding: 6px 0 0;
     background: #fff;
 }
+
+#popup_thumbs.popup-min {
+    width: 640px;
+}
 .popup-min-top {
     padding: 18px 30px 15px;
     border-bottom: 1px solid #e6e6e6;

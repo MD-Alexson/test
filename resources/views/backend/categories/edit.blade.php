@@ -23,43 +23,24 @@
                             <div class="add-mat-text tooltip-holder">Миниатюра <span class="tooltip-icon tooltip-icon-inline" data-content="<div class='popover-inner-text'>Миниатюра категории отображается на странице со списком категорий</div>">?</span></div>
                         </div>
                         <div class="add-mat-right">
-                            <div class="select-block inline-button" style="margin-right: 10px;">
-                                <select class="styled" name="thumbnail_size">
-                                    <option value="0">Маленькая (128px)</option>
-                                    <option value="1">Большая (750px)</option>
-                                </select>
-                            </div>
-                            <div id="thumbnail_128_tab">
-                                <a href="#popup_thumbs" class="blue-button inline-button fancybox" style="margin-right: 10px;">Выбрать миниатюру</a>
-                                <label class="white-button inline-button" for="thumbnail_128">Загрузить миниатюру</label>
-                                <p class='thumbnail_128_path'></p>
-                                <input type="file" name="thumbnail_128" id="thumbnail_128" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                <input type='hidden' name='thumbnail_128_select' value=''>
+                            <div id="thumbnail_tab">
+                                <a href="#popup_thumbs" class="blue-button inline-button fancybox-thumbs" style="margin-right: 10px;">Выбрать миниатюру</a>
+                                <label class="white-button inline-button" for="thumbnail">Загрузить миниатюру</label>
+                                <p class='thumbnail_path'></p>
+                                <input type="file" name="thumbnail" id="thumbnail" style='display: none' accept="image/jpeg,image/png,image/gif">
+                                <input type='hidden' name='thumbnail_select' value=''>
                                 <div class="add-mat-thumbnail-wrap">
-                                    @if(pathTo($category->thumbnail_128, 'imagepath'))
-                                    <img src="{{ url(pathTo($category->thumbnail_128, 'imagepath')) }}" alt="image" class="add-mat-image">
+                                    @if(pathTo($category->thumbnail, 'imagepath'))
+                                    <img src="{{ url(pathTo($category->thumbnail, 'imagepath')) }}" alt="image" class="add-mat-image">
                                     @else
-                                    <img src="{{ asset('assets/images/thumbnails/categories/1.png') }}" alt="image" class="add-mat-image">
+                                    <img src="{{ asset('assets/images/thumbnails/categories/1.jpg') }}" alt="image" class="add-mat-image">
                                     @endif
-                                    @if($category->thumbnail_128 !== asset('assets/images/thumbnails/categories/1.png'))
-                                    <a href="javascript: removeThumbnail128();" class="white-button">Удалить миниатюру</a>
+                                    @if($category->thumbnail !== asset('assets/images/thumbnails/categories/1.jpg'))
+                                    <a href="javascript: removeThumbnail();" class="white-button">Удалить миниатюру</a>
                                     @else
-                                    <a style="display: none" href="javascript: removeThumbnail128();" class="white-button">Удалить миниатюру</a>
+                                    <a style="display: none" href="javascript: removeThumbnail();" class="white-button">Удалить миниатюру</a>
                                     @endif
                                 </div>
-                            </div>
-                            <div id="thumbnail_750_tab" style="display: none">
-                                <label class="white-button inline-button" for="thumbnail_750">Загрузить миниатюру</label>
-                                <p class='thumbnail_750_path'></p>
-                                <input type="file" name="thumbnail_750" id="thumbnail_750" style='display: none' accept="image/jpeg,image/png,image/gif">
-                                @if(pathTo($category->thumbnail_750, 'imagepath'))
-                                <div class="add-mat-thumbnail-wrap">
-                                    <img src="{{ url(pathTo($category->thumbnail_750, 'imagepath')) }}" alt="image" class="add-mat-image">
-                                    <a href="javascript: removeThumbnail750();" class="white-button">Удалить миниатюру</a>
-                                </div>
-                                @else
-                                <a style="display: none;" href="javascript: removeThumbnail750();" class="white-button">Удалить миниатюру</a>
-                                @endif
                             </div>
                         </div>
                         <div class="add-mat-title">Настройки</div>
@@ -311,21 +292,14 @@
         $(".image_path").text("");
         $("form").append("<input type='hidden' name='image_remove' value='1'>");
     }
-    function removeThumbnail128(){
-        $("input[name=thumbnail_128_select]").val("{{ asset('assets/images/thumbnails/categories/1.png') }}");
-        $("#thumbnail_128_tab img").attr('src', "{{ asset('assets/images/thumbnails/categories/1.png') }}");
-        $("input[name=thumbnail_128]").val();
-        $("p.thumbnail_128_path").text("");
-        $("#thumbnail_128_tab img").show();
-        $("a[href='javascript: removeThumbnail128();']").hide();
-        $("form").append("<input type='hidden' name='thumbnail_128_remove' value='1'>");
-    }
-    function removeThumbnail750(){
-        $("input[name=thumbnail_750]").val();
-        $("p.thumbnail_750_path").text("");
-        $("a[href='javascript: removeThumbnail750();']").hide();
-        $("#thumbnail_750_tab img").hide();
-        $("form").append("<input type='hidden' name='thumbnail_750_remove' value='1'>");
+    function removeThumbnail(){
+        $("input[name=thumbnail_select]").val("{{ asset('assets/images/thumbnails/categories/1.jpg') }}");
+        $("#thumbnail_tab img").attr('src', "{{ asset('assets/images/thumbnails/categories/1.jpg') }}");
+        $("input[name=thumbnail]").val();
+        $("p.thumbnail_path").text("");
+        $("#thumbnail_tab img").show();
+        $("a[href='javascript: removeThumbnail();']").hide();
+        $("form").append("<input type='hidden' name='thumbnail_remove' value='1'>");
     }
     $(document).ready(function () {
         $("input[name=image]").on('change', function () {
@@ -341,37 +315,24 @@
             $("#selected_image").slideDown();
             $.fancybox.close();
         });
-        $("select[name=thumbnail_size]").on('selectmenuselect', function(){
-            if($(this).val() === "1"){
-                $("#thumbnail_128_tab").hide();
-                $("#thumbnail_750_tab").show();
-            } else {
-                $("#thumbnail_750_tab").hide();
-                $("#thumbnail_128_tab").show();
-            }
-        });
-        $("input[name=thumbnail_128]").on('change', function () {
-            $("p.thumbnail_128_path").text($(this).val());
-            $("input[name=thumbnail_128_select]").val("");
-            $("#thumbnail_128_tab img").hide();
-            $("a[href='javascript: removeThumbnail128();']").show();
+        $("input[name=thumbnail]").on('change', function () {
+            $("p.thumbnail_path").text($(this).val());
+            $("input[name=thumbnail_select]").val("");
+            $("#thumbnail_tab img").hide();
+            $("a[href='javascript: removeThumbnail();']").show();
         });
         $("#popup_thumbs .thumb_choose a").on("click", function () {
-            $("#thumbnail_128_tab img").show();
-            $("input[name=thumbnail_128]").val("");
-            $("p.thumbnail_128_path").text("");
-            $("input[name=thumbnail_128_select]").val($(this).children("img").attr('src'));
-            $("#thumbnail_128_tab img").attr('src', $(this).children("img").attr('src'));
-            if($(this).children("img").attr('src') !== "{{ asset('assets/images/thumbnails/categories/1.png') }}"){
-                $("a[href='javascript: removeThumbnail128();']").show();
+            $("#thumbnail_tab img").show();
+            $("input[name=thumbnail]").val("");
+            $("p.thumbnail_path").text("");
+            $("input[name=thumbnail_select]").val($(this).children("img").attr('src'));
+            $("#thumbnail_tab img").attr('src', $(this).children("img").attr('src'));
+            if($(this).children("img").attr('src') !== "{{ asset('assets/images/thumbnails/categories/1.jpg') }}"){
+                $("a[href='javascript: removeThumbnail();']").show();
             } else {
-                $("a[href='javascript: removeThumbnail128();']").hide();
+                $("a[href='javascript: removeThumbnail();']").hide();
             }
             $.fancybox.close();
-        });
-        $("input[name=thumbnail_750]").on('change', function () {
-            $("p.thumbnail_750_path").text($(this).val());
-            $("a[href='javascript: removeThumbnail750();']").show();
         });
         $("input[name=header_dim]").on('click', function(){
             if($(this).prop('checked')){
@@ -471,13 +432,6 @@
             $.uniform.update();
         @endif
 
-        var thumbnail_size = "{{ $category->thumbnail_size }}";
-        $("select[name=thumbnail_size]").val(thumbnail_size);
-        if(thumbnail_size === "1"){
-            $("#thumbnail_128_tab").hide();
-            $("#thumbnail_750_tab").show();
-        }
-
         var status = "{{ $category->status }}";
         $("select[name=status]").val(status);
         $(".optional#"+status).show();
@@ -521,34 +475,19 @@
     <div class="popup-min-content" style="padding: 0px;">
         <div class="thumb_choose">
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/1.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/categories/1.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/2.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/categories/2.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/3.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/categories/3.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/4.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/categories/4.jpg') }}">
             </a>
             <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/5.png') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/6.png') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/7.png') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/8.png') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/9.png') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/categories/10.png') }}">
+                <img src="{{ asset('assets/images/thumbnails/categories/5.jpg') }}">
             </a>
             <div class="clearfix"></div>
         </div>

@@ -13,8 +13,8 @@
                 <div class="col-xs-12">
                     <div class="site-heading">
                         <h1>{{ $user->name }}</h1>
-                        <hr class="small">
-                        <h2>Настройки аккаунта</h2>
+                        <div class='divider'></div>
+                        <h3>Настройки аккаунта</h3>
                     </div>
                 </div>
             </div>

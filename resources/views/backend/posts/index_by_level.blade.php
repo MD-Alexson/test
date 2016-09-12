@@ -243,7 +243,7 @@
                 <div class="add-project-title">У вас пока нет публикаций</div>
                 <div class="add-project-text">Создайте первую публикацию</div>
                 <div class="add-project-button">
-                    <a href="/posts/add" class="green-button">Создать публикацию</a>
+                    <a href="/posts/add/level/{{ $level->id }}" class="green-button">Создать публикацию</a>
                 </div>
             </div>
             @endif

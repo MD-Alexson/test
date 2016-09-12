@@ -38,9 +38,9 @@
                         </form>
                     </div>
                 </div>
-                @include('frontend.inc.auth_footer')
             </div>
         </div>
     </div>
+    @include('frontend.inc.footer')
 </body>
 @endsection

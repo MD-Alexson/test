@@ -69,9 +69,9 @@
                 @endif
                 @if(strlen($project->custom_copyright))
                 <p class="copyright text-center text-muted"><?php echo nl2br($project->custom_copyright); ?></p>
-                <br/>
                 @endif
                 @if(!$project->disable_copyright)
+                <br/>
                 <div class="text-center">
                     <a href='{{ config('app.url') }}' target="_blank">
                         <img src='{{ asset('assets/images/logo_header.png') }}'>

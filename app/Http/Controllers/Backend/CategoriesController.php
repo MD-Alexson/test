@@ -180,26 +180,14 @@ class CategoriesController extends Controller
             $cat->image = htmlspecialchars(Request::input('image_select'));
         }
 
-        $cat->thumbnail_size = (int) Request::input('thumbnail_size');
-
-        if (Request::hasFile('thumbnail_128')) {
+        if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/categories/'.$cat->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_128'), $path, 128, 128);
+            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
             if ($image_save) {
-                $cat->thumbnail_128 = $image_save;
+                $cat->thumbnail = $image_save;
             }
-        } else if(strlen(Request::input('thumbnail_128_select'))){
-            $cat->thumbnail_128 = htmlspecialchars(Request::input('thumbnail_128_select'));
-        }
-        
-        if (Request::hasFile('thumbnail_750')) {
-            $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/categories/'.$cat->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_750'), $path, 750, 750);
-            if ($image_save) {
-                $cat->thumbnail_750 = $image_save;
-            }
-        } else {
-            $cat->thumbnail_size = 0;
+        } else if(strlen(Request::input('thumbnail_select'))){
+            $cat->thumbnail = htmlspecialchars(Request::input('thumbnail_select'));
         }
 
         $levels = Request::input('levels');
@@ -309,53 +297,29 @@ class CategoriesController extends Controller
             $cat->image = htmlspecialchars(Request::input('image_select'));
         }
 
-        if (Request::has('thumbnail_128_remove')) {
-            if (Storage::exists($cat->thumbnail_128)) {
-                Storage::delete($cat->thumbnail_128);
+        if (Request::has('thumbnail_remove')) {
+            if (Storage::exists($cat->thumbnail)) {
+                Storage::delete($cat->thumbnail);
             }
-            $cat->thumbnail_128 = "";
+            $cat->thumbnail = "";
         }
 
-        if (Request::has('thumbnail_750_remove')) {
-            if (Storage::exists($cat->thumbnail_750)) {
-                Storage::delete($cat->thumbnail_750);
-            }
-            $cat->thumbnail_750 = "";
-        }
-
-        $cat->thumbnail_size = (int) Request::input('thumbnail_size');
-
-        if (Request::hasFile('thumbnail_128')) {
+        if (Request::hasFile('thumbnail')) {
             $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/categories/'.$cat->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_128'), $path, 128, 128);
+            $image_save = imageSave(Request::file('thumbnail'), $path, 300);
             if ($image_save) {
-                if (Storage::exists($cat->thumbnail_128)) {
-                    Storage::delete($cat->thumbnail_128);
+                if (Storage::exists($cat->thumbnail)) {
+                    Storage::delete($cat->thumbnail);
                 }
-                $cat->thumbnail_128 = $image_save;
+                $cat->thumbnail = $image_save;
             }
-        } else if(strlen(Request::input('thumbnail_128_select'))){
-            if (Storage::exists($cat->thumbnail_128)) {
-                Storage::delete($cat->thumbnail_128);
+        } else if(strlen(Request::input('thumbnail_select'))){
+            if (Storage::exists($cat->thumbnail)) {
+                Storage::delete($cat->thumbnail);
             }
-            $cat->thumbnail_128 = htmlspecialchars(Request::input('thumbnail_128_select'));
+            $cat->thumbnail = htmlspecialchars(Request::input('thumbnail_select'));
         }
         
-        if (Request::hasFile('thumbnail_750')) {
-            $path       = "/".Auth::guard('backend')->id().'/'.$project->domain.'/categories/'.$cat->id.'/';
-            $image_save = imageSave(Request::file('thumbnail_750'), $path, 750, 750);
-            if ($image_save) {
-                if (Storage::exists($cat->thumbnail_750)) {
-                    Storage::delete($cat->thumbnail_750);
-                }
-                $cat->thumbnail_750 = $image_save;
-            }
-        }
-        
-        if($cat->thumbnail_size && !strlen($cat->thumbnail_750)){
-            $cat->thumbnail_size = 0;
-        }
-
         $levels = Request::input('levels');
         $cat_levels = Array();
         if(count($levels)){

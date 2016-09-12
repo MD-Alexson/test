@@ -1,8 +1,5 @@
 @extends('frontend.app')
 @section('content')
-<body id="list">
-    <?php echo html_entity_decode($project->body_start_user_code); ?>
-    
     @include('frontend.inc.nav')
     <header class="intro-header" style="background-image: url({{ $data['header_bg'] }})">
         @if($post->header_dim)
@@ -81,5 +78,4 @@
     <script type="text/javascript">
         $(document).ready(function(){ $("nav#menu li[data-id="+{{ $post->category->id }}+"]").addClass('active'); });
     </script>
-</body>
 @endsection
