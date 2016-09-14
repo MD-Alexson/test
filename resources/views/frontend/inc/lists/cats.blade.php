@@ -12,6 +12,7 @@ $thumbnail = pathTo($cat->thumbnail, 'imagepath');
 if(!$thumbnail){
     $thumbnail = "/assets/images/thumbnails/categories/1.jpg";
 }
+$sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $cat->sch2num, $cat->sch2type);
 ?>
  <div class="col-md-4">
     <div class="card hoverable cat">
@@ -20,7 +21,9 @@ if(!$thumbnail){
                 <img src="{{ $thumbnail }}" class="img-responsive" alt="">
                 @if(Auth::guard('backend')->check())
                 <a href="/categories/{{ $cat->id }}"><div class="mask waves-effect"></div></a>
-                @elseif($cat->status === "scheduled" || $cat->status === "scheduled2")
+                @elseif($cat->status === "scheduled")
+                <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
+                @elseif($cat->status === "scheduled2" && $sch2 > getTime())
                 <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
                 @else
                 <a href="/categories/{{ $cat->id }}"><div class="mask waves-effect"></div></a>
@@ -38,8 +41,7 @@ if(!$thumbnail){
                 @if($cat->status === "scheduled" && $cat->comingsoon)
                 <br/>
                 <p style='font-size: 14px;'>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000;">{{ getDateTime($cat->scheduled) }}</span></p>
-                @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend' && $cat->comingsoon)
-                    <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $cat->sch2num, $cat->sch2type); ?>
+                @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend' && $cat->comingsoon && $sch2 > getTime())
                     <br/>
                     <p>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000">{{ getDateTime($sch2) }}</span></p>
                 @endif
@@ -48,7 +50,9 @@ if(!$thumbnail){
         <div class="card-btn text-center">
             @if(Auth::guard('backend')->check())
             <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
-            @elseif($cat->status === "scheduled" || $cat->status === "scheduled2")
+            @elseif($cat->status === "scheduled")
+            <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
+            @elseif($cat->status === "scheduled2" && $sch2 > getTime())
             <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
             @else
             <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>

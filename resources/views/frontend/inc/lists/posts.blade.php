@@ -9,6 +9,7 @@ $thumbnail = pathTo($post->thumbnail, 'imagepath');
 if(!$thumbnail){
     $thumbnail = "/assets/images/thumbnails/posts/1.jpg";
 }
+$sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $post->sch2num, $post->sch2type);
 ?>
  <div class="col-md-4">
     <div class="card hoverable post">
@@ -20,7 +21,9 @@ if(!$thumbnail){
                 @endif
                 @if(Auth::guard('backend')->check())
                 <a href="/posts/{{ $post->id }}"><div class="mask waves-effect"></div></a>
-                @elseif($post->status === "scheduled" || $post->status === "scheduled2")
+                @elseif($post->status === "scheduled")
+                <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
+                @elseif($post->status === "scheduled2" && $sch2 > getTime())
                 <a href="javascript: void(0);"><div class="mask waves-effect"></div></a>
                 @else
                 <a href="/posts/{{ $post->id }}"><div class="mask waves-effect"></div></a>
@@ -38,8 +41,7 @@ if(!$thumbnail){
                 @if($post->status === "scheduled" && $post->comingsoon)
                 <br/>
                 <p style='font-size: 14px;'>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000;">{{ getDateTime($post->scheduled) }}</span></p>
-                @elseif($post->status === "scheduled2" && Session::get('guard') === 'frontend' && $post->comingsoon)
-                    <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $post->sch2num, $post->sch2type); ?>
+                @elseif($post->status === "scheduled2" && Session::get('guard') === 'frontend' && $post->comingsoon && $sch2 > getTime())
                     <br/>
                     <p>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000">{{ getDateTime($sch2) }}</span></p>
                 @endif
@@ -48,7 +50,9 @@ if(!$thumbnail){
         <div class="card-btn text-center">
             @if(Auth::guard('backend')->check())
             <a href="/posts/{{ $post->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
-            @elseif($post->status === "scheduled" || $post->status === "scheduled2")
+            @elseif($post->status === "scheduled")
+            <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
+            @elseif($post->status === "scheduled2" && $sch2 > getTime())
             <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
             @else
             <a href="/posts/{{ $post->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>

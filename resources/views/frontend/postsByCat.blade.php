@@ -14,11 +14,12 @@
         </div>
     </header>
     @include('frontend.inc.menu')
+    <?php $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $category->sch2num, $category->sch2type); ?>
     <div class="container" id="content">
         <div class="row">
             @if($project->sidebar)
             <div class="col-md-8 thin">
-                @if(frontendCheckLevel($category, Session::get('level_id')) && ($category->status === "published" || Auth::guard('backend')->check()))
+                @if(frontendCheckLevel($category, Session::get('level_id')) && ($category->status === "published" || Auth::guard('backend')->check() || ($category->status === "scheduled2" && $sch2 <= getTime())))
                         @if(!empty($category->category_html))
                         <?php echo html_entity_decode($category->category_html); ?>
                         <br/>
@@ -46,7 +47,7 @@
             </div>
             @else
             <div class="col-md-10 col-md-offset-1 col-sm-12 wide">
-                @if(frontendCheckLevel($category, Session::get('level_id')) && ($category->status === "published" || Auth::guard('backend')->check()))
+                @if(frontendCheckLevel($category, Session::get('level_id')) && ($category->status === "published" || Auth::guard('backend')->check() || ($category->status === "scheduled2" && $sch2 <= getTime())))
                         @if(!empty($category->category_html))
                         <?php echo html_entity_decode($category->category_html); ?>
                         <br/>
