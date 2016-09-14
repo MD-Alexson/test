@@ -38,7 +38,11 @@
                 @endif
             </div>
             <div class="col-md-4" id="sidebar">
+                @if($category->sidebar_type === 1)
+                <?php echo html_entity_decode($category->sidebar_html); ?>
+                @else
                 <?php echo html_entity_decode($project->sidebar_html); ?>
+                @endif
             </div>
             @else
             <div class="col-md-10 col-md-offset-1 col-sm-12 wide">

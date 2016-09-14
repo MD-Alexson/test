@@ -44,7 +44,11 @@
                 @if($post->sidebar_type === 2)
                 <?php echo html_entity_decode($post->sidebar_html); ?>
                 @elseif($post->sidebar_type === 1)
-                <?php echo html_entity_decode($post->category->sidebar_html); ?>
+                    @if($post->category->sidebar_type === 1)
+                    <?php echo html_entity_decode($post->category->sidebar_html); ?>
+                    @else
+                    <?php echo html_entity_decode($project->sidebar_html); ?>
+                    @endif
                 @else
                 <?php echo html_entity_decode($project->sidebar_html); ?>
                 @endif

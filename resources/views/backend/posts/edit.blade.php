@@ -567,7 +567,7 @@
             }
         });
         
-        $("input[name=sidebar_type][value={{ $post->sidebar_type }}]").attr('checked', 'checked');
+        $("input[name=sidebar_type][value={{ $post->sidebar_type }}]").prop('checked', true);
         $.uniform.update();
         $("input[name=sidebar]").on('change', function(){
             if($(this).prop('checked')){
