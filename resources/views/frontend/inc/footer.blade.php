@@ -82,14 +82,4 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(window).resize(function(){
-            footer();
-        });
-        $(document).ready(function(){
-            footer();
-        });
-    });
-</script>
 @include('frontend.inc.popups')

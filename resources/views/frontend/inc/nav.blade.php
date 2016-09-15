@@ -7,10 +7,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand waves-effect waves-light"><a href="/">{{ $project->name }}</a> / <a href="/logout"><span class="fa fa-fw fa-sign-out"></span></a></span>
+            @if($_SERVER['REQUEST_URI'] !== '/categories' && $_SERVER['REQUEST_URI'] !== '/posts')
+            <a href="javascript: history.back()" class="btn btn-info waves-effect waves-light" style="float: left"><span class="fa fa-fw fa-arrow-left"></span> Назад</a>
+            @endif
+            <a href="/" class="navbar-brand waves-effect waves-light">{{ $project->name }}</a>
         </div>
 
         <div class="collapse navbar-collapse" id="top-nav">
+            <a href="/logout" class="btn btn-info waves-effect waves-light navbar-right">Выйти <span class="fa fa-fw fa-sign-out"></span></a>
             <ul class="nav navbar-nav navbar-right">
                 @if(Session::get('guard') === 'backend')
                 <li>

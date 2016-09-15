@@ -12,11 +12,3 @@ var disqus_config = function () {
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<script type='text/javascript'>
-    $(document).ready(function(){
-        function temp(){
-            footer();
-        }
-        setTimeout(temp, 2000);
-    });
-</script>
