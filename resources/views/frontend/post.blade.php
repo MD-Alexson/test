@@ -20,7 +20,7 @@
     <div class="container" id="content">
         <div class="row">
             @if($post->sidebar)
-            <div class="col-xs-8">
+            <div class="col-md-8 thin">
                 @if(frontendCheckLevel($post, Session::get('level_id')) && ($post->status === 'published' || Auth::guard('backend')->check() || ($post->status === 'scheduled2' && $sch2 <= getTime())))
                     @if(Session::get('guard') === 'backend' || frontendCheckHomeworks($post))
                     @include('frontend.inc.content')
@@ -40,7 +40,7 @@
                 <a href='/'>На главную</a>
                 @endif
             </div>
-            <div class="col-xs-4" id="sidebar">
+            <div class="col-md-4" id="sidebar">
                 @if($post->sidebar_type === 2)
                 <?php echo html_entity_decode($post->sidebar_html); ?>
                 @elseif($post->sidebar_type === 1)
@@ -54,7 +54,7 @@
                 @endif
             </div>
             @else
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-md-10 col-md-offset-1 wide">
                 @if(frontendCheckLevel($post, Session::get('level_id')) && ($post->status === 'published' || Auth::guard('backend')->check() || ($post->status === 'scheduled2' && $sch2 <= getTime())))
                     @if(Session::get('guard') === 'backend' || frontendCheckHomeworks($post))
                     @include('frontend.inc.content')

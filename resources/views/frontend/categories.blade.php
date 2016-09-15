@@ -33,7 +33,7 @@
                 <?php echo html_entity_decode($project->sidebar_html); ?>
             </div>
             @else
-            <div class="col-md-10 col-md-offset-1 col-sm-12 wide">
+            <div class="col-md-10 col-md-offset-1 wide">
                 @if(!empty($project->dashboard_html))
                 <?php echo html_entity_decode($project->dashboard_html); ?>
                 <br/>
