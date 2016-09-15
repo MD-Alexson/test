@@ -383,6 +383,7 @@ class PaymentController extends Controller
     }
     
     public function fondy(){
-        
+        $result = print_r(\Request::toArray(), true);
+        file_put_contents('0000-'.str_random(4).'.txt', $result);
     }
 }

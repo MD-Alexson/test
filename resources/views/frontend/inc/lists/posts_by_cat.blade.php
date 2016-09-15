@@ -1,5 +1,5 @@
-@if(!empty($postcats))
-@include('frontend.inc.lists.cats', ['cats' => $postcats, 'sub' => true])
+@if(!empty($subcats))
+@include('frontend.inc.lists.cats', ['cats' => $subcats, 'sub' => true])
 @endif
 <?php $count = 0; ?>
 @foreach($posts as $post)
