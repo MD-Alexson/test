@@ -19,7 +19,11 @@ $(document).ready(function(){
         if(!$(this).attr('webkitallowfullscreen')){
             $(this).attr('webkitallowfullscreen', "");
         }
-        $(this).before("<div class='row'><div class='col-md-10 col-md-offset-1'><div class='video_wrap' id='video_wrap"+count+"'></div></div></div>");
+        if($("#left").hasClass('wide')){
+            $(this).before("<div class='row'><div class='col-md-10 col-md-offset-1'><div class='video_wrap' id='video_wrap"+count+"'></div></div></div>");
+        } else {
+            $(this).before("<div class='video_wrap' id='video_wrap"+count+"'></div>");
+        }
         var iframe = $(this).remove();
         $("#video_wrap"+count).html(iframe);
         count++;

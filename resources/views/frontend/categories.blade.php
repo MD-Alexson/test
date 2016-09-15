@@ -22,7 +22,7 @@
         
         <div class="row">
             @if($project->sidebar)
-            <div class="col-md-8 thin">
+            <div class="col-md-8 thin" id="left">
                 @if(!empty($project->dashboard_html))
                 <?php echo html_entity_decode($project->dashboard_html); ?>
                 <br/>
@@ -33,7 +33,7 @@
                 <?php echo html_entity_decode($project->sidebar_html); ?>
             </div>
             @else
-            <div class="col-md-10 col-md-offset-1 wide">
+            <div class="col-md-10 col-md-offset-1 wide" id="left">
                 @if(!empty($project->dashboard_html))
                 <?php echo html_entity_decode($project->dashboard_html); ?>
                 <br/>

@@ -20,7 +20,7 @@
     <div class="container" id="content">
         <div class="row">
             @if($post->sidebar)
-            <div class="col-md-8 thin">
+            <div class="col-md-8 thin" id="left">
                 @if(frontendCheckLevel($post, Session::get('level_id')) && ($post->status === 'published' || Auth::guard('backend')->check() || ($post->status === 'scheduled2' && $sch2 <= getTime())))
                     @if(Session::get('guard') === 'backend' || frontendCheckHomeworks($post))
                     @include('frontend.inc.content')
@@ -54,7 +54,7 @@
                 @endif
             </div>
             @else
-            <div class="col-md-10 col-md-offset-1 wide">
+            <div class="col-md-10 col-md-offset-1 wide" id="left">
                 @if(frontendCheckLevel($post, Session::get('level_id')) && ($post->status === 'published' || Auth::guard('backend')->check() || ($post->status === 'scheduled2' && $sch2 <= getTime())))
                     @if(Session::get('guard') === 'backend' || frontendCheckHomeworks($post))
                     @include('frontend.inc.content')

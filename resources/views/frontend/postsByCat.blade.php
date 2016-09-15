@@ -18,7 +18,7 @@
     <div class="container" id="content">
         <div class="row">
             @if($project->sidebar)
-            <div class="col-md-8 thin">
+            <div class="col-md-8 thin" id="left">
                 @if(frontendCheckLevel($category, Session::get('level_id')) && ($category->status === "published" || Auth::guard('backend')->check() || ($category->status === "scheduled2" && $sch2 <= getTime())))
                         @if(!empty($category->category_html))
                         <?php echo html_entity_decode($category->category_html); ?>
@@ -46,7 +46,7 @@
                 @endif
             </div>
             @else
-            <div class="col-md-10 col-md-offset-1 wide">
+            <div class="col-md-10 col-md-offset-1 wide" id="left">
                 @if(frontendCheckLevel($category, Session::get('level_id')) && ($category->status === "published" || Auth::guard('backend')->check() || ($category->status === "scheduled2" && $sch2 <= getTime())))
                         @if(!empty($category->category_html))
                         <?php echo html_entity_decode($category->category_html); ?>
