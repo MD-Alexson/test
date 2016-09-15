@@ -38,22 +38,15 @@ $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_
                 @if(!empty($cat->excerpt))
                 <p>{{ $cat->excerpt }}</p>
                 @endif
-                @if($cat->status === "scheduled" && $cat->comingsoon)
-                <br/>
-                <p style='font-size: 14px;'>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000;">{{ getDateTime($cat->scheduled) }}</span></p>
-                @elseif($cat->status === "scheduled2" && Session::get('guard') === 'frontend' && $cat->comingsoon && $sch2 > getTime())
-                    <br/>
-                    <p>Будет опубликовано: <span class="toLocalTime onlydate" style="color: #cc0000">{{ getDateTime($sch2) }}</span></p>
-                @endif
             </div>
         </div>
         <div class="card-btn text-center">
             @if(Auth::guard('backend')->check())
             <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
             @elseif($cat->status === "scheduled")
-            <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
+            <a href="javascript: void(0);" class="btn btn-danger btn-md waves-effect waves-light disabled toLocalTime onlydate">{{ getDateTime($cat->scheduled) }}</a>
             @elseif($cat->status === "scheduled2" && $sch2 > getTime())
-            <a href="javascript: void(0);" class="btn btn-primary btn-md waves-effect waves-light disabled">Смотреть</a>
+            <a href="javascript: void(0);" class="btn btn-danger btn-md waves-effect waves-light disabled toLocalTime onlydate">{{ getDateTime($sch2) }}</a>
             @else
             <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
             @endif
