@@ -8,6 +8,7 @@ $(document).ready(function(){
         }
         $(this).text(localTime);
     });
+    var count = 0;
     $("#content iframe").each(function(){
         if(!$(this).attr('allowfullscreen')){
             $(this).attr('allowfullscreen', "");
@@ -18,6 +19,9 @@ $(document).ready(function(){
         if(!$(this).attr('webkitallowfullscreen')){
             $(this).attr('webkitallowfullscreen', "");
         }
+        $(this).before("<div class='video_wrap' id='video_wrap"+count+"'></div>");
+        var iframe = $(this).remove();
+        $("#video_wrap"+count).html(iframe);
     });
 });
 function updateCards(){
