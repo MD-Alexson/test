@@ -83,10 +83,9 @@ header .divider {
     font-size: 16px;
     line-height: normal;
     font-weight: normal;
-    word-break: break-all;
 }
 
-#content a {
+#post-content a, #post-content p {
     word-break: break-all;
 }
 
