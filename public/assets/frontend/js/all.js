@@ -42,9 +42,15 @@ function updateCards(){
         $(this).find(".card").css({'height':max+'px'});
     });
 }
+function updateHeader(){
+    var navH = $("nav.navbar-fixed-top").outerHeight();
+    $("header").css({'margin-top':navH+'px'});
+}
 $(window).load(function(){
     updateCards();
+    updateHeader();
 });
 $(window).resize(function(){
     updateCards();
+    updateHeader();
 });
