@@ -401,8 +401,7 @@ class PaymentController extends Controller
             return redirect('/api/payment/fail');
         }
         
-//        $email = strtolower(Request::get('sender_email'));
-        $email = 'md.alexson@gmail.com';
+        $email = strtolower(Request::get('sender_email'));
         if(!strlen($email)){
             return redirect('/api/payment/fail');
         }
