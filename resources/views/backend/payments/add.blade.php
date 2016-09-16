@@ -15,9 +15,7 @@
                         <div class="material-note">
                             Настройки оплаты позволяют автоматически дабавлять пользователей<br/>
                             в ваш проект в ABC Кабинет сразу же после оплаты ваших продуктов.<br/><br/>
-                            ВАЖНО! Укажите следующие URL для уведомлений об оплате заказа:<br/>
-                            Для E-Autopay: <strong>{{ config('app.url') }}/api/payment/eautopay</strong><br/>
-                            Для Justclick: <strong>{{ config('app.url') }}/api/payment/justclick</strong>
+                            Возникли трудности или нужна помощь в настройке? <a href="#popup_message" class="fancybox message">Написать в поддержку</a>
                         </div>
                         <div class="add-mat-title">Основная информация</div>
                         <div class="add-mat-left">
@@ -28,17 +26,25 @@
                                 <select class="styled" name="method">
                                     <option value="E-Autopay">E-Autopay</option>
                                     <option value="Justclick">Justclick</option>
+                                    <option value="Fondy">Fondy</option>
                                 </select>
                             </div>
                         </div>
+                        <div class="material-note" id="changeble_note">ВАЖНО! В настройках продукта в E-Autopay укажите следующий URL<br/>для уведомлений об оплате заказа:<br/><strong>{{ config('app.url') }}/api/payment/eautopay</strong></div>
+                        <div class="add-mat-left merch_id" style='display: none'>
+                            <div class="add-mat-text tooltip-holder">ID Мерчанта</div>
+                        </div>
+                        <div class="add-mat-right merch_id" style='display: none'>
+                            <input type="text" class="input" placeholder="Введите ID" name="merch_id" maxlength="24" value="—" required="required">
+                        </div>
                         <div class="add-mat-left">
-                            <div class="add-mat-text tooltip-holder">Пароль <span class="tooltip-icon" data-content="<div class='popover-inner-text'>Введите пароль, который вы создавали в e-autopay или justclick при создании товара</div>">?</span></div>
+                            <div class="add-mat-text tooltip-holder">Пароль</div>
                         </div>
                         <div class="add-mat-right">
                             <input type="text" class="input" placeholder="Введите пароль" name="key" required="required" maxlength="128" value="{{ Request::old('key') }}">
                         </div>
                         <div class="add-mat-left">
-                            <div class="add-mat-text tooltip-holder">ID товара в системе <span class="tooltip-icon" data-content="<div class='popover-inner-text'>Введите ID товара, который находится настройках товара в e-autopay или justclick</div>">?</span></div>
+                            <div class="add-mat-text tooltip-holder">ID товара в системе <span class="tooltip-icon" data-content="<div class='popover-inner-text'>Введите ID товара</div>">?</span></div>
                         </div>
                         <div class="add-mat-right">
                             <input type="text" class="input" placeholder="Введите id" name="item_id" required="required" maxlength="40" value="{{ Request::old('item_id') }}">
@@ -131,28 +137,24 @@
     </section>
 </section>
 @include('backend.inc.sidebar')
-<div id="popup_images" class="popup-min">
-    <div class="popup-min-top">
-        <div class="popup-min-title">Выберите изображение</div>
-    </div>
-    <div class="popup-min-content" style="padding: 0px;">
-        <div class="image_choose">
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/headers/1.jpg') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/headers/2.jpg') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/headers/3.jpg') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/headers/4.jpg') }}">
-            </a>
-            <a href="javascript: void(0);">
-                <img src="{{ asset('assets/images/thumbnails/headers/5.jpg') }}">
-            </a>
-        </div>
-    </div>
-</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var chnote1 = "ВАЖНО! В настройках продукта в E-Autopay укажите следующий URL<br/>для уведомлений об оплате заказа:<br/><strong>{{ config('app.url') }}/api/payment/eautopay</strong>";
+        var chnote2 = "ВАЖНО! В настройках продукта в Justclick укажите следующий URL<br/>для уведомлений об оплате заказа:<br/><strong>{{ config('app.url') }}/api/payment/justclick</strong>";
+        var chnote3 = "ВАЖНО! В настройках кнопки / в генераторе в Fondy укажите следующие URL<br/>для уведомлений об оплате заказа (Callback/Response URL) и если необходимо<br/>subscription_callback_url для регулярных платежей:<br/><strong>{{ config('app.url') }}/api/payment/fondy</strong>";
+        
+        $("select[name=method]").on('selectmenuselect', function(){
+            if($(this).val() === 'E-Autopay'){
+                $("#changeble_note").html(chnote1);
+                $('.merch_id').slideUp();
+            } else if($(this).val() === 'Justclick'){
+                $("#changeble_note").html(chnote2);
+                $('.merch_id').slideUp();
+            } else if($(this).val() === 'Fondy'){
+                $("#changeble_note").html(chnote3);
+                $('.merch_id').slideDown();
+            }
+        });
+    });
+</script>
 @endsection

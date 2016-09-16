@@ -75,10 +75,11 @@ class PaymentsController extends Controller
 
         $pay = new Payment();
         $pay->item_id = htmlspecialchars(Request::input('item_id'));
+        $pay->merch_id = htmlspecialchars(Request::input('merch_id'));
         $pay->key = htmlspecialchars(Request::input('key'));
         $pay->method = htmlspecialchars(Request::input('method'));
 
-        if(Payment::where('project_domain', $project->domain)->where('method', $pay->method)->where('item_id', $pay->key)->count()){
+        if(Payment::where('project_domain', $project->domain)->where('method', $pay->method)->where('merch_id', $pay->merch_id)->where('item_id', $pay->item_id)->count()){
             return redirect()->back()->with('popup_info', ['Ошибка', 'Настройка оплаты данного товара уже добавлена в данный проект!']);
         }
 
@@ -127,10 +128,11 @@ class PaymentsController extends Controller
         }
         $old_item_id = $pay->item_id;
         $pay->item_id = htmlspecialchars(Request::input('item_id'));
+        $pay->merch_id = htmlspecialchars(Request::input('merch_id'));
         $pay->key = htmlspecialchars(Request::input('key'));
         $pay->method = htmlspecialchars(Request::input('method'));
 
-        if(Payment::where('project_domain', $project->domain)->where('method', $pay->method)->where('item_id', $pay->key)->where('item_id', '!='. $old_item_id)->count()){
+        if(Payment::where('project_domain', $project->domain)->where('method', $pay->method)->where('merch_id', $pay->merch_id)->where('item_id', $pay->item_id)->where('item_id', '!='. $old_item_id)->count()){
             return redirect()->back()->with('popup_info', ['Ошибка', 'Настройка оплаты данного товара уже добавлена в данный проект!']);
         }
 

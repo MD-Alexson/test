@@ -383,8 +383,136 @@ class PaymentController extends Controller
     }
     
     public function fondy(){
-        $result = print_r(\Request::toArray(), true);
-        file_put_contents('0000-'.str_random(4).'.txt', $result);
+        $method = "Fondy";
+        $merch_id = Request::get('merchant_id');
+        $product_id = Request::get('product_id');
+        $payment = Payment::where('method', $method)->where('merch_id', $merch_id)->where('item_id', $product_id)->first();
+        if (!count($payment)) {
+            return redirect('/api/payment/fail');
+        }
+
+        $hash = Request::get('signature');
+        $hash_check = explode("|", Request::get('response_signature_string'));
+        $key = $payment->key;
+        $hash_check[0] = $key;
+        $hash_check_string = join("|", $hash_check);
+        $check_hash = sha1($hash_check_string);
+        if ($hash !== $check_hash) {
+            return redirect('/api/payment/fail');
+        }
+        
+//        $email = strtolower(Request::get('sender_email'));
+        $email = 'md.alexson@gmail.com';
+        if(!strlen($email)){
+            return redirect('/api/payment/fail');
+        }
+
+        if(Request::get('order_status') !== "approved"){
+            return redirect('/api/payment/fail');
+        }
+        
+        $level = $payment->level;
+        $project = $payment->project;
+
+        $check = $project->susers()->where('email', $email)->first();
+        if (count($check)) {
+            $user = $check;
+            if ($user->expires <= time()) {
+                $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type);
+            } else {
+                $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type, $user->expires);
+            }
+            if ($payment->membership) {
+                $user->expire = true;
+            } else {
+                $user->expire = false;
+            }
+            $user->status = 1;
+            $user->level()->associate($level);
+            $user->project()->associate($project);
+            $user->save();
+
+            $msg = $payment->message2;
+            $sub = $payment->subject2;
+            if(strlen($msg) > 0 && strlen($sub) > 0){
+                $msg = str_replace("{username}", $user->name, $msg);
+                if(!empty($project->remote_domain)){
+                    $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $msg);
+                } else {
+                    $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $msg);
+                }
+                $msg = str_replace("{email}", $email, $msg);
+                $msg = str_replace("{project_name}", $project->name, $msg);
+                $msg = str_replace("{level_name}", $level->name, $msg);
+
+                $sub = str_replace("{username}", $user->name, $sub);
+                if(!empty($project->remote_domain)){
+                    $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $sub);
+                } else {
+                    $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $sub);
+                }
+                $sub = str_replace("{password}", $user->password_raw, $sub);
+                $sub = str_replace("{email}", $email, $sub);
+                $sub = str_replace("{project_name}", $project->name, $sub);
+                $sub = str_replace("{level_name}", $level->name, $sub);
+
+                Mail::raw($msg, function($message) use ($email, $project, $sub) {
+                    $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+                    $message->to($email)->subject($sub);
+                });
+            }
+        } else {
+            $user = new Suser();
+            $user->name = "Пользователь";
+            $user->email = $email;
+            if ($payment->membership) {
+                $user->expire = true;
+            }
+            $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type);
+            $pass = str_random(8);
+            $user->password = Hash::make($pass);
+            $user->password_raw = $pass;
+            $user->rand = str_random(16);
+            $user->level()->associate($level);
+            $user->project()->associate($project);
+            $user->save();
+
+            $data           = new SuserPassword();
+            $data->key      = str_random(16);
+            $data->suser()->associate($user);
+            $data->project()->associate($project);
+            $data->save();
+
+            $msg = $payment->message;
+            $sub = $payment->subject;
+            if(strlen($msg) > 0 && strlen($sub) > 0){
+                $msg = str_replace("{username}", $user->name, $msg);
+                if(!empty($project->remote_domain)){
+                    $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $msg);
+                } else {
+                    $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $msg);
+                }
+                $msg = str_replace("{email}", $email, $msg);
+                $msg = str_replace("{project_name}", $project->name, $msg);
+                $msg = str_replace("{level_name}", $level->name, $msg);
+
+                $sub = str_replace("{username}", $user->name, $sub);
+                if(!empty($project->remote_domain)){
+                    $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $sub);
+                } else {
+                    $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $sub);
+                }
+                $sub = str_replace("{password}", $user->password_raw, $sub);
+                $sub = str_replace("{email}", $email, $sub);
+                $sub = str_replace("{project_name}", $project->name, $sub);
+                $sub = str_replace("{level_name}", $level->name, $sub);
+
+                Mail::raw($msg, function($message) use ($email, $project, $sub) {
+                    $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+                    $message->to($email)->subject($sub);
+                });
+            }
+        }
         return redirect('/api/payment/success');
     }
 }
