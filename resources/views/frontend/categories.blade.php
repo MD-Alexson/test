@@ -19,7 +19,6 @@
     </header>
     @include('frontend.inc.menu')
     <div class="container" id="content">
-        
         <div class="row">
             @if($project->sidebar)
             <div class="col-md-8 thin" id="left">

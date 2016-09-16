@@ -6,4 +6,7 @@ Route::group(['namespace' => 'Api', 'domain' => config('app.domain')],
     Route::post('/api/payment/eautopay', "PaymentController@eautopay");
     Route::post('/api/payment/justclick', "PaymentController@justclick");
     Route::any('/api/payment/fondy', "PaymentController@fondy");
+    
+    Route::get('/api/payment/success', "ViewController@success");
+    Route::get('/api/payment/fail', "ViewController@fail");
 });

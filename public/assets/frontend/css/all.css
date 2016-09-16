@@ -162,7 +162,7 @@ header .divider {
     font-weight: 400;
 }
 
-#sidebar img {
+#sidebar img, #content img {
     max-width: 100%;
     height: auto!important;
 }
