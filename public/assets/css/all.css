@@ -2528,6 +2528,7 @@ label.error {
     color: #808080;
     font-size: 15px;
     font-family: 'SegoeWP';
+    padding: 0px 15px;
 }
 .popup-min-bottom {
     padding: 30px 10px;
