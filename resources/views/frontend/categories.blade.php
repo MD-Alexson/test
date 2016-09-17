@@ -17,7 +17,7 @@
             </div>
         </div>
     </header>
-    @include('frontend.inc.menu')    
+    @include('frontend.inc.menu')
     <div class="container" id="content">
         <div class="row">
             @if($project->sidebar)

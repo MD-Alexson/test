@@ -390,14 +390,22 @@ class PaymentController extends Controller
         if (!count($payment)) {
             return redirect('/api/payment/fail');
         }
-
         $hash = Request::get('signature');
-        $hash_check = explode("|", Request::get('response_signature_string'));
-        $key = $payment->key;
-        $hash_check[0] = $key;
-        $hash_check_string = join("|", $hash_check);
-        $check_hash = sha1($hash_check_string);
-        if ($hash !== $check_hash) {
+        $pass = $payment->key;
+        
+        $request_arr = \Request::toArray();
+        $hash_arr = Array();
+        foreach($request_arr as $key => $val){
+            if($val !== "" && $key !== 'signature'){
+                $hash_arr[$key] = $val;
+            }
+        }
+        ksort($hash_arr);
+        $hash_check_string = $pass.'|'.join("|", $hash_arr);
+        $hash_check = sha1($hash_check_string);
+        echo $hash.'<br/>'.$hash_check;
+        
+        if ($hash !== $hash_check) {
             return redirect('/api/payment/fail');
         }
         
