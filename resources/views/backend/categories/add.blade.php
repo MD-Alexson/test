@@ -66,6 +66,7 @@
                                     <input name="comingsoon1" type="checkbox" class="check" id="comingsoon1">
                                     <label for="comingsoon1" class="check-label">Отображать запланированую дату публикации</label>
                                 </div>
+                                <div class="material-note">Предпросмотр категории будет доступен только администратору</div>
                             </div>
                         </div>
                         <div class="optional" id="scheduled2">
@@ -85,6 +86,7 @@
                                     <input name="comingsoon2" type="checkbox" class="check" id="comingsoon2">
                                     <label for="comingsoon2" class="check-label">Отображать запланированую дату публикации</label>
                                 </div>
+                                <div class="material-note">Предпросмотр категории будет доступен только администратору</div>
                             </div>
                         </div>
                         <div class="add-mat-left">

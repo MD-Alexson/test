@@ -14,7 +14,11 @@ if(!$thumbnail){
 }
 $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $cat->sch2num, $cat->sch2type);
 ?>
- <div class="col-md-4">
+@if($cat->status === 'published')
+<div class="col-md-4">
+@else
+<div class="col-md-4 card-disabled">
+@endif
     <div class="card hoverable cat">
         <div class="card-image">
             <div class="view overlay hm-white-slight z-depth-1">
@@ -42,7 +46,13 @@ $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_
         </div>
         <div class="card-btn text-center">
             @if(Auth::guard('backend')->check())
-            <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
+                @if($cat->status === 'scheduled')
+                <a href="/categories/{{ $cat->id }}" class="btn btn-danger btn-md waves-effect waves-light toLocalTime onlydate">{{ getDateTime($cat->scheduled) }}</a>
+                @elseif($cat->status === 'scheduled2')
+                <a href="/categories/{{ $cat->id }}" class="btn btn-danger btn-md waves-effect waves-light">{{ $cat->sch2num }} {{ $cat->sch2typename }}</a>
+                @else
+                <a href="/categories/{{ $cat->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
+                @endif
             @elseif($cat->status === "scheduled")
             <a href="javascript: void(0);" class="btn btn-danger btn-md waves-effect waves-light disabled toLocalTime onlydate">{{ getDateTime($cat->scheduled) }}</a>
             @elseif($cat->status === "scheduled2" && $sch2 > getTime())

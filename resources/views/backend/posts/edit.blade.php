@@ -130,6 +130,7 @@
                                     @endif
                                     <label for="comingsoon1" class="check-label">Отображать запланированую дату публикации</label>
                                 </div>
+                                <div class="material-note">Предпросмотр публикации будет доступен только администратору</div>
                             </div>
                         </div>
                         <div class="optional" id="scheduled2">
@@ -153,6 +154,7 @@
                                     @endif
                                     <label for="comingsoon2" class="check-label">Отображать запланированую дату публикации</label>
                                 </div>
+                                <div class="material-note">Предпросмотр публикации будет доступен только администратору</div>
                             </div>
                         </div>
                         <div class="add-mat-left">

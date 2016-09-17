@@ -40,50 +40,6 @@
         @endforeach
     </ul>
     @endif
-    @if($post->comments_enabled)
-    <hr>
-    <br/>
-    <h3>Комментарии:</h3>
-    <br/>
-    @foreach($post->comments()->where('allowed', true)->orderBy('created_at', 'ASC')->get() as $comment)
-        @if($comment->commentable_type === 'App\Suser')
-        <?php $user = \App\Suser::findOrFail($comment->commentable_id); ?>
-        @else
-        <?php $user = \App\User::findOrFail($comment->commentable_id); ?>
-        @endif
-
-        @if($comment->commentable_type === 'App\User')
-        <?php $type = "<span class='admin'>(Администратор)</span>"; ?>
-        @elseif($user->id === Auth::guard(Session::get('guard'))->id())
-        <?php $type = "<span class='user'>(Вы)</span>"; ?>
-        @else
-        <?php $type = ""; ?>
-        @endif
-
-        <?php $destroy = ""; ?>
-
-        @if(Session::get('guard') === 'backend' && $project->user->id === Auth::guard('backend')->id())
-        <?php $destroy = " <a href='/posts/".$post->id."/comments/".$comment->id."/destroy' class='destroy'>&times;</a>"; ?>
-        @elseif($user->id === Auth::guard(Session::get('guard'))->id())
-        <?php $destroy = " <a href='/posts/".$post->id."/comments/".$comment->id."/destroy' class='destroy'>&times;</a>"; ?>
-        @endif
-        <div class='comment'>
-            <h4>{{ $user->name }} <?php echo $type; ?> [<span class='toLocalTime'>{{ $comment->created_at }}</span>] <?php echo $destroy; ?></h4>
-            <p><?php echo nl2br($comment->text); ?></p>
-        </div>
-    @endforeach
-    <form method="post" action="{{ action("Frontend\PostsController@comment", ['domain' => $project->domain, 'post_id' => $post->id]) }}" class="post_form">
-        {{ csrf_field() }}
-        <div class="row control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>Комментарий</label>
-                <textarea name="text" class="form-control" placeholder="Текст комментария" required="required" maxlength="1024" rows="6"></textarea>
-                <p class="help-block text-danger"></p>
-                <button type="submit" class="btn btn-default btn-success">Добавить комментарий</button>
-            </div>
-        </div>
-    </form>
-    @endif
     @if($post->homework_enabled)
     <hr/>
     <br/>
@@ -138,6 +94,50 @@
             </form>
             @endif
         @endif
+    @endif
+    @if($post->comments_enabled)
+    <hr>
+    <br/>
+    <h3>Комментарии:</h3>
+    <br/>
+    @foreach($post->comments()->where('allowed', true)->orderBy('created_at', 'ASC')->get() as $comment)
+        @if($comment->commentable_type === 'App\Suser')
+        <?php $user = \App\Suser::findOrFail($comment->commentable_id); ?>
+        @else
+        <?php $user = \App\User::findOrFail($comment->commentable_id); ?>
+        @endif
+
+        @if($comment->commentable_type === 'App\User')
+        <?php $type = "<span class='admin'>(Администратор)</span>"; ?>
+        @elseif($user->id === Auth::guard(Session::get('guard'))->id())
+        <?php $type = "<span class='user'>(Вы)</span>"; ?>
+        @else
+        <?php $type = ""; ?>
+        @endif
+
+        <?php $destroy = ""; ?>
+
+        @if(Session::get('guard') === 'backend' && $project->user->id === Auth::guard('backend')->id())
+        <?php $destroy = " <a href='/posts/".$post->id."/comments/".$comment->id."/destroy' class='destroy'>&times;</a>"; ?>
+        @elseif($user->id === Auth::guard(Session::get('guard'))->id())
+        <?php $destroy = " <a href='/posts/".$post->id."/comments/".$comment->id."/destroy' class='destroy'>&times;</a>"; ?>
+        @endif
+        <div class='comment'>
+            <h4>{{ $user->name }} <?php echo $type; ?> [<span class='toLocalTime'>{{ $comment->created_at }}</span>] <?php echo $destroy; ?></h4>
+            <p><?php echo nl2br($comment->text); ?></p>
+        </div>
+    @endforeach
+    <form method="post" action="{{ action("Frontend\PostsController@comment", ['domain' => $project->domain, 'post_id' => $post->id]) }}" class="post_form">
+        {{ csrf_field() }}
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Комментарий</label>
+                <textarea name="text" class="form-control" placeholder="Текст комментария" required="required" maxlength="1024" rows="6"></textarea>
+                <p class="help-block text-danger"></p>
+                <button type="submit" class="btn btn-default btn-success">Добавить комментарий</button>
+            </div>
+        </div>
+    </form>
     @endif
     <br/>
 </div>

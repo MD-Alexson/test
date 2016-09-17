@@ -101,8 +101,8 @@
                             <p>{{ $user->rand }}</p>
                         </div>
                         <div class="add-mat-right-holder">
-                            <button class="green-button float-left" type="submit">Сохранить</button>
-                            <a href="#popup_data" class="fancybox white-button float-left">Отправить доступ</a>
+                            <button class="green-button float-left" type="submit" onclick="javascript: $(this).closest('form').find('input[name=send_data]').remove();">Сохранить</button>
+                            <button class="green-button float-left" type="submit" onclick="javascript: $(this).closest('form').prepend('<input type=\'hidden\' name=\'send_data\' value=\'1\'>')" style="width: auto; padding: 0px 15px;">Сохранить и отправить данные доступа</button>
                         </div>
                     </fieldset>
                 </form>
@@ -110,15 +110,6 @@
         </div>
     </section>
 </section>
-<div id="popup_data" class="popup-min">
-    <div class="popup-min-top">
-        <div class="popup-min-title">Вы уверены что хотите отправить данные доступа к проекту пользователю "{{ $user->name }}"?</div>
-    </div>
-    <div class="popup-min-bottom">
-        <a href="/users/{{ $user->id }}/data" class="red-button outline">Да</a>
-        <button class="green-button close">Нет</button>
-    </div>
-</div>
 <script type='text/javascript'>
     $(document).ready(function () {
         $("input[name=expire]").on('change', function(){

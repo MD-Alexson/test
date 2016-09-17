@@ -70,4 +70,7 @@
         </div>
     </div>
     @include('frontend.inc.footer')
+    <script type="text/javascript">
+        $(document).ready(function(){ $("nav#menu li[data-id="+{{ $category->id }}+"]").addClass('active'); });
+    </script>
 @endsection

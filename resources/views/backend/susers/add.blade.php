@@ -36,7 +36,8 @@
                             <div class="add-mat-text">Пароль</div>
                         </div>
                         <div class="add-mat-right">
-                            <input type="text" class="input" placeholder="От 8 до 20 символов" name="password" minlength="8" maxlength="20" value="{{ Request::old('password') }}" required="required">
+                            <input type="text" class="input" placeholder="От 8 до 20 символов" name="password" minlength="8" maxlength="20" value="{{ Request::old('password') }}">
+                            <div class="material-note">Если не указать пароль, он будет сгенерирован автоматически</div>
                         </div>
                         <div class="add-mat-title">Доступ</div>
                         <div class="add-mat-left">
@@ -78,7 +79,8 @@
                             </div>
                         </div>
                         <div class="add-mat-right-holder">
-                            <button class="green-button float-left" type="submit">Сохранить</button>
+                            <button class="green-button float-left" type="submit" onclick="javascript: $(this).closest('form').find('input[name=send_data]').remove();">Сохранить</button>
+                            <button class="green-button float-left" type="submit" onclick="javascript: $(this).closest('form').prepend('<input type=\'hidden\' name=\'send_data\' value=\'1\'>')" style="width: auto; padding: 0px 15px;">Сохранить и отправить данные доступа</button>
                         </div>
                     </fieldset>
                 </form>

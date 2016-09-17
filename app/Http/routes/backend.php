@@ -66,8 +66,8 @@ Route::group(['middleware' => ['sid', 'auth:backend', 'csrf'], 'namespace' => 'B
     Route::get('/users/by_level/{level_id}', 'SusersController@indexByLevel')->middleware(['status', 'project']);
     Route::get('/users/by_level/{level_id}/data', 'SusersController@dataByLevel')->middleware(['status', 'project']);
     Route::get('/users/add', 'SusersController@add')->middleware(['status', 'project']);
-    Route::post('/users/store', 'SusersController@store')->middleware(['status', 'project']);
-    Route::get('/users/{user_id}/edit', 'SusersController@edit')->middleware(['status', 'project']);
+    Route::post('/users/store/', 'SusersController@store')->middleware(['status', 'project']);
+    Route::get('/users/{user_id}/edit/', 'SusersController@edit')->middleware(['status', 'project']);
     Route::get('/users/{user_id}/data', 'SusersController@data')->middleware(['status', 'project']);
     Route::post('/users/{user_id}/update', 'SusersController@update')->middleware(['status', 'project']);
     Route::get('/users/{user_id}/delete', 'SusersController@delete')->middleware(['status', 'project']);

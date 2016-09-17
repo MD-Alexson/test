@@ -112,7 +112,7 @@ class SusersController extends Controller
                 'name' => 'required|max:32',
                 'email' => 'required|max:32',
                 'phone' => 'max:20',
-                'password' => 'required|between:8,20'
+                'password' => 'between:8,20'
                 ], $this->messages);
 
         if ($v->fails()) {
@@ -125,13 +125,19 @@ class SusersController extends Controller
         if ($level->project->user->id !== Auth::guard('backend')->id()) {
             return redirect()->back()->with('popup_info', ['Ошибка', 'Вы выбрали не ваш уровень!']);
         }
+        
+        if(!empty(Request::input('password'))){
+            $pass = htmlspecialchars(Request::input('password'));
+        } else {
+            $pass = str_random(8);
+        }
 
         $user = new Suser();
         $user->name = htmlspecialchars(Request::input('name'));
         $user->email = strtolower(htmlspecialchars(Request::input('email')));
         $user->phone = htmlspecialchars(Request::input('phone'));
-        $user->password = Hash::make(htmlspecialchars(Request::input('password')));
-        $user->password_raw = htmlspecialchars(Request::input('password'));
+        $user->password = Hash::make($pass);
+        $user->password_raw = $pass;
         $user->status = (int) htmlspecialchars(Request::input('status'));
         if(Request::has('expire')){
             $user->expire = true;
@@ -150,7 +156,12 @@ class SusersController extends Controller
         }
 
         $user->save();
-        return redirect('/users');
+        if(Request::has('send_data')){
+            $this->sendData($project, $user->id);
+            return redirect('/users/'.$user->id.'/edit')->with('popup_ok', ['Добавление пользователя', 'Настройки пользователя сохранены успешно! Вы успешно отправили данные доступа пользователю!']);
+        } else {
+            return redirect('/users/'.$user->id.'/edit')->with('popup_ok', ['Добавление пользователя', 'Настройки пользователя сохранены успешно!']);
+        }
     }
 
     public function update($user_id)
@@ -201,8 +212,12 @@ class SusersController extends Controller
         }
 
         $user->save();
-        return redirect()->back()->with('popup_ok', ['Редактировать пользователя', 'Настройки пользователя сохранены успешно!']);
-
+        if(Request::has('send_data')){
+            $this->sendData($project, $user->id);
+            return redirect()->back()->with('popup_ok', ['Данные доступа', 'Настройки пользователя сохранены успешно! Вы успешно отправили данные доступа пользователю!']);
+        } else {
+            return redirect()->back()->with('popup_ok', ['Редактировать пользователя', 'Настройки пользователя сохранены успешно!']);
+        }
     }
 
     public function batch(){

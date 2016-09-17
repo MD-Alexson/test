@@ -11,7 +11,11 @@ if(!$thumbnail){
 }
 $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_at), $post->sch2num, $post->sch2type);
 ?>
- <div class="col-md-4">
+@if($post->status === 'published')
+<div class="col-md-4">
+@else
+<div class="col-md-4 card-disabled">
+@endif
     <div class="card hoverable post">
         <div class="card-image">
             <div class="view overlay hm-white-slight z-depth-1">
@@ -42,7 +46,13 @@ $sch2 = getTimePlus(getTime(Auth::guard(Session::get('guard'))->user()->created_
         </div>
         <div class="card-btn text-center">
             @if(Auth::guard('backend')->check())
-            <a href="/posts/{{ $post->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
+                @if($post->status === 'scheduled')
+                <a href="/posts/{{ $post->id }}" class="btn btn-danger btn-md waves-effect waves-light toLocalTime onlydate">{{ getDateTime($post->scheduled) }}</a>
+                @elseif($post->status === 'scheduled2')
+                <a href="/posts/{{ $post->id }}" class="btn btn-danger btn-md waves-effect waves-light">{{ $post->sch2num }} {{ $post->sch2typename }}</a>
+                @else
+                <a href="/posts/{{ $post->id }}" class="btn btn-primary btn-md waves-effect waves-light">Смотреть</a>
+                @endif
             @elseif($post->status === "scheduled")
             <a href="javascript: void(0);" class="btn btn-danger btn-md waves-effect waves-light disabled toLocalTime onlydate">{{ getDateTime($post->scheduled) }}</a>
             @elseif($post->status === "scheduled2" && $sch2 > getTime())
