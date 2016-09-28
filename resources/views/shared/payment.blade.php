@@ -208,7 +208,7 @@
 
         var actions = [
             "{{ action('Shared\AuthController@register') }}",
-            "http://abckab.e-autopay.com/checkout/save_order_data.php"
+            "https://abckab.e-autopay.com/checkout/save_order_data.php"
         ];
 
         var buttons = [
