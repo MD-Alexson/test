@@ -13,13 +13,13 @@
         <title>ABC Кабинет</title>
         @endif
         <link href='https://fonts.googleapis.com/css?family=Russo+One&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-        <script src="https://use.fontawesome.com/ad63e12ff7.js"></script>
+        <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/font-awesome.min.css') }}">
         @if(isset($data['assets']['css']))
         @foreach($data['assets']['css'] as $css)
         <link media="all" rel="stylesheet" type="text/css" href="{{ $css }}" />
         @endforeach
         @endif
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/frontend/css/mdb.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/frontend/css/all.css') }}">
         @if(Auth::guard('frontend')->check())
@@ -31,12 +31,11 @@
                     'user_ip' : "{{ clientIp() }}"}];
         </script>
         @endif
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/frontend/js/mdb.min.js') }}"></script>
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/locale/ru.js"></script>
+        <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+        <script src="{{ asset('assets/js/moment.ru.js') }}"></script>
         @if(isset($data['assets']['js']))
         @foreach($data['assets']['js'] as $js)
         <script src="{{ $js }}"></script>

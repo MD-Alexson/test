@@ -15,17 +15,17 @@
         <link media="all" rel="stylesheet" type="text/css" href="{{ asset('assets/css/datepicker.css') }}" />
         <link media="all" rel="stylesheet" type="text/css" href="{{ asset('assets/css/popover.css') }}" />
         <link media="all" rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.fancybox.css') }}" />
-        <script src="{{ asset('assets/js/jquery-1.9.1.min.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
         <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('assets/js/jquery.uniform.min.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/jquery.carousel-1.1.min.js') }}"></script>
         <script src="{{ asset('assets/js/jquery.fancybox.js') }}"></script>
         <script src="{{ asset('assets/js/jquery.scrollTo.js') }}"></script>
         <script src="{{ asset('assets/js/tabs.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/locale/ru.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+        <script src="{{ asset('assets/js/moment.ru.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery.cookie.min.js') }}"></script>
         <!--[if lt IE 9]><script type="text/javascript" src="js/html5.js"></script><![endif]-->
         <!--[if lt IE 9]><script type="text/javascript" src="js/placeholder.js"></script><![endif]-->
         <script src="{{ asset('assets/js/all.js') }}"></script>
