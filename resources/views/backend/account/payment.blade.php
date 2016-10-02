@@ -133,7 +133,7 @@
                         </div>
                         <div class="pay-right">
                             <div class="pay-form" style="margin: 0px; padding: 34px 45px;">
-                                <form action="http://abckab.e-autopay.com/checkout/save_order_data.php" method="post" target="_parent">
+                                <form action="http://dk6.e-autopay.com/checkout/save_order_data.php" method="post" target="_parent">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="form_charset" id="form_charset" value="">
                                     <input type="hidden" name="tovar_id" value="">
