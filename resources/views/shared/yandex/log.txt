@@ -1,0 +1,12 @@
+[2016-10-02 19:48:01] Start checkOrder
+[2016-10-02 19:48:01] Security type PKCS7
+[2016-10-02 19:48:01] Response: <?xml version="1.0" encoding="UTF-8"?><checkOrderResponse performedDatetime="2016-10-02T19:48:01.000+00:00" code="200"  invoiceId="" shopId="151"/>
+[2016-10-02 19:48:12] Start checkOrder
+[2016-10-02 19:48:12] Security type PKCS7
+[2016-10-02 19:48:12] Response: <?xml version="1.0" encoding="UTF-8"?><checkOrderResponse performedDatetime="2016-10-02T19:48:12.000+00:00" code="200"  invoiceId="" shopId="151"/>
+[2016-10-02 19:48:12] Start checkOrder
+[2016-10-02 19:48:12] Security type PKCS7
+[2016-10-02 19:48:13] Response: <?xml version="1.0" encoding="UTF-8"?><checkOrderResponse performedDatetime="2016-10-02T19:48:13.000+00:00" code="200"  invoiceId="" shopId="151"/>
+[2016-10-02 19:48:13] Start checkOrder
+[2016-10-02 19:48:13] Security type PKCS7
+[2016-10-02 19:48:13] Response: <?xml version="1.0" encoding="UTF-8"?><checkOrderResponse performedDatetime="2016-10-02T19:48:13.000+00:00" code="200"  invoiceId="" shopId="151"/>
