@@ -46,6 +46,59 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
     Route::get('/perpage/{perpage}', 'AccountController@perpage');
     Route::get("/logout", "AuthController@logout");
 
+    Route::get('/copyk17', function() {
+        $k17users = \App\Project::findOrFail("k17")->susers;
+        
+        $tmp_level = \App\Level::findOrFail(10174);
+        $tmp_project = \App\Project::findOrFail("intensiv2016");
+        
+        foreach ($k17users as $k17user) {
+
+            $tmp_check = $tmp_project->susers()->where('email', $k17user->email)->first();
+            if (!count($tmp_check)) {
+                $user = new Suser();
+                $user->name = $k17user->name;
+                $user->email = $k17user->email;
+                $user->phone = $k17user->phone;
+                $user->expires = $k17user->expires;
+                $user->password = $k17user->password;
+                $user->password_raw = $k17user->password_raw;
+                $user->rand = str_random(16);
+                $user->level()->associate($tmp_level);
+                $user->project()->associate($tmp_project);
+                $user->save();
+
+                $sub = "Интенсив Димы Ковпака - Доступы";
+                $msg = "Здравстуйте, {username}!\r
+Ваши доступы к интенсиву:\r
+Ссылка:\r
+http://intensiv2016.abckabinet.ru/login\r
+\r
+Email:\r
+{email}\r
+\r
+Пароль:\r
+{pass}\r
+\r
+Проблемы с доступом? Пишите:\r
+support@abckabinet.ru\r
+\r
+Благодарим Вас за покупку!\r
+\r
+-----------\r
+\r";
+                $msg = str_replace("{username}", $user->name, $msg);
+                $msg = str_replace("{email}", $user->email, $msg);
+                $msg = str_replace("{pass}", $user->password_raw, $msg);
+
+                Mail::raw($msg, function($message) use ($user, $sub) {
+                    $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+                    $message->to($user->email)->subject($sub);
+                });
+            }
+        }
+    });
+
     Route::get('/intense', function() {
         $project = \App\Project::findOrFail("intensiv2016");
         $users = $project->susers;
