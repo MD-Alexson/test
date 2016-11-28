@@ -56,7 +56,7 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
 
             $tmp_check = $tmp_project->susers()->where('email', $k17user->email)->first();
             if (!count($tmp_check)) {
-                $user = new Suser();
+                $user = new \App\Suser();
                 $user->name = $k17user->name;
                 $user->email = $k17user->email;
                 $user->phone = $k17user->phone;
