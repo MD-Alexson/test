@@ -48,7 +48,7 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
 
     Route::get('/intense', function() {
         $project = \App\Project::findOrFail("intensiv2016");
-        $users = $project->susers();
+        $users = $project->susers;
 
         foreach ($users as $user) {
             $sub = "Интенсив Димы Ковпака - Доступы";
