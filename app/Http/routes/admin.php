@@ -46,4 +46,5 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
 
     Route::get('/perpage/{perpage}', 'AccountController@perpage');
     Route::get("/logout", "AuthController@logout");
+    
 });

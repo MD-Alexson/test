@@ -15,8 +15,7 @@ use Mail;
 use Request;
 use Storage;
 
-class PaymentController extends Controller
-{
+class PaymentController extends Controller {
 
     public function abc() {
         $hash = Request::get('hash');
@@ -25,12 +24,12 @@ class PaymentController extends Controller
         $email = strtolower(Request::get('email'));
         $phone = Request::get('phone');
         $key = '2glolgim6N';
-        if(Request::has('additional_field_1')){
+        if (Request::has('additional_field_1')) {
             $partner = Request::get('additional_field_1');
         } else {
             $partner = "";
         }
-        if(Request::has('additional_field_2')){
+        if (Request::has('additional_field_2')) {
             $utm_string = Request::get('additional_field_2');
         } else {
             $utm_string = "";
@@ -41,7 +40,7 @@ class PaymentController extends Controller
             exit('Wrong hash');
         }
 
-        if((int) Request::get('status') !== 5){
+        if ((int) Request::get('status') !== 5) {
             exit();
         }
 
@@ -62,10 +61,10 @@ class PaymentController extends Controller
             $user->plan()->associate($plan);
             $user->save();
 
-            $msg = "Здравствуйте, ".Request::get('first_name')."!\r\n";
+            $msg = "Здравствуйте, " . Request::get('first_name') . "!\r\n";
             $msg.= "Вы успешно продили пользование сервисом!\r\n";
-            $msg.= "\r\nСтраница входа: ".config('app.url')."/?modal=login\r\n";
-            $msg.= "Забыли пароль? - ".config('app.url')."/login/password\r\n";
+            $msg.= "\r\nСтраница входа: " . config('app.url') . "/?modal=login\r\n";
+            $msg.= "Забыли пароль? - " . config('app.url') . "/login/password\r\n";
             $msg.= "\r\n-----------\r\n";
             $msg.= "С уважением, ABC Кабинет";
 
@@ -88,16 +87,16 @@ class PaymentController extends Controller
 
             $key = str_random(16);
 
-            $new_user      = new NewUser();
+            $new_user = new NewUser();
             $new_user->key = $key;
             $new_user->user()->associate($user);
             $new_user->save();
 
-            Storage::makeDirectory("/".$user->id."/");
+            Storage::makeDirectory("/" . $user->id . "/");
 
-            $msg = "Здравствуйте, ".Request::get('first_name')."!\r\n";
+            $msg = "Здравствуйте, " . Request::get('first_name') . "!\r\n";
             $msg.= "Все, что Вам осталось сделать для\r\nпользования сервисом - создать пароль:\r\n";
-            $msg.= "\r\n".config('app.url')."/register/".$key."\r\n";
+            $msg.= "\r\n" . config('app.url') . "/register/" . $key . "\r\n";
             $msg.= "\r\nЕсли по какой-то причине Вам не удалось\r\nсоздать пароль для входа - обязательно\r\nнапишите нам - support@abckabinet.ru\r\n";
             $msg.= "\r\nБлагодарим Вас за покупку!\r\n";
             $msg.= "\r\n-----------\r\n";
@@ -131,7 +130,7 @@ class PaymentController extends Controller
         $phone = Request::get('phone');
         $status = (int) Request::get('status');
 
-        if($status !== 5){
+        if ($status !== 5) {
             exit('status');
         }
 
@@ -166,22 +165,22 @@ class PaymentController extends Controller
 
                 $msg = $payment->message2;
                 $sub = $payment->subject2;
-                if(strlen($msg) > 0 && strlen($sub) > 0){
+                if (strlen($msg) > 0 && strlen($sub) > 0) {
                     $msg = str_replace("{username}", $user->name, $msg);
-                    if(!empty($project->remote_domain)){
-                        $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $msg);
+                    if (!empty($project->remote_domain)) {
+                        $msg = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass", $msg);
                     } else {
-                        $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $msg);
+                        $msg = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass", $msg);
                     }
                     $msg = str_replace("{email}", $email, $msg);
                     $msg = str_replace("{project_name}", $project->name, $msg);
                     $msg = str_replace("{level_name}", $level->name, $msg);
 
                     $sub = str_replace("{username}", $user->name, $sub);
-                    if(!empty($project->remote_domain)){
-                        $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $sub);
+                    if (!empty($project->remote_domain)) {
+                        $sub = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass", $sub);
                     } else {
-                        $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $sub);
+                        $sub = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass", $sub);
                     }
                     $sub = str_replace("{password}", $user->password_raw, $sub);
                     $sub = str_replace("{email}", $email, $sub);
@@ -210,30 +209,30 @@ class PaymentController extends Controller
                 $user->project()->associate($project);
                 $user->save();
 
-                $data           = new SuserPassword();
-                $data->key      = str_random(16);
+                $data = new SuserPassword();
+                $data->key = str_random(16);
                 $data->suser()->associate($user);
                 $data->project()->associate($project);
                 $data->save();
 
                 $msg = $payment->message;
                 $sub = $payment->subject;
-                if(strlen($msg) > 0 && strlen($sub) > 0){
+                if (strlen($msg) > 0 && strlen($sub) > 0) {
                     $msg = str_replace("{username}", $user->name, $msg);
-                    if(!empty($project->remote_domain)){
-                        $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $msg);
+                    if (!empty($project->remote_domain)) {
+                        $msg = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass/" . $data->key, $msg);
                     } else {
-                        $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $msg);
+                        $msg = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass/" . $data->key, $msg);
                     }
                     $msg = str_replace("{email}", $email, $msg);
                     $msg = str_replace("{project_name}", $project->name, $msg);
                     $msg = str_replace("{level_name}", $level->name, $msg);
 
                     $sub = str_replace("{username}", $user->name, $sub);
-                    if(!empty($project->remote_domain)){
-                        $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $sub);
+                    if (!empty($project->remote_domain)) {
+                        $sub = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass/" . $data->key, $sub);
                     } else {
-                        $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $sub);
+                        $sub = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass/" . $data->key, $sub);
                     }
                     $sub = str_replace("{password}", $user->password_raw, $sub);
                     $sub = str_replace("{email}", $email, $sub);
@@ -241,6 +240,57 @@ class PaymentController extends Controller
                     $sub = str_replace("{level_name}", $level->name, $sub);
 
                     Mail::raw($msg, function($message) use ($email, $project, $sub) {
+                        $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+                        $message->to($email)->subject($sub);
+                    });
+                }
+            }
+
+            /* --- TEMP --- */
+            /* --- TEMP --- */
+            /* --- TEMP --- */
+
+            if($project->domain === "k17") {
+                $tmp_level = \App\Level::findOrFail(10174);
+                $tmp_project = \App\Project::findOrFail("intensiv2016");
+
+                $tmp_check = $tmp_project->susers()->where('email', $email)->first();
+                if (!count($tmp_check)) {
+                    $user = new Suser();
+                    $user->name = Request::get('last_name') . ' ' . Request::get('first_name') . ' ' . Request::get('middle_name');
+                    $user->email = $email;
+                    $user->phone = $phone;
+                    $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type);
+                    $pass = str_random(8);
+                    $user->password = Hash::make($pass);
+                    $user->password_raw = $pass;
+                    $user->rand = str_random(16);
+                    $user->level()->associate($tmp_level);
+                    $user->project()->associate($tmp_project);
+                    $user->save();
+
+                    $sub = "Интенсив Димы Ковпака - Доступы";
+                    $msg = "Здравстуйте, {username}!\r
+Ваши доступы к интенсиву:\r
+Ссылка:\r
+http://intensiv2016.abckabinet.ru/login\r
+\r
+Email:\r
+{email}\r
+\r
+Пароль:\r
+".$pass."\r
+Проблемы с доступом? Пишите:\r
+support@abckabinet.ru\r
+\r
+Благодарим Вас за покупку!\r
+\r
+-----------\r
+\r";
+                    $msg = str_replace("{username}", $user->name, $msg);
+                    $msg = str_replace("{email}", $email, $msg);
+
+                    Mail::raw($msg, function($message) use ($email, $sub) {
                         $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
                         $message->to($email)->subject($sub);
                     });
@@ -299,22 +349,22 @@ class PaymentController extends Controller
 
                 $msg = $payment->message2;
                 $sub = $payment->subject2;
-                if(strlen($msg) > 0 && strlen($sub) > 0){
+                if (strlen($msg) > 0 && strlen($sub) > 0) {
                     $msg = str_replace("{username}", $user->name, $msg);
-                    if(!empty($project->remote_domain)){
-                        $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $msg);
+                    if (!empty($project->remote_domain)) {
+                        $msg = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass", $msg);
                     } else {
-                        $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $msg);
+                        $msg = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass", $msg);
                     }
                     $msg = str_replace("{email}", $email, $msg);
                     $msg = str_replace("{project_name}", $project->name, $msg);
                     $msg = str_replace("{level_name}", $level->name, $msg);
 
                     $sub = str_replace("{username}", $user->name, $sub);
-                    if(!empty($project->remote_domain)){
-                        $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $sub);
+                    if (!empty($project->remote_domain)) {
+                        $sub = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass", $sub);
                     } else {
-                        $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $sub);
+                        $sub = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass", $sub);
                     }
                     $sub = str_replace("{password}", $user->password_raw, $sub);
                     $sub = str_replace("{email}", $email, $sub);
@@ -343,30 +393,30 @@ class PaymentController extends Controller
                 $user->project()->associate($project);
                 $user->save();
 
-                $data           = new SuserPassword();
-                $data->key      = str_random(16);
+                $data = new SuserPassword();
+                $data->key = str_random(16);
                 $data->suser()->associate($user);
                 $data->project()->associate($project);
                 $data->save();
 
                 $msg = $payment->message;
                 $sub = $payment->subject;
-                if(strlen($msg) > 0 && strlen($sub) > 0){
+                if (strlen($msg) > 0 && strlen($sub) > 0) {
                     $msg = str_replace("{username}", $user->name, $msg);
-                    if(!empty($project->remote_domain)){
-                        $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $msg);
+                    if (!empty($project->remote_domain)) {
+                        $msg = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass/" . $data->key, $msg);
                     } else {
-                        $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $msg);
+                        $msg = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass/" . $data->key, $msg);
                     }
                     $msg = str_replace("{email}", $email, $msg);
                     $msg = str_replace("{project_name}", $project->name, $msg);
                     $msg = str_replace("{level_name}", $level->name, $msg);
 
                     $sub = str_replace("{username}", $user->name, $sub);
-                    if(!empty($project->remote_domain)){
-                        $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $sub);
+                    if (!empty($project->remote_domain)) {
+                        $sub = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass/" . $data->key, $sub);
                     } else {
-                        $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $sub);
+                        $sub = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass/" . $data->key, $sub);
                     }
                     $sub = str_replace("{password}", $user->password_raw, $sub);
                     $sub = str_replace("{email}", $email, $sub);
@@ -381,8 +431,8 @@ class PaymentController extends Controller
             }
         }
     }
-    
-    public function fondy(){
+
+    public function fondy() {
         $method = "Fondy";
         $merch_id = Request::get('merchant_id');
         $product_id = Request::get('product_id');
@@ -392,32 +442,32 @@ class PaymentController extends Controller
         }
         $hash = Request::get('signature');
         $pass = $payment->key;
-        
+
         $request_arr = \Request::toArray();
         $hash_arr = Array();
-        foreach($request_arr as $key => $val){
-            if($val !== "" && $key !== 'signature'){
+        foreach ($request_arr as $key => $val) {
+            if ($val !== "" && $key !== 'signature') {
                 $hash_arr[$key] = $val;
             }
         }
         ksort($hash_arr);
-        $hash_check_string = $pass.'|'.join("|", $hash_arr);
+        $hash_check_string = $pass . '|' . join("|", $hash_arr);
         $hash_check = sha1($hash_check_string);
-        echo $hash.'<br/>'.$hash_check;
-        
+        echo $hash . '<br/>' . $hash_check;
+
         if ($hash !== $hash_check) {
             return redirect('/api/payment/fail');
         }
-        
+
         $email = strtolower(Request::get('sender_email'));
-        if(!strlen($email)){
+        if (!strlen($email)) {
             return redirect('/api/payment/fail');
         }
 
-        if(Request::get('order_status') !== "approved"){
+        if (Request::get('order_status') !== "approved") {
             return redirect('/api/payment/fail');
         }
-        
+
         $level = $payment->level;
         $project = $payment->project;
 
@@ -441,22 +491,22 @@ class PaymentController extends Controller
 
             $msg = $payment->message2;
             $sub = $payment->subject2;
-            if(strlen($msg) > 0 && strlen($sub) > 0){
+            if (strlen($msg) > 0 && strlen($sub) > 0) {
                 $msg = str_replace("{username}", $user->name, $msg);
-                if(!empty($project->remote_domain)){
-                    $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $msg);
+                if (!empty($project->remote_domain)) {
+                    $msg = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass", $msg);
                 } else {
-                    $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $msg);
+                    $msg = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass", $msg);
                 }
                 $msg = str_replace("{email}", $email, $msg);
                 $msg = str_replace("{project_name}", $project->name, $msg);
                 $msg = str_replace("{level_name}", $level->name, $msg);
 
                 $sub = str_replace("{username}", $user->name, $sub);
-                if(!empty($project->remote_domain)){
-                    $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass", $sub);
+                if (!empty($project->remote_domain)) {
+                    $sub = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass", $sub);
                 } else {
-                    $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass", $sub);
+                    $sub = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass", $sub);
                 }
                 $sub = str_replace("{password}", $user->password_raw, $sub);
                 $sub = str_replace("{email}", $email, $sub);
@@ -484,30 +534,30 @@ class PaymentController extends Controller
             $user->project()->associate($project);
             $user->save();
 
-            $data           = new SuserPassword();
-            $data->key      = str_random(16);
+            $data = new SuserPassword();
+            $data->key = str_random(16);
             $data->suser()->associate($user);
             $data->project()->associate($project);
             $data->save();
 
             $msg = $payment->message;
             $sub = $payment->subject;
-            if(strlen($msg) > 0 && strlen($sub) > 0){
+            if (strlen($msg) > 0 && strlen($sub) > 0) {
                 $msg = str_replace("{username}", $user->name, $msg);
-                if(!empty($project->remote_domain)){
-                    $msg = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $msg);
+                if (!empty($project->remote_domain)) {
+                    $msg = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass/" . $data->key, $msg);
                 } else {
-                    $msg = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $msg);
+                    $msg = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass/" . $data->key, $msg);
                 }
                 $msg = str_replace("{email}", $email, $msg);
                 $msg = str_replace("{project_name}", $project->name, $msg);
                 $msg = str_replace("{level_name}", $level->name, $msg);
 
                 $sub = str_replace("{username}", $user->name, $sub);
-                if(!empty($project->remote_domain)){
-                    $sub = str_replace("{pass_link}", "http://".$project->remote_domain."/pass/".$data->key, $sub);
+                if (!empty($project->remote_domain)) {
+                    $sub = str_replace("{pass_link}", "http://" . $project->remote_domain . "/pass/" . $data->key, $sub);
                 } else {
-                    $sub = str_replace("{pass_link}", "http://".$project->domain.".".config('app.domain')."/pass/".$data->key, $sub);
+                    $sub = str_replace("{pass_link}", "http://" . $project->domain . "." . config('app.domain') . "/pass/" . $data->key, $sub);
                 }
                 $sub = str_replace("{password}", $user->password_raw, $sub);
                 $sub = str_replace("{email}", $email, $sub);
@@ -522,4 +572,5 @@ class PaymentController extends Controller
         }
         return redirect('/api/payment/success');
     }
+
 }
