@@ -590,7 +590,7 @@
                     $('body').css('overflow', 'auto');
                     $.fancybox("#popup_ajax_errors");
                 } else if(data.success) {
-                    window.location.href = "/posts";
+                    window.location.href = "/posts/by_category/"+$("select[name=category_id]").val();
                 } else {
                     $("#popup_ajax_errors .popup-min-title").text("Ошибка сервера:");
                     $("#popup_ajax_errors ul").html("");
