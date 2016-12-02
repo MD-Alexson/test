@@ -88,6 +88,9 @@
                 var newstr = str.replace(/{ipr_key}/i, ipr_key);
                 $(this).attr('href', newstr);
             });
+            $(".ipr_key_plain").each(function(){
+                $(this).text(ipr_key);
+            });
         @else
             $(".ipr_key").each(function(){
                 var str = $(this).attr("href");
