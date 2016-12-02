@@ -160,8 +160,12 @@ support@abckabinet.ru\r
         
         $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
         foreach($pr2 as $user){
-            $check = \App\Suser::where('email', $user->email)->where('project_domain', 'k17')->count();
-            echo $check."<br/>";
+            $check = \App\Suser::where('email', $user->email)->where('project_domain', 'k17')->first();
+            if($check){
+                echo $check->email."<br/>";
+            } else {
+                echo "NO<br/>";
+            }
         }
         
 //        echo "Keys added successfully<br/><br/>";
