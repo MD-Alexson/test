@@ -18,9 +18,9 @@ class Suser extends Authenticatable
         return $this->hasMany('App\Homework', 'suser_id');
     }
 
-    public function ratings()
+    public function new_susers()
     {
-        return $this->hasMany('App\Rating', 'suser_id');
+        return $this->hasMany('App\NewSuser');
     }
 
     public function project()
@@ -31,5 +31,10 @@ class Suser extends Authenticatable
     public function level()
     {
         return $this->belongsTo('App\Level');
+    }
+    
+    public function ipr_key()
+    {
+        return $this->belongsTo('App\Ipr', 'ipr_key');
     }
 }
