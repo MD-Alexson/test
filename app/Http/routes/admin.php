@@ -158,20 +158,14 @@ support@abckabinet.ru\r
         
         echo getAvaibleCount()."<br/><br/>";
         
-        $pr1 = \App\Project::findOrFail("k17")->susers;
-        foreach($pr1 as $user){
-            $key = getAvaibleKey();
-            if($key){
-                $user->ipr_key()->associate($key);
-                $user->save();
-            } else {
-                echo "USER ".$user->id.": NO KEY<br/>";
-            }
+        $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
+        foreach($pr2 as $user){
+            $check = \App\Suser::where('email', $user->email)->where('project_domain', 'k17')->count();
+            echo $check."<br/>";
         }
         
-        echo "Keys added successfully<br/><br/>";
+//        echo "Keys added successfully<br/><br/>";
         
-        echo getAvaibleCount();
-//        $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
+//        echo getAvaibleCount();
     });
 });
