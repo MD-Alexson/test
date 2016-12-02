@@ -135,41 +135,48 @@ support@abckabinet.ru\r
     });
 
     Route::get('ipr', function() {
-        function getAvaibleCount(){
+
+        function getAvaibleCount() {
             $count = \App\Ipr::count();
             $ipr = \App\Ipr::all();
-            foreach($ipr as $key){
-                if($key->susers->count()){
+            foreach ($ipr as $key) {
+                if ($key->susers->count()) {
                     $count--;
                 }
             }
             return $count;
         }
-        
-        function getAvaibleKey(){
+
+        function getAvaibleKey() {
             $ipr = \App\Ipr::all();
-            foreach($ipr as $key){
-                if(!$key->susers->count()){
+            foreach ($ipr as $key) {
+                if (!$key->susers->count()) {
                     return $key;
                 }
             }
             return false;
         }
-        
-        echo getAvaibleCount()."<br/><br/>";
-        
+
+        echo getAvaibleCount() . "<br/><br/>";
+
         $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
-        foreach($pr2 as $user){
+        foreach ($pr2 as $user) {
             $check = \App\Suser::where('email', $user->email)->where('project_domain', 'k17')->first();
-            if($check){
-                echo $check->email."<br/>";
+            if ($check) {
+                $user->ipr_key()->associate($check->ipr_key);
+                $user->save();
             } else {
-                echo "NO<br/>";
+                $key = getAvaibleKey();
+                if ($key) {
+                    $user->ipr_key()->associate($key);
+                    $user->save();
+                } else {
+                    echo "USER " . $user->id . ": NO KEY<br/>";
+                }
             }
         }
-        
+
 //        echo "Keys added successfully<br/><br/>";
-        
 //        echo getAvaibleCount();
     });
 });
