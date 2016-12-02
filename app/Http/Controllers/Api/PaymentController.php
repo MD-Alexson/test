@@ -116,17 +116,6 @@ class PaymentController extends Controller {
     }
 
     public function eautopay() {
-
-        function getAvaibleKey() {
-            $ipr = \App\Ipr::all();
-            foreach ($ipr as $key) {
-                if (!$key->susers->count()) {
-                    return $key;
-                }
-            }
-            return false;
-        }
-
         $method = "E-Autopay";
         $product_id = Request::get('product_id');
 
@@ -147,7 +136,6 @@ class PaymentController extends Controller {
 
         foreach ($payments as $payment) {
             $key = $payment->key;
-            $ipr_key = getAvaibleKey();
 
             $check_hash = md5($order_id . $email . $phone . $key);
             if ($hash !== $check_hash) {
@@ -206,9 +194,6 @@ class PaymentController extends Controller {
                 }
             } else {
                 $user = new Suser();
-                if($project->domain === "k17" || $project->domain === "intensiv2016"){
-                    $user->ipr_key()->associate($ipr_key);
-                }
                 $user->name = Request::get('last_name') . ' ' . Request::get('first_name') . ' ' . Request::get('middle_name');
                 $user->email = $email;
                 $user->phone = $phone;
@@ -265,14 +250,13 @@ class PaymentController extends Controller {
             /* --- TEMP --- */
             /* --- TEMP --- */
 
-            if ($project->domain === "k17") {
+            if($project->domain === "k17") {
                 $tmp_level = \App\Level::findOrFail(10174);
                 $tmp_project = \App\Project::findOrFail("intensiv2016");
 
                 $tmp_check = $tmp_project->susers()->where('email', $email)->first();
                 if (!count($tmp_check)) {
                     $user = new Suser();
-                    $user->ipr_key()->associate($ipr_key);
                     $user->name = Request::get('last_name') . ' ' . Request::get('first_name') . ' ' . Request::get('middle_name');
                     $user->email = $email;
                     $user->phone = $phone;
@@ -295,7 +279,7 @@ Email:\r
 {email}\r
 \r
 Пароль:\r
-" . $pass . "\r
+".$pass."\r
 Проблемы с доступом? Пишите:\r
 support@abckabinet.ru\r
 \r
