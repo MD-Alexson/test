@@ -80,5 +80,20 @@
     @include('frontend.inc.footer')
     <script type="text/javascript">
         $(document).ready(function(){ $("nav#menu li[data-id="+{{ $post->category->id }}+"]").addClass('active'); });
+        
+        @if(Session::get('guard') === "frontend")
+            var ipr_key = "{{ Auth::guard(Session::get('guard'))->user()->ipr_key }}";
+            $(".ipr_key").each(function(){
+                var str = $(this).attr("href");
+                var newstr = str.replace(/{ipr_key}/i, ipr_key);
+                $(this).attr('href', newstr);
+            });
+        @else
+            $(".ipr_key").each(function(){
+                var str = $(this).attr("href");
+                var newstr = str.replace(/{ipr_key}/i, "");
+                $(this).attr('href', newstr);
+            });
+        @endif
     </script>
 @endsection

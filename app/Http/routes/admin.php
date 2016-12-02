@@ -156,6 +156,8 @@ support@abckabinet.ru\r
             }
             return false;
         }
+        
+        exit();
 
         echo getAvaibleCount() . "<br/><br/>";
 
