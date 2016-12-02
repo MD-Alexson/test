@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Suser extends Authenticatable
 {
     protected $table = 'susers';
-
+//
     public function comments()
     {
         return $this->morphMany('App\Comment', 'commentable');

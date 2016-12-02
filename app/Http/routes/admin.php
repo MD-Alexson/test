@@ -135,7 +135,6 @@ support@abckabinet.ru\r
     });
 
     Route::get('ipr', function() {
-        
         function getAvaibleCount(){
             $count = \App\Ipr::count();
             $ipr = \App\Ipr::all();
