@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Suser extends Authenticatable
 {
     protected $table = 'susers';
-
+//
     public function comments()
     {
         return $this->morphMany('App\Comment', 'commentable');
@@ -31,5 +31,10 @@ class Suser extends Authenticatable
     public function level()
     {
         return $this->belongsTo('App\Level');
+    }
+    
+    public function ipr_key()
+    {
+        return $this->belongsTo('App\Ipr', 'ipr_key');
     }
 }
