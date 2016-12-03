@@ -161,18 +161,18 @@ support@abckabinet.ru\r
         $key = getAvaibleKey();
         echo $key;
 
-//        $pr1 = \App\Project::findOrFail("intensiv2016")->susers;
-//        foreach ($pr1 as $user) {
-//            if (!strlen($user->ipr_key)) {
-//                $key = getAvaibleKey();
-//                if ($key) {
-//                    $user->ipr_key->associate($key);
-//                    $user->save();
-//                } else {
-//                    echo "NO KEY FOR USER " . $user->id . "<br/>";
-//                }
-//            }
-//        }
+        $pr1 = \App\Project::findOrFail("intensiv2016")->susers;
+        foreach ($pr1 as $user) {
+            if (!strlen($user->ipr_key)) {
+                $key = getAvaibleKey();
+                if ($key) {
+                    $user->ipr_key()->associate($key);
+                    $user->save();
+                } else {
+                    echo "NO KEY FOR USER " . $user->id . "<br/>";
+                }
+            }
+        }
 
         $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
         foreach ($pr2 as $user) {
