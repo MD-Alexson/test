@@ -1,53 +1,53 @@
 <?php
 
-function schedule(){
+function schedule() {
     $now = getTime();
     $categories = App\Category::all();
-    foreach($categories as $cat){
-        if($cat->status === 'scheduled' && $now >= $cat->scheduled){
+    foreach ($categories as $cat) {
+        if ($cat->status === 'scheduled' && $now >= $cat->scheduled) {
             $cat->status = 'published';
             $cat->save();
         }
     }
     $posts = App\Post::all();
-    foreach($posts as $post){
-        if($post->status === 'scheduled' && $now >= $post->scheduled){
+    foreach ($posts as $post) {
+        if ($post->status === 'scheduled' && $now >= $post->scheduled) {
             $post->status = 'published';
             $post->save();
         }
     }
     $susers = App\Suser::all();
-    foreach($susers as $suser){
-        if($suser->expire && $now >= $suser->expires){
+    foreach ($susers as $suser) {
+        if ($suser->expire && $now >= $suser->expires) {
             $suser->status = false;
             $suser->save();
         }
     }
     $users = App\User::all();
-    foreach($users as $user){
-        if($now >= $user->expires){
+    foreach ($users as $user) {
+        if ($now >= $user->expires) {
             $user->status = false;
             $user->save();
         }
     }
 }
 
-function scheduleDaily(){
+function scheduleDaily() {
     $users = \App\User::orderBy('created_at', 'desc')->get();
     $now = getTime();
-    foreach($users as $user){
+    foreach ($users as $user) {
         $num = (int) floor(($user->expires - $now) / 60 / 60 / 24);
-        if($num >= 3 && $num < 4){
+        if ($num >= 3 && $num < 4) {
             \Mail::send('emails.pay3days', ['user' => $user], function ($m) use ($user) {
                 $m->from('postmaster@abckabinet.ru', 'ABC Кабинет');
                 $m->to($user->email, $user->name)->subject('Продление аккаунта ABC Кабинет');
             });
-        } elseif($num >= 1 && $num < 2){
+        } elseif ($num >= 1 && $num < 2) {
             \Mail::send('emails.pay1day', ['user' => $user], function ($m) use ($user) {
                 $m->from('postmaster@abckabinet.ru', 'ABC Кабинет');
                 $m->to($user->email, $user->name)->subject('Продление аккаунта ABC Кабинет');
             });
-        } elseif($num >= -1 && $num < 0){
+        } elseif ($num >= -1 && $num < 0) {
             \Mail::send('emails.payday', ['user' => $user], function ($m) use ($user) {
                 $m->from('postmaster@abckabinet.ru', 'ABC Кабинет');
                 $m->to($user->email, $user->name)->subject('Продление аккаунта ABC Кабинет');
@@ -56,9 +56,9 @@ function scheduleDaily(){
     }
 }
 
-function getDomainByRemote(){
+function getDomainByRemote() {
     $project = App\Project::where('remote_domain', Request::getHost())->select('domain')->first();
-    if(!$project){
+    if (!$project) {
         abort(404);
     }
     return $project->domain;
@@ -69,12 +69,33 @@ function prep_url($str = '') {
         return '';
     }
     $url = parse_url($str);
-    if (!$url || !isset($url['scheme'])){
-        return 'http://'.$str;
+    if (!$url || !isset($url['scheme'])) {
+        return 'http://' . $str;
     }
     return $str;
 }
 
-function cmp($a, $b){
+function cmp($a, $b) {
     return strcmp($a->order, $b->order);
+}
+
+function getAvaibleIprCount() {
+    $count = \App\Ipr::count();
+    $ipr = \App\Ipr::all();
+    foreach ($ipr as $key) {
+        if ($key->susers->count()) {
+            $count--;
+        }
+    }
+    return $count;
+}
+
+function getAvaibleIprKey() {
+    $ipr = \App\Ipr::all();
+    foreach ($ipr as $key) {
+        if (!$key->susers->count()) {
+            return $key;
+        }
+    }
+    return false;
 }

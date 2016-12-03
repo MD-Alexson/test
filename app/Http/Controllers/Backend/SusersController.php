@@ -156,6 +156,8 @@ class SusersController extends Controller
         }
 
         $user->save();
+        
+        
         if(Request::has('send_data')){
             $this->sendData($project, $user->id);
             return redirect('/users/'.$user->id.'/edit')->with('popup_ok', ['Добавление пользователя', 'Настройки пользователя сохранены успешно! Вы успешно отправили данные доступа пользователю!']);
@@ -212,6 +214,7 @@ class SusersController extends Controller
         }
 
         $user->save();
+        
         if(Request::has('send_data')){
             $this->sendData($project, $user->id);
             return redirect()->back()->with('popup_ok', ['Данные доступа', 'Настройки пользователя сохранены успешно! Вы успешно отправили данные доступа пользователю!']);
