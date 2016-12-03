@@ -157,14 +157,10 @@ support@abckabinet.ru\r
             return false;
         }
 
-        exit();
-
         echo getAvaibleCount() . "<br/><br/>";
 
         $pr1 = \App\Project::findOrFail("intensiv2016")->susers;
         foreach ($pr1 as $user) {
-            var_dump($user->ipr_key);
-            echo "<br/>"; /*
             if (!strlen($user->ipr_key)) {
                 $key = getAvaibleKey();
                 if ($key) {
@@ -174,29 +170,25 @@ support@abckabinet.ru\r
                     echo "NO KEY FOR USER " . $user->id . "<br/>";
                 }
             }
-            */
         }
 
         $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
         foreach ($pr2 as $user) {
-            var_dump($user->ipr_key);
-            echo "<br/>"; /*
-              if (!strlen($user->ipr_key)) {
-              $check = \App\Suser::where('email', $user->email)->where('project_domain', 'k17')->first();
-              if ($check) {
-              $user->ipr_key()->associate($check->ipr_key);
-              $user->save();
-              } else {
-              $key = getAvaibleKey();
-              if ($key) {
-              $user->ipr_key()->associate($key);
-              $user->save();
-              } else {
-              echo "USER " . $user->id . ": NO KEY<br/>";
-              }
-              }
-              }
-             */
+            if (!strlen($user->ipr_key)) {
+                $check = \App\Suser::where('email', $user->email)->where('project_domain', 'k17')->first();
+                if ($check) {
+                    $user->ipr_key()->associate($check->ipr_key);
+                    $user->save();
+                } else {
+                    $key = getAvaibleKey();
+                    if ($key) {
+                        $user->ipr_key()->associate($key);
+                        $user->save();
+                    } else {
+                        echo "USER " . $user->id . ": NO KEY<br/>";
+                    }
+                }
+            }
         }
 
         echo "Keys added successfully<br/><br/>";
