@@ -136,7 +136,6 @@ class PaymentController extends Controller {
 
         foreach ($payments as $payment) {
             $key = $payment->key;
-            $ipr_key = getAvaibleIprKey();
 
             $check_hash = md5($order_id . $email . $phone . $key);
             if ($hash !== $check_hash) {
@@ -208,11 +207,6 @@ class PaymentController extends Controller {
                 $user->rand = str_random(16);
                 $user->level()->associate($level);
                 $user->project()->associate($project);
-                
-                if(($project->domain === "k17" || $project->domain === "intensiv2016") && $ipr_key){
-                    $user->ipr_key()->associate($ipr_key);
-                }
-                
                 $user->save();
 
                 $data = new SuserPassword();
@@ -273,11 +267,6 @@ class PaymentController extends Controller {
                     $user->rand = str_random(16);
                     $user->level()->associate($tmp_level);
                     $user->project()->associate($tmp_project);
-                    
-                    if($ipr_key){
-                        $user->ipr_key()->associate($ipr_key);
-                    }
-                    
                     $user->save();
 
                     $sub = "Интенсив Димы Ковпака - Доступы";
