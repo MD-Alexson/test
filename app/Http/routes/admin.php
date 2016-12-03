@@ -157,15 +157,8 @@ support@abckabinet.ru\r
             return false;
         }
         
-        $em1 = "chepkasov-john@mail.ru";
-        $em2 = "khabibulin1981@mail.ru";
-        $pr1 = \App\Project::findOrFail("intensiv2016")->susers()->where('email', $em1)->first();
-        $pr1->ipr_key()->associate(getAvaibleKey());
-        $pr1->save();
         
-        $pr2 = \App\Project::findOrFail("intensiv2016")->susers()->where('email', $em2)->first();
-        $pr2->ipr_key()->associate(getAvaibleKey());
-        $pr2->save();
+        echo getAvaibleKey();
         
         exit();
         echo getAvaibleCount() . "<br/><br/>";
