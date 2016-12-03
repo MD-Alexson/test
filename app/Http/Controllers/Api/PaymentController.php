@@ -245,57 +245,6 @@ class PaymentController extends Controller {
                     });
                 }
             }
-
-            /* --- TEMP --- */
-            /* --- TEMP --- */
-            /* --- TEMP --- */
-
-            if($project->domain === "k17") {
-                $tmp_level = \App\Level::findOrFail(10174);
-                $tmp_project = \App\Project::findOrFail("intensiv2016");
-
-                $tmp_check = $tmp_project->susers()->where('email', $email)->first();
-                if (!count($tmp_check)) {
-                    $user = new Suser();
-                    $user->name = Request::get('last_name') . ' ' . Request::get('first_name') . ' ' . Request::get('middle_name');
-                    $user->email = $email;
-                    $user->phone = $phone;
-                    $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type);
-                    $pass = str_random(8);
-                    $user->password = Hash::make($pass);
-                    $user->password_raw = $pass;
-                    $user->rand = str_random(16);
-                    $user->level()->associate($tmp_level);
-                    $user->project()->associate($tmp_project);
-                    $user->save();
-
-                    $sub = "Интенсив Димы Ковпака - Доступы";
-                    $msg = "Здравстуйте, {username}!\r
-Ваши доступы к интенсиву:\r
-Ссылка:\r
-http://intensiv2016.abckabinet.ru/login\r
-\r
-Email:\r
-{email}\r
-\r
-Пароль:\r
-".$pass."\r
-Проблемы с доступом? Пишите:\r
-support@abckabinet.ru\r
-\r
-Благодарим Вас за покупку!\r
-\r
------------\r
-\r";
-                    $msg = str_replace("{username}", $user->name, $msg);
-                    $msg = str_replace("{email}", $email, $msg);
-
-                    Mail::raw($msg, function($message) use ($email, $sub) {
-                        $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
-                        $message->to($email)->subject($sub);
-                    });
-                }
-            }
         }
     }
 
