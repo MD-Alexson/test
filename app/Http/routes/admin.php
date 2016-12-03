@@ -141,7 +141,7 @@ support@abckabinet.ru\r
         $pr1 = \App\Project::findOrFail("k17")->susers;
         foreach ($pr1 as $user) {
             if (!strlen($user->ipr_key)) {
-                $key = getAvaibleKey();
+                $key = getAvaibleIprKey();
                 if ($key) {
                     $user->ipr_key()->associate($key);
                     $user->save();
@@ -154,7 +154,7 @@ support@abckabinet.ru\r
         $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
         foreach ($pr2 as $user) {
             if (!strlen($user->ipr_key)) {
-                $key = getAvaibleKey();
+                $key = getAvaibleIprKey();
                 if ($key) {
                     $user->ipr_key()->associate($key);
                     $user->save();
