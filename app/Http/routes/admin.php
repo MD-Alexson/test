@@ -136,12 +136,9 @@ support@abckabinet.ru\r
 
     Route::get('ipr', function() {
         
-        echo getAvaibleIprKey();
+        echo getAvaibleIprCount() . "<br/><br/>";
         
-        exit();
-        echo getAvaibleCount() . "<br/><br/>";
-        
-        $pr1 = \App\Project::findOrFail("intensiv2016")->susers;
+        $pr1 = \App\Project::findOrFail("k17")->susers;
         foreach ($pr1 as $user) {
             if (!strlen($user->ipr_key)) {
                 $key = getAvaibleKey();
@@ -153,22 +150,16 @@ support@abckabinet.ru\r
                 }
             }
         }
-
+        
         $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
         foreach ($pr2 as $user) {
             if (!strlen($user->ipr_key)) {
-                $check = \App\Suser::where('email', $user->email)->where('project_domain', 'k17')->first();
-                if ($check) {
-                    $user->ipr_key()->associate($check->ipr_key);
+                $key = getAvaibleKey();
+                if ($key) {
+                    $user->ipr_key()->associate($key);
                     $user->save();
                 } else {
-                    $key = getAvaibleKey();
-                    if ($key) {
-                        $user->ipr_key()->associate($key);
-                        $user->save();
-                    } else {
-                        echo "USER " . $user->id . ": NO KEY<br/>";
-                    }
+                    echo "NO KEY FOR USER " . $user->id . "<br/>";
                 }
             }
         }
