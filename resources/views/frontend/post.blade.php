@@ -91,11 +91,14 @@
             $(".ipr_key_plain").each(function(){
                 $(this).text(ipr_key);
             });
-        @else
-            $(".ipr_key").each(function(){
+            var ipr_key2 = "{{ Auth::guard(Session::get('guard'))->user()->ipr_key2 }}";
+            $(".ipr_key2").each(function(){
                 var str = $(this).attr("href");
-                var newstr = str.replace(/{ipr_key}/i, "");
+                var newstr = str.replace(/{ipr_key2}/i, ipr_key2);
                 $(this).attr('href', newstr);
+            });
+            $(".ipr_key2_plain").each(function(){
+                $(this).text(ipr_key2);
             });
         @endif
     </script>
