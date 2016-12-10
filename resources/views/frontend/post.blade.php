@@ -110,5 +110,10 @@
             pdf = "/dkpdf/"+user_rnd+"/"+pdf;
             $(this).attr('href', pdf);
         });
+        
+        @if($post->id === 10587)
+            $("#post-content ul").addClass('files');
+            $("#post-content ul li img").addClass('img-thumbnail');
+        @endif
     </script>
 @endsection
