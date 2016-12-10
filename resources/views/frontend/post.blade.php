@@ -103,7 +103,7 @@
             
             var user_rnd = "{{ Auth::guard(Session::get('guard'))->user()->rand }}";
         @else
-            var user_rnd = "admin";
+            var user_rnd = "admin62256225";
         @endif
         $("a.dkpdf").each(function(){
             var pdf = $(this).attr('href');

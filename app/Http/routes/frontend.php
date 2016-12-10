@@ -46,9 +46,17 @@ Route::group(['middleware' => ['sid', 'front'], 'namespace' => 'Frontend', 'doma
     Route::get('/select/{level_id}', 'AccountController@select')->where('level_id', '[0-9]+');
     
     Route::get('/dkpdf/{user_rnd}/{file_name}', function($domain, $user_rnd, $file_name) {
-        $owner = \App\Project::findOrFail($domain)->user->id;
+        $project = \App\Project::findOrFail($domain);
+        $owner = $project->user->id;
         if($owner !== 80){
             abort(404);
+        }
+        if($user_rnd !== 'admin62256225'){
+            $check_user = $project->susers()->where('rand', $user_rnd)->count();
+            if(!$check_user){
+                echo "Тут то ты и попался, Нео.";
+                exit();
+            }
         }
         $pdf_path = public_path().'/dkpdf/'.$file_name;
         if (!file_exists($pdf_path)) {
