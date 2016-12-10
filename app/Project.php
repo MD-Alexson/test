@@ -50,6 +50,11 @@ class Project extends Model
         return $this->hasMany('App\Payment', 'project_domain');
     }
 
+    public function emails()
+    {
+        return $this->hasMany('App\Email', 'project_domain');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');

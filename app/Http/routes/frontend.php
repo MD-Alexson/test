@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => ['sid'], 'namespace' => 'Frontend', 'domain' => '{domain}.' . config('app.domain')], function($domain) {
     Route::get('/login', 'AccountController@loginView');
-    Route::get('/rr', function(){
+    Route::get('/rr', function() {
 //        \Auth::guard('frontend')->login(\App\Suser::findOrFail(7706));
     });
     Route::post('/login', 'AccountController@login');
@@ -44,6 +44,22 @@ Route::group(['middleware' => ['sid', 'front'], 'namespace' => 'Frontend', 'doma
     Route::get('/imagepath/{path}', 'StorageController@getImage')->where('path', '.+');
     Route::get('/filepath/{path}', 'StorageController@getFile')->where('path', '.+');
     Route::get('/select/{level_id}', 'AccountController@select')->where('level_id', '[0-9]+');
+    
+    Route::get('/dkpdf/{user_rnd}/{file_name}', function($domain, $user_rnd, $file_name) {
+        $owner = \App\Project::findOrFail($domain)->user->id;
+        if($owner !== 80){
+            abort(404);
+        }
+        $pdf_path = public_path().'/dkpdf/'.$file_name;
+        if (!file_exists($pdf_path)) {
+            abort(404);
+        }
+        $file = file_get_contents($pdf_path);
+        $pdf = preg_replace("~(dimakovpak\.[a-z\.\/]+)()~is", "$1?utm_source=" . $user_rnd, $file);
+        header("Content-type:application/pdf");
+        header("Content-Disposition:inline;filename=" . $file_name);
+        echo $pdf;
+    });
 });
 
 Route::group(['middleware' => ['remote', 'sid'], 'namespace' => 'Frontend'], function($domain) {
@@ -87,4 +103,20 @@ Route::group(['middleware' => ['remote', 'sid', 'front'], 'namespace' => 'Fronte
     Route::get('/imagepath/{path}', 'StorageController@getImage')->where('path', '.+');
     Route::get('/filepath/{path}', 'StorageController@getFile')->where('path', '.+');
     Route::get('/select/{level_id}', 'AccountController@select')->where('level_id', '[0-9]+');
+    
+    Route::get('/dkpdf/{user_rnd}/{file_name}', function($domain, $user_rnd, $file_name) {
+        $owner = \App\Project::findOrFail($domain)->user->id;
+        if($owner !== 80){
+            abort(404);
+        }
+        $pdf_path = public_path().'/dkpdf/'.$file_name;
+        if (!file_exists($pdf_path)) {
+            abort(404);
+        }
+        $file = file_get_contents($pdf_path);
+        $pdf = preg_replace("~(dimakovpak\.[a-z\.\/]+)()~is", "$1?utm_source=" . $user_rnd, $file);
+        header("Content-type:application/pdf");
+        header("Content-Disposition:inline;filename=" . $file_name);
+        echo $pdf;
+    });
 });

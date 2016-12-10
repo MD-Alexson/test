@@ -198,4 +198,8 @@ support@abckabinet.ru\r
         echo "<br/>";
         echo \App\Ipr2::count();
     });
+    
+    Route::get('/pass', function(){
+        
+    });
 });

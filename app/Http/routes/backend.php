@@ -85,6 +85,14 @@ Route::group(['middleware' => ['sid', 'auth:backend', 'csrf'], 'namespace' => 'B
     Route::get('/select/{project}/{redirect?}', 'ProjectsController@select')->middleware(['ownership']);
     Route::get('/perpage/{perpage}', 'AccountController@perpage');
 
+    Route::get('/emails', 'EmailController@index')->middleware(['status', 'project']);
+    Route::get('/emails/add', 'EmailController@add')->middleware(['status', 'project']);
+    Route::post('/emails/store', 'EmailController@store')->middleware(['status', 'project']);
+    Route::get('/emails/{email_id}/edit', 'EmailController@edit')->middleware(['status', 'project']);
+    Route::post('/emails/{email_id}/update', 'EmailController@update')->middleware(['status', 'project']);
+    Route::get('/emails/{email_id}/delete', 'EmailController@delete')->middleware(['status', 'project']);
+    Route::post('/emails/batch', 'EmailController@batch')->middleware(['status', 'project']);
+
     Route::get('/payments', 'PaymentsController@index')->middleware(['status', 'project']);
     Route::get('/payments/add', 'PaymentsController@add')->middleware(['status', 'project']);
     Route::post('/payments/store', 'PaymentsController@store')->middleware(['status', 'project']);

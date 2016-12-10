@@ -100,6 +100,15 @@
             $(".ipr_key2_plain").each(function(){
                 $(this).text(ipr_key2);
             });
+            
+            var user_rnd = "{{ Auth::guard(Session::get('guard'))->user()->rand }}";
+        @else
+            var user_rnd = "admin";
         @endif
+        $("a.dkpdf").each(function(){
+            var pdf = $(this).attr('href');
+            pdf = "/dkpdf/"+user_rnd+"/"+pdf;
+            $(this).attr('href', pdf);
+        });
     </script>
 @endsection
