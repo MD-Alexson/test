@@ -57,7 +57,11 @@ Route::group(['middleware' => ['sid', 'front'], 'namespace' => 'Frontend', 'doma
                 echo "Тут то ты и попался, Нео.";
                 if(Session::get('guard') === "frontend"){
                     $user = Auth::guard(Session::get('guard'))->user();
-                    echo $user->name."<br/>".$user->email."<br/>".$user->id;
+                    $msg = $user->email." | ".$user->name." | ".$user->id;
+                    \Mail::raw($msg, function($message) {
+                        $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+                        $message->to("md.alexson@gmail.com")->subject("ABC K17: Нарушитель");
+                    });
                 }
                 exit();
             }
