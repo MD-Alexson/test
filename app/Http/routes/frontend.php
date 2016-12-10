@@ -55,6 +55,10 @@ Route::group(['middleware' => ['sid', 'front'], 'namespace' => 'Frontend', 'doma
             $check_user = $project->susers()->where('rand', $user_rnd)->count();
             if(!$check_user){
                 echo "Тут то ты и попался, Нео.";
+                if(Session::get('guard') === "frontend"){
+                    $user = Auth::guard(Session::get('guard'))->user();
+                    echo $user->name."<br/>".$user->email."<br/>".$user->id;
+                }
                 exit();
             }
         }
