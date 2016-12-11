@@ -100,6 +100,15 @@
             $(".ipr_key2_plain").each(function(){
                 $(this).text(ipr_key2);
             });
+            var ipr_key3 = "{{ Auth::guard(Session::get('guard'))->user()->ipr_key3 }}";
+            $(".ipr_key3").each(function(){
+                var str = $(this).attr("href");
+                var newstr = str.replace(/{ipr_key3}/i, ipr_key3);
+                $(this).attr('href', newstr);
+            });
+            $(".ipr_key3_plain").each(function(){
+                $(this).text(ipr_key3);
+            });
             
             var user_rnd = "{{ Auth::guard(Session::get('guard'))->user()->rand }}";
         @else
