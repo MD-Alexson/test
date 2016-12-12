@@ -76,3 +76,13 @@ function clientIp(){
     }
     return $ipaddress;
 }
+
+function getHigherLevel($project){
+    $higher = $project->levels->first();
+    foreach($project->levels as $level){
+        if($level->categories()->count() >= $higher->categories()->count()){
+            $higher = $level;
+        }
+    }
+    return $level;
+}

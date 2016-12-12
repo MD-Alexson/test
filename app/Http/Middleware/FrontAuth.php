@@ -23,12 +23,12 @@ class FrontAuth
             if(!Auth::guard('backend')->user()->status){
                 return redirect('/expired');
             }
-
+            $higher_level = getHigherLevel($project);
             if(!Session::has('level_id') || empty(Session::get('level_id'))){
-                Session::put('level_id', $project->levels->first()->id);
+                Session::put('level_id', $higher_level->id);
             } else if(Session::has('level_id') && !empty (Session::get('level_id'))){
                 if(!$project->levels()->where('id', (int) Session::get('level_id'))->count()){
-                    Session::put('level_id', $project->levels->first()->id);
+                    Session::put('level_id', $higher_level->id);
                 }
             }
 
