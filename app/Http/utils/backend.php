@@ -62,3 +62,9 @@ function sortDefaults(){
         \Session::put('sort.categories.order', 'asc');
     }
 }
+
+function getAvaibleIprKey($ipr_level_id){
+    $ipr_level = \App\IprLevel::findOrFail($ipr_level_id);
+    $result = $ipr_level->ipr_keys()->first();
+    return $result;
+}

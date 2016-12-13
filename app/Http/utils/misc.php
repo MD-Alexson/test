@@ -78,24 +78,3 @@ function prep_url($str = '') {
 function cmp($a, $b) {
     return strcmp($a->order, $b->order);
 }
-
-function getAvaibleIprCount() {
-    $count = \App\Ipr::count();
-    $ipr = \App\Ipr::all();
-    foreach ($ipr as $key) {
-        if ($key->susers->count()) {
-            $count--;
-        }
-    }
-    return $count;
-}
-
-function getAvaibleIprKey() {
-    $ipr = \App\Ipr::all();
-    foreach ($ipr as $key) {
-        if (!$key->susers->count()) {
-            return $key;
-        }
-    }
-    return false;
-}

@@ -221,4 +221,11 @@ support@abckabinet.ru\r
         echo "<br/>";
         echo \App\Ipr3::count();
     });
+    
+    Route::get('fortest', function(){
+        $suser = \App\Suser::findOrFail(10262);
+        foreach($suser->ipr_levels as $ipr_level){
+            echo $ipr_level->name . " - " . $ipr_level->pivot->key;
+        }
+    });
 });

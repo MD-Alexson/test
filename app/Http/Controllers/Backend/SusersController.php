@@ -157,6 +157,18 @@ class SusersController extends Controller
 
         $user->save();
         
+        $ipr_levels = Request::input('ipr_levels');
+        $user_ipr_levels = Array();
+        if(count($ipr_levels)){
+            foreach($ipr_levels as $id => $state){
+                $key = getAvaibleIprKey($id);
+                if($key){
+                    $user_ipr_levels[$id] = Array('key' => $key->key);
+                    $key->delete();
+                }
+            }
+        }
+        $user->ipr_levels()->sync($user_ipr_levels);
         
         if(Request::has('send_data')){
             $this->sendData($project, $user->id);
@@ -214,6 +226,25 @@ class SusersController extends Controller
         }
 
         $user->save();
+        
+        $ipr_levels = Request::input('ipr_levels');
+        $user_ipr_levels = Array();
+        if(count($ipr_levels)){
+            foreach($ipr_levels as $id => $state){
+                if($user->ipr_levels()->where('id', $id)->count()){
+                    $ipr_level = $user->ipr_levels()->where('id', $id)->first();
+                    $key = $ipr_level->pivot->key;
+                    $user_ipr_levels[$id] = Array('key' => $key);
+                } else {
+                    $key = getAvaibleIprKey($id);
+                    if($key){
+                        $user_ipr_levels[$id] = Array('key' => $key->key);
+                        $key->delete();
+                    }
+                }
+            }
+        }
+        $user->ipr_levels()->sync($user_ipr_levels);
         
         if(Request::has('send_data')){
             $this->sendData($project, $user->id);

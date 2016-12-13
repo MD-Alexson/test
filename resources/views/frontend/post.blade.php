@@ -124,5 +124,21 @@
             $("#post-content ul").addClass('files');
             $("#post-content ul li img").addClass('img-thumbnail');
         @endif
+        
+        @if($ipr_key)
+            var key = "{{ $ipr_key }}";
+            $(".ipr").each(function(){
+                $(this).text(key);
+            });
+            $("#post-content a").each(function(){
+                var href = $(this).attr('href').split("?")[0];
+                href = href.split(".");
+                if(href.pop() === "ipr"){
+                    href.push("ipr?sn="+key);
+                    href = href.join(".");
+                    $(this).attr('href', href);
+                }
+            });
+        @endif
     </script>
 @endsection

@@ -82,7 +82,7 @@ return [
         
         'susers' => [
             'driver' => 'eloquent',
-            'model' => App\SUser::class,
+            'model' => App\Suser::class,
         ],
         
         'admins' => [

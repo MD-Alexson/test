@@ -48,7 +48,23 @@ class PostsController extends Controller
         }
         $data['title'] = $post->name." / ".$project->name;
         $menu = Request::input('allowed')['categories'];
-        return view('frontend.post')->with('data', $data)->with('post', $post)->with('project', $project)->with('menu', $menu);
+        
+        $ipr_key = false;
+        
+        if($post->ipr_level){
+            $ipr_level = $post->ipr_level;
+            if(Session::get('guard') === 'frontend'){
+                $user = \Auth::guard('frontend')->user();
+                if($user->ipr_levels()->where('id', $ipr_level->id)->count()){
+                    $temp = $user->ipr_levels()->where('id', $ipr_level->id)->first();
+                    $ipr_key = $temp->pivot->key;
+                }
+            } elseif(strlen($ipr_level->test_key)) {
+                $ipr_key = $ipr_level->test_key;
+            }
+        }
+        
+        return view('frontend.post')->with('data', $data)->with('post', $post)->with('project', $project)->with('menu', $menu)->with('ipr_key', $ipr_key);
     }
     
     /* -- */

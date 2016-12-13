@@ -24,8 +24,8 @@
                 <li><a href="/users/export">Экспорт</a></li>
             </ul>
         </li>
-        <!--<li class="side-nav-item nav-item5"><a href="/emails">Рассылки</a></li>-->
         <li class="side-nav-item nav-item5"><a href="/payments">Настройки оплаты</a></li>
+        <li class="side-nav-item nav-item5"><a href="/ipr">Инфопротектор</a></li>
     </ul>
     <a href="/account/faq"><img src="{{ asset('assets/images/faq.png') }}" alt="F.A.Q" style='margin-top: 10px;'>Инструкции по работе</a>
     <a href="#popup_message" class="fancybox message"><img src="{{ asset('assets/images/message.png') }}" alt="message">Написать в поддержку</a>

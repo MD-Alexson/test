@@ -25,6 +25,11 @@ class Project extends Model
         return $this->hasMany('App\Level', 'project_domain');
     }
 
+    public function ipr_levels()
+    {
+        return $this->hasMany('App\IprLevel', 'project_domain');
+    }
+
     public function comments()
     {
         return $this->hasMany('App\Comment', 'project_domain');

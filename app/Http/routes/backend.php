@@ -79,6 +79,7 @@ Route::group(['middleware' => ['sid', 'auth:backend', 'csrf'], 'namespace' => 'B
     Route::get('/users/export/csv', 'SusersController@exportCSV')->middleware(['status', 'project']);
     Route::get('/users/export/xls', 'SusersController@exportXLS')->middleware(['status', 'project']);
     Route::get('/users/search/', 'SusersController@search')->middleware(['status', 'project']);
+    
 
     Route::get('/imagepath/{path}', 'StorageController@getImage')->where('path', '.+')->middleware(['project']);
     Route::get('/filepath/{path}', 'StorageController@getFile')->where('path', '.+')->middleware(['project']);
@@ -100,6 +101,15 @@ Route::group(['middleware' => ['sid', 'auth:backend', 'csrf'], 'namespace' => 'B
     Route::post('/payments/{payment_id}/update', 'PaymentsController@update')->middleware(['status', 'project']);
     Route::get('/payments/{payment_id}/delete', 'PaymentsController@delete')->middleware(['status', 'project']);
     Route::post('/payments/batch', 'PaymentsController@batch')->middleware(['status', 'project']);
+    Route::get('/payments', 'PaymentsController@index')->middleware(['status', 'project']);
+    
+    Route::get('/ipr', 'IprController@index')->middleware(['status', 'project']);
+    Route::get('/ipr/add', 'IprController@add')->middleware(['status', 'project']);
+    Route::post('/ipr/store', 'IprController@store')->middleware(['status', 'project']);
+    Route::get('/ipr/{ipr_level_id}/edit', 'IprController@edit')->middleware(['status', 'project']);
+    Route::post('/ipr/{ipr_level_id}/update', 'IprController@update')->middleware(['status', 'project']);
+    Route::get('/ipr/{ipr_level_id}/delete', 'IprController@delete')->middleware(['status', 'project']);
+    Route::post('/ipr/batch', 'IprController@batch')->middleware(['status', 'project']);
 
     Route::get('/comments', 'CommentsController@index')->middleware(['status', 'project']);
     Route::get('/comments/by_post/{post_id}', 'CommentsController@indexByPost')->middleware(['status', 'project']);

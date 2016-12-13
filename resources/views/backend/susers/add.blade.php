@@ -78,6 +78,22 @@
                                 </select>
                             </div>
                         </div>
+                        @if($project->ipr_levels()->count())
+                        <div class="add-mat-title">InfoProtector™</div>
+                        <div class="add-mat-left">
+                            <div class="add-mat-text tooltip-holder">Уровень</div>
+                        </div>
+                        <div class="add-mat-right">
+                            <div class="check-list">
+                                @foreach($project->ipr_levels as $ipr_level)
+                                <div class="check-block">
+                                    <input data-id='{{ $ipr_level->id }}' name="ipr_levels[{{ $ipr_level->id }}]" type="checkbox" class="check check-level" id="ipr_lvl{{ $ipr_level->id }}">
+                                    <label for="ipr_lvl{{ $ipr_level->id }}" class="check-label">{{ $ipr_level->name }}</label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
                         <div class="add-mat-right-holder">
                             <button class="green-button float-left" type="submit" onclick="javascript: $(this).closest('form').find('input[name=send_data]').remove();">Сохранить</button>
                             <button class="green-button float-left" type="submit" onclick="javascript: $(this).closest('form').prepend('<input type=\'hidden\' name=\'send_data\' value=\'1\'>')" style="width: auto; padding: 0px 15px;">Сохранить и отправить данные доступа</button>

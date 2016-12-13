@@ -101,6 +101,26 @@
                                 </li>
                             </ul>
                         </div>
+                        @if($project->ipr_levels()->count())
+                        <div class="add-mat-title">InfoProtector™</div>
+                        <div class="add-mat-left">
+                            <div class="add-mat-text tooltip-holder">Уровень</div>
+                        </div>
+                        <div class="add-mat-right">
+                            <div class="select-block">
+                                <select class="styled" name="ipr_level_id">
+                                    <option value="0">Не назначать</option>
+                                    @foreach($project->ipr_levels as $ipr_level)
+                                        @if($post->ipr_level_id === $ipr_level->id)
+                                        <option value="{{ $ipr_level->id }}" selected="selected">{{ $ipr_level->name }}</option>
+                                        @else
+                                        <option value="{{ $ipr_level->id }}">{{ $ipr_level->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endif
                         <div class="add-mat-title">Настройки</div>
                         <div class="add-mat-left">
                             <div class="add-mat-text">Статус</div>

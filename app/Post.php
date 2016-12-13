@@ -52,4 +52,9 @@ class Post extends Model
     {
         return $this->belongsTo('App\Project');
     }
+    
+    public function ipr_level()
+    {
+        return $this->belongsTo('App\IprLevel');
+    }
 }

@@ -152,6 +152,11 @@ class PostsController extends Controller
 
         $post = new Post;
         $post->name = htmlspecialchars(Request::input('name'));
+        
+        if((int) Request::input("ipr_level_id") && $project->ipr_levels()->where('id', (int) Request::input("ipr_level_id"))->count()){
+            $ipr_level = \App\IprLevel::findOrFail((int) Request::input("ipr_level_id"));
+            $post->ipr_level()->associate($ipr_level);
+        }
 
         $post->excerpt = htmlentities(Request::input('excerpt'));
         $post->post_html = htmlentities(Request::input('post_html'));
@@ -332,6 +337,13 @@ class PostsController extends Controller
         }
         
         $post->name = htmlspecialchars(Request::input('name'));
+        
+        if((int) Request::input("ipr_level_id") && $project->ipr_levels()->where('id', (int) Request::input("ipr_level_id"))->count()){
+            $ipr_level = \App\IprLevel::findOrFail((int) Request::input("ipr_level_id"));
+            $post->ipr_level()->associate($ipr_level);
+        } else {
+            $post->ipr_level()->associate(null);
+        }
 
         $post->excerpt = htmlentities(Request::input('excerpt'));
         $post->post_html = htmlentities(Request::input('post_html'));

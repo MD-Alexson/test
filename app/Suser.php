@@ -4,37 +4,36 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Suser extends Authenticatable
-{
+class Suser extends Authenticatable {
+
     protected $table = 'susers';
-//
-    public function comments()
-    {
+    
+    public function comments() {
         return $this->morphMany('App\Comment', 'commentable');
     }
 
-    public function homeworks()
-    {
+    public function homeworks() {
         return $this->hasMany('App\Homework', 'suser_id');
     }
 
-    public function new_susers()
-    {
+    public function new_susers() {
         return $this->hasMany('App\NewSuser');
     }
 
-    public function project()
-    {
+    public function project() {
         return $this->belongsTo('App\Project', 'project_domain');
     }
 
-    public function level()
-    {
+    public function level() {
         return $this->belongsTo('App\Level');
     }
-    
-    public function ipr_key()
-    {
+
+    public function ipr_levels() {
+        return $this->belongsToMany('App\IprLevel', 'susers_ipr_keys')->withPivot('key');
+    }
+
+    public function ipr_key() {
         return $this->belongsTo('App\Ipr', 'ipr_key');
     }
+
 }
