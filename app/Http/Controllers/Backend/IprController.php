@@ -53,7 +53,7 @@ class IprController extends Controller {
 
     public function store() {
         Request::flash();
-        $v = Validator::make(Request::all(), ['name' => 'required|max:40', 'test_key' => 'min:14|max:14', 'new_keys' => 'required'], $this->messages);
+        $v = Validator::make(Request::all(), ['name' => 'required|max:40', 'test_key' => 'min:14|max:14'], $this->messages);
 
         if ($v->fails()) {
             return redirect()->back()->withErrors($v);
