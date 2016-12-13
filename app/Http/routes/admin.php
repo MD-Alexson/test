@@ -148,7 +148,7 @@ support@abckabinet.ru\r
         $ipr_level2 = \App\IprLevel::findOrFail(2);
         foreach ($pr2 as $user) {
             if (strlen($user->ipr_key)) {
-                $user->ipr_levels()->attach($ipr_level1->id, ['key' => $user->ipr_key]);
+                $user->ipr_levels()->attach($ipr_level2->id, ['key' => $user->ipr_key]);
             }
         }
         
@@ -164,67 +164,6 @@ support@abckabinet.ru\r
             if (strlen($user->ipr_key3)) {
                 $user->ipr_levels()->attach($ipr_level4->id, ['key' => $user->ipr_key3]);
             }
-        }
-    });
-
-    Route::get('/ipr2', function() {
-
-        function getNextKey() {
-            $key = \App\Ipr2::first();
-            $result = $key->key;
-            $key->delete();
-            return $result;
-        }
-
-        echo \App\Ipr2::count();
-
-        $susers1 = \App\Level::findOrFail(10146)->susers;
-        foreach ($susers1 as $user) {
-            if (!strlen($user->ipr_key2)) {
-                $user->ipr_key2 = getNextKey();
-                $user->save();
-                echo $user->name . " - " . $user->ipr_key2 . "<br/>";
-            }
-        }
-        $susers2 = \App\Level::findOrFail(10147)->susers;
-        foreach ($susers2 as $user) {
-            if (!strlen($user->ipr_key2)) {
-                $user->ipr_key2 = getNextKey();
-                $user->save();
-                echo $user->name . " - " . $user->ipr_key2 . "<br/>";
-            }
-        }
-        echo "<br/>";
-        echo \App\Ipr2::count();
-    });
-
-    Route::get('/ipr3', function() {
-
-        function getNextKey2() {
-            $key = \App\Ipr3::first();
-            $result = $key->key;
-            $key->delete();
-            return $result;
-        }
-
-        echo \App\Ipr3::count();
-
-        $susers1 = \App\Level::findOrFail(10147)->susers;
-        foreach ($susers1 as $user) {
-            if (!strlen($user->ipr_key3)) {
-                $user->ipr_key3 = getNextKey2();
-                $user->save();
-                echo $user->name . " - " . $user->ipr_key3 . "<br/>";
-            }
-        }
-        echo "<br/>";
-        echo \App\Ipr3::count();
-    });
-    
-    Route::get('fortest', function(){
-        $suser = \App\Suser::findOrFail(10262);
-        foreach($suser->ipr_levels as $ipr_level){
-            echo $ipr_level->name . " - " . $ipr_level->pivot->key;
         }
     });
 });
