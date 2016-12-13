@@ -137,33 +137,13 @@ support@abckabinet.ru\r
     Route::get('ipr', function() {
 
         $pr1 = \App\Project::findOrFail("k17")->susers;
-        $ipr_level1 = \App\IprLevel::findOrFail(3);
+        
         foreach ($pr1 as $user) {
-            if (strlen($user->ipr_key)) {
-                $user->ipr_levels()->attach($ipr_level1->id, ['key' => $user->ipr_key]);
+            if(\App\Ipr::where('key', $user->ipr_key)->count()){
+                $key = \App\Ipr::findOrFail($user->ipr_key);
+                $key->delete();
             }
         }
 
-        $pr2 = \App\Project::findOrFail("intensiv2016")->susers;
-        $ipr_level2 = \App\IprLevel::findOrFail(2);
-        foreach ($pr2 as $user) {
-            if (strlen($user->ipr_key)) {
-                $user->ipr_levels()->attach($ipr_level2->id, ['key' => $user->ipr_key]);
-            }
-        }
-        
-        $ipr_level3 = \App\IprLevel::findOrFail(4);
-        foreach ($pr1 as $user) {
-            if (strlen($user->ipr_key2)) {
-                $user->ipr_levels()->attach($ipr_level3->id, ['key' => $user->ipr_key2]);
-            }
-        }
-        
-        $ipr_level4 = \App\IprLevel::findOrFail(5);
-        foreach ($pr1 as $user) {
-            if (strlen($user->ipr_key3)) {
-                $user->ipr_levels()->attach($ipr_level4->id, ['key' => $user->ipr_key3]);
-            }
-        }
     });
 });

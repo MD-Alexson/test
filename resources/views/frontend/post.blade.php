@@ -127,6 +127,7 @@
         
         @if($ipr_key)
             var key = "{{ $ipr_key }}";
+            console.log(key);
             $(".ipr").each(function(){
                 $(this).text(key);
             });
