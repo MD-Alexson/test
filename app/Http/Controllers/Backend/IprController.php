@@ -67,19 +67,21 @@ class IprController extends Controller {
         $ipr_level->project()->associate($project);
         $ipr_level->save();
 
-        $keys = Request::file('new_keys');
-        $fp = fopen($keys->getRealPath(), 'rb');
-        while (($key = fgets($fp)) !== false) {
-            $key = preg_replace('/[^\w-]/', '', $key);
-            $key = substr($key, 0, 14);
-            if (strlen($key) && !\App\IprKey::where('key', $key)->where('ipr_level_id', $ipr_level->id)->count()) {
-                $ipr_key = new \App\IprKey();
-                $ipr_key->key = $key;
-                $ipr_key->ipr_level()->associate($ipr_level);
-                $ipr_key->save();
+        if (Request::hasFile('new_keys')) {
+            $keys = Request::file('new_keys');
+            $fp = fopen($keys->getRealPath(), 'rb');
+            while (($key = fgets($fp)) !== false) {
+                $key = preg_replace('/[^\w-]/', '', $key);
+                $key = substr($key, 0, 14);
+                if (strlen($key) && !\App\IprKey::where('key', $key)->where('ipr_level_id', $ipr_level->id)->count()) {
+                    $ipr_key = new \App\IprKey();
+                    $ipr_key->key = $key;
+                    $ipr_key->ipr_level()->associate($ipr_level);
+                    $ipr_key->save();
+                }
             }
+            fclose($fp);
         }
-        fclose($fp);
 
         return redirect('/ipr');
     }
