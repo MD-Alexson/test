@@ -132,12 +132,12 @@ class IprController extends Controller {
         unset($arr[0]);
 
         foreach ($arr as $id) {
-            $pay = Payment::findOrFail($id);
-            if ($pay->project->user->id !== Auth::guard('backend')->id()) {
+            $ipr_level = \App\IprLevel::findOrFail($id);
+            if ($ipr_level->project->user->id !== Auth::guard('backend')->id()) {
                 return redirect()->back()->with('popup_info', ['Ошибка', 'Nope!']);
             }
             if ($action === "delete") {
-                $pay->delete();
+                $ipr_level->delete();
             }
         }
         return redirect()->back();
