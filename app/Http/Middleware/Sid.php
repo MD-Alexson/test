@@ -4,7 +4,6 @@ use Closure;
 class Sid {
     public function handle($request, Closure $next) {
         if($request->has('sid')){
-            $project = \App\Project::findOrFail($request->domain);
             $sess = \App\Session::findOrFail($request->sid);
             $payload = unserialize(base64_decode($sess->payload));
             \Session::flush();
