@@ -32,8 +32,4 @@ class Suser extends Authenticatable {
         return $this->belongsToMany('App\IprLevel', 'susers_ipr_keys')->withPivot('key');
     }
 
-    public function ipr_key() {
-        return $this->belongsTo('App\Ipr', 'ipr_key');
-    }
-
 }

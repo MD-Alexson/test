@@ -82,34 +82,6 @@
         $(document).ready(function(){ $("nav#menu li[data-id="+{{ $post->category->id }}+"]").addClass('active'); });
         
         @if(Session::get('guard') === "frontend")
-            var ipr_key = "{{ Auth::guard(Session::get('guard'))->user()->ipr_key }}";
-            $(".ipr_key").each(function(){
-                var str = $(this).attr("href");
-                var newstr = str.replace(/{ipr_key}/i, ipr_key);
-                $(this).attr('href', newstr);
-            });
-            $(".ipr_key_plain").each(function(){
-                $(this).text(ipr_key);
-            });
-            var ipr_key2 = "{{ Auth::guard(Session::get('guard'))->user()->ipr_key2 }}";
-            $(".ipr_key2").each(function(){
-                var str = $(this).attr("href");
-                var newstr = str.replace(/{ipr_key2}/i, ipr_key2);
-                $(this).attr('href', newstr);
-            });
-            $(".ipr_key2_plain").each(function(){
-                $(this).text(ipr_key2);
-            });
-            var ipr_key3 = "{{ Auth::guard(Session::get('guard'))->user()->ipr_key3 }}";
-            $(".ipr_key3").each(function(){
-                var str = $(this).attr("href");
-                var newstr = str.replace(/{ipr_key3}/i, ipr_key3);
-                $(this).attr('href', newstr);
-            });
-            $(".ipr_key3_plain").each(function(){
-                $(this).text(ipr_key3);
-            });
-            
             var user_rnd = "{{ Auth::guard(Session::get('guard'))->user()->rand }}";
         @else
             var user_rnd = "admin62256225";
