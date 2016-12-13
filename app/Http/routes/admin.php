@@ -136,12 +136,11 @@ support@abckabinet.ru\r
 
     Route::get('ipr', function() {
 
-        $pr1 = \App\Project::findOrFail("k17")->susers;
-        
-        foreach ($pr1 as $user) {
-            if(\App\Ipr::where('key', $user->ipr_key)->count()){
-                $key = \App\Ipr::findOrFail($user->ipr_key);
-                $key->delete();
+        $pr1 = \App\Project::findOrFail("k17")->susers()->where('level_id', 10145)->get();
+        foreach($pr1 as $user){
+            $count = count($user->ipr_levels);
+            if($count > 1){
+                echo $user->email."<br/>";
             }
         }
 

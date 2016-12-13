@@ -110,7 +110,7 @@
                                 @foreach($project->ipr_levels as $ipr_level)
                                 <div class="check-block">
                                     <input data-id='{{ $ipr_level->id }}' name="ipr_levels[{{ $ipr_level->id }}]" type="checkbox" class="check check-level" id="ipr_lvl{{ $ipr_level->id }}">
-                                    <label for="ipr_lvl{{ $ipr_level->id }}" class="check-label">{{ $ipr_level->name }}</label>
+                                    <label for="ipr_lvl{{ $ipr_level->id }}" class="check-label"><strong>{{ $ipr_level->name }}:</strong> <span style="font-family: monospace">{{ $user->ipr_levels()->where('id', $ipr_level->id)->first()->pivot->key }}</span></label>
                                 </div>
                                 @endforeach
                             </div>
