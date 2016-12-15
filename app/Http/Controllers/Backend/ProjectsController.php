@@ -26,7 +26,7 @@ class ProjectsController extends Controller
         'password.required' => "Вы не ввели пароль!"
     ];
 
-    private $domains = ['admin', 'k18', 'k19', 'k20', 'k21', 'k22', 'k23', 'k24', 'k25', 'blog', 'info', 'partners', 'dmitriy', 'maletskyi', 'kovpak', 'dima', 'support', 'www', 'faq'];
+    private $domains = ['admin', 'k19', 'k20', 'k21', 'k22', 'k23', 'k24', 'k25', 'blog', 'info', 'partners', 'dmitriy', 'maletskyi', 'kovpak', 'dima', 'support', 'www', 'faq'];
 
     // VIEWS
 
