@@ -62,11 +62,11 @@ class PaymentController extends Controller {
             $user->save();
 
             $msg = "Здравствуйте, " . Request::get('first_name') . "!\r\n";
-            $msg.= "Вы успешно продили пользование сервисом!\r\n";
-            $msg.= "\r\nСтраница входа: " . config('app.url') . "/?modal=login\r\n";
-            $msg.= "Забыли пароль? - " . config('app.url') . "/login/password\r\n";
-            $msg.= "\r\n-----------\r\n";
-            $msg.= "С уважением, ABC Кабинет";
+            $msg .= "Вы успешно продили пользование сервисом!\r\n";
+            $msg .= "\r\nСтраница входа: " . config('app.url') . "/?modal=login\r\n";
+            $msg .= "Забыли пароль? - " . config('app.url') . "/login/password\r\n";
+            $msg .= "\r\n-----------\r\n";
+            $msg .= "С уважением, ABC Кабинет";
 
             Mail::raw($msg, function($message) use ($email) {
                 $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
@@ -95,12 +95,12 @@ class PaymentController extends Controller {
             Storage::makeDirectory("/" . $user->id . "/");
 
             $msg = "Здравствуйте, " . Request::get('first_name') . "!\r\n";
-            $msg.= "Все, что Вам осталось сделать для\r\nпользования сервисом - создать пароль:\r\n";
-            $msg.= "\r\n" . config('app.url') . "/register/" . $key . "\r\n";
-            $msg.= "\r\nЕсли по какой-то причине Вам не удалось\r\nсоздать пароль для входа - обязательно\r\nнапишите нам - support@abckabinet.ru\r\n";
-            $msg.= "\r\nБлагодарим Вас за покупку!\r\n";
-            $msg.= "\r\n-----------\r\n";
-            $msg.= "С уважением, ABC Кабинет";
+            $msg .= "Все, что Вам осталось сделать для\r\nпользования сервисом - создать пароль:\r\n";
+            $msg .= "\r\n" . config('app.url') . "/register/" . $key . "\r\n";
+            $msg .= "\r\nЕсли по какой-то причине Вам не удалось\r\nсоздать пароль для входа - обязательно\r\nнапишите нам - support@abckabinet.ru\r\n";
+            $msg .= "\r\nБлагодарим Вас за покупку!\r\n";
+            $msg .= "\r\n-----------\r\n";
+            $msg .= "С уважением, ABC Кабинет";
 
             Mail::raw($msg, function($message) use ($email) {
                 $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
@@ -243,6 +243,21 @@ class PaymentController extends Controller {
                         $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
                         $message->to($email)->subject($sub);
                     });
+                }
+
+                if ($project->domain === 'gambit') {
+                    $ipr_levels = Array(9);
+                    $user_ipr_levels = Array();
+                    if (count($ipr_levels)) {
+                        foreach ($ipr_levels as $id => $state) {
+                            $key = getAvaibleIprKey($id);
+                            if ($key) {
+                                $user_ipr_levels[$id] = Array('key' => $key->key);
+                                $key->delete();
+                            }
+                        }
+                    }
+                    $user->ipr_levels()->sync($user_ipr_levels);
                 }
             }
         }
