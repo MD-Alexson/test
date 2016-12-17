@@ -48,23 +48,8 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
 
     Route::get('ipr', function() {
         
-        $transfer = array(
-            3 => 6,
-            4 => 7,
-            5 => 8
-        );
-        
-        foreach($transfer as $old => $new){
-            $old_level = \App\IprLevel::findOrFail($old);
-            $new_level = \App\IprLevel::findOrFail($new);
-            
-            $count = $old_level->ipr_keys()->count() - 30;
-        
-            foreach($old_level->ipr_keys()->limit($count)->get() as $key){
-                $key->ipr_level()->associate($new_level);
-                $key->save();
-            }
-        }        
+        echo "Nothing so far";
+        exit();
 
     });
 });
