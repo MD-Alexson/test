@@ -92,7 +92,7 @@
             $(this).attr('href', pdf);
         });
         
-        @if($post->id === 10587)
+        @if($post->id === 10587 || $post->id === 10594)
             $("#post-content ul").addClass('files');
             $("#post-content ul li img").addClass('img-thumbnail');
         @endif
