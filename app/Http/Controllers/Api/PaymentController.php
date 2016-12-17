@@ -249,7 +249,7 @@ class PaymentController extends Controller {
                     $ipr_levels = Array(9);
                     $user_ipr_levels = Array();
                     if (count($ipr_levels)) {
-                        foreach ($ipr_levels as $id => $state) {
+                        foreach ($ipr_levels as $id) {
                             $key = getAvaibleIprKey($id);
                             if ($key) {
                                 $user_ipr_levels[$id] = Array('key' => $key->key);
