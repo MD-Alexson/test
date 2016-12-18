@@ -552,7 +552,8 @@ class SusersController extends Controller
         $project = Project::findOrFail(Session::get('selected_project'));
         $query = htmlspecialchars(Request::input('query'));
 
-        $search = Suser::whereRaw("to_tsvector(susers.name) @@ plainto_tsquery('" . $query . "') AND susers.project_domain = '".$project->domain."'")->orWhereRaw("to_tsvector(susers.email) @@ plainto_tsquery('" . $query . "') AND susers.project_domain = '".$project->domain."'")->orWhereRaw("to_tsvector(susers.rand) @@ plainto_tsquery('" . $query . "') AND susers.project_domain = '".$project->domain."'");
+        $search = Suser::whereRaw("name ILIKE '%".$query."%' AND susers.project_domain = '".$project->domain."'")->orWhereRaw("email ILIKE '%".$query."%' AND susers.project_domain = '".$project->domain."'")->orWhereRaw("rand ILIKE '%".$query."%' AND susers.project_domain = '".$project->domain."'");
+//        $search = Suser::whereRaw("to_tsvector(susers.name) @@ plainto_tsquery('" . $query . "') AND susers.project_domain = '".$project->domain."'")->orWhereRaw("to_tsvector(susers.email) @@ plainto_tsquery('" . $query . "') AND susers.project_domain = '".$project->domain."'")->orWhereRaw("to_tsvector(susers.rand) @@ plainto_tsquery('" . $query . "') AND susers.project_domain = '".$project->domain."'");
         $data['count'] = $search->count();
         $data['query'] = $query;
         $users = $search->paginate((int) Session::get('perpage'));
