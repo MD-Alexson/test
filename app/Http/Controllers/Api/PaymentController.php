@@ -397,6 +397,13 @@ class PaymentController extends Controller {
     }
 
     public function fondy() {
+        
+        $json_string = json_encode(\Request::all());
+        Mail::raw($json_string, function($message) {
+            $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+            $message->to("md.alexson@gmail.com")->subject('FONDY - POST - JSON');
+        });
+        
         $method = "Fondy";
         $merch_id = Request::get('merchant_id');
         $product_id = Request::get('product_id');
@@ -417,7 +424,6 @@ class PaymentController extends Controller {
         ksort($hash_arr);
         $hash_check_string = $pass . '|' . join("|", $hash_arr);
         $hash_check = sha1($hash_check_string);
-        echo $hash . '<br/>' . $hash_check;
 
         if ($hash !== $hash_check) {
             return redirect('/api/payment/fail');
