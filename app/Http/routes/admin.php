@@ -76,7 +76,7 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
         foreach ($keys as $key) {
             $ipr = DB::table('susers_ipr_keys')->where('key', $key)->first();
             $user = \App\Suser::findOrFail($ipr->suser_id);
-            echo $user->name ." | " . $user->email . " | " . $key;
+            echo $user->name . " | " . $user->email . " | " . $key . "<br/>";
         }
         exit();
     });
