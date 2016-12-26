@@ -49,29 +49,8 @@ Route::group(['middleware' => ['sid', 'auth:admin', 'admin', 'csrf'], 'namespace
     Route::get('ipr', function() {
 
         $keys = Array(
-            "P3DA-52BS-Y2CZ",
-            "JKDW-8A43-C9RX",
-            "RS5H-7V7U-CGR5",
-            "JM4N-6U8A-CXRY",
-            "RS5H-7V7U-CGR5",
-            "KJMH-7V8B-C8RY",
-            "M44F-4T5T-CSRZ",
-            "KJMH-7V8B-C8RY",
-            "P3DA-52BS-Y2CZ",
-            "C9NB-5P5C-CYRP",
-            "PNB8-6M7C-C3RZ",
-            "JYXD-9R9M-CNRX",
-            "XF8N-7Y93-CBRZ",
-            "VNBC-7Q7C-C9RZ",
-            "2966-2K3V-CXRF",
-            "WPPS-B6YF-BEYA",
-            "TM98-6M8Y-CAR7",
-            "U95E-5S8U-CXR7",
-            "LJQ8-7M4F-C8RZ",
-            "GWSV-B9YL-AUZY",
-            "92VG-5U8K-CRRM",
-            "U95E-5S8U-CXR7",
-            "P3DA-52BS-Y2CZ"
+            "DQV5-7J5K-CFRR",
+            "WKDZ-BDY3-A9ZA"
         );
         foreach ($keys as $key) {
             $ipr = DB::table('susers_ipr_keys')->where('key', $key)->first();
