@@ -397,17 +397,11 @@ class PaymentController extends Controller {
     }
 
     public function fondy() {
-        
-        $json_string = json_encode(\Request::all());
-        Mail::raw($json_string, function($message) {
-            $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
-            $message->to("md.alexson@gmail.com")->subject('FONDY - POST - JSON');
-        });
-        
         $method = "Fondy";
         $merch_id = Request::get('merchant_id');
         $product_id = Request::get('product_id');
         $payment = Payment::where('method', $method)->where('merch_id', $merch_id)->where('item_id', $product_id)->first();
+
         if (!count($payment)) {
             return redirect('/api/payment/fail');
         }
@@ -423,10 +417,6 @@ class PaymentController extends Controller {
         }
         ksort($hash_arr);
         $hash_check_string = $pass . '|' . join("|", $hash_arr);
-        Mail::raw($hash_check_string, function($message) {
-            $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
-            $message->to("md.alexson@gmail.com")->subject('FONDY - POST - JSON');
-        });
         $hash_check = sha1($hash_check_string);
 
         if ($hash !== $hash_check) {
@@ -544,7 +534,18 @@ class PaymentController extends Controller {
                 });
             }
         }
-        return redirect('/api/payment/success');
+
+        Mail::raw($email, function($message) {
+            $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
+            $message->to("md.alexson@gmail.com")->subject("FONDY LAST");
+        });
+
+        $recurring = Request::get('parent_order_id');
+        if (strlen($recurring)) {
+            return http_response_code(200);
+        } else {
+            return redirect('/api/payment/success');
+        }
     }
 
 }

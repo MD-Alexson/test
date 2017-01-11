@@ -10,21 +10,20 @@ Route::group(['namespace' => 'Api', 'domain' => config('app.domain')], function(
         return view('api.test')->with('data', $data);
     });
     Route::any('/api/payment/fondytest', function() {
-        $json = '{"rrn":"","masked_card":"545708XXXXXX5431","sender_cell_phone":"","response_status":"success","sender_account":"","fee":"","rectoken_lifetime":"","reversal_amount":"0","settlement_amount":"0","actual_amount":"10","order_status":"approved","response_description":"","verification_status":"","order_time":"22.12.2016 19:03:00","actual_currency":"UAH","order_id":"recurring__1482426180.48__Order_1397559_MDZeZt1XzD_1482339679","parent_order_id":"Order_1397559_MDZeZt1XzD_1482339679","merchant_data":"","tran_type":"purchase","eci":"","settlement_date":"","payment_system":"card","rectoken":"04d83c3c3415c1256d1cd31c3f0bebf9d5b4","approval_code":"04609B","merchant_id":1397559,"settlement_currency":"","payment_id":33325055,"product_id":"","currency":"UAH","card_bin":545708,"response_code":"","card_type":"MasterCard","amount":"10","sender_email":"md.alexson@gmail.com","signature":"9932b7149d545e7c69008b83294da2dc632e674b"}';
+        $json = '{"rrn":"","masked_card":"546940XXXXXX4224","sender_cell_phone":"","response_status":"success","sender_account":"","fee":"","rectoken_lifetime":"01.05.2019 00:00:00","reversal_amount":"0","settlement_amount":"0","actual_amount":"49400","order_status":"approved","response_description":"","verification_status":"","order_time":"11.01.2017 12:46:08","actual_currency":"UAH","order_id":"Order_1397559_b51F18Ch8t_1484131568","parent_order_id":"","merchant_data":"[]","tran_type":"purchase","eci":"5","settlement_date":"","payment_system":"card","rectoken":"07bd88f9d1fddffdd026f67b7ee6edca29b9cfd2","approval_code":"449906","merchant_id":"1397559","settlement_currency":"","payment_id":"34901984","product_id":"baza","currency":"UAH","card_bin":"546940","response_code":"","card_type":"MasterCard","amount":"49400","sender_email":"ihei2008@yandex.ru","signature":"889bdb961f43346b2c1bfe9e7761eb286e165abe"}';
 
         $url = "https://devserver.host/api/payment/fondy";
-        $content = json_decode($json);
-
+        
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
         curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
 
         $response = curl_exec($curl);
         curl_close($curl);
-        dd($response);
+        return $response;
     });
 
     Route::get('/api/payment/success', "ViewController@success");

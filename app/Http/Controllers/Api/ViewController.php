@@ -9,6 +9,7 @@ class ViewController extends Controller
 
     public function success() {
         $data['title'] = "Оплата успешна";
+        http_response_code(200);
         return view('api.success')->with('data', $data);
     }
     
