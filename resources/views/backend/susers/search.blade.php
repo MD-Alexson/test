@@ -101,6 +101,9 @@
                             <td class="phone">{{ $user->phone }}</td>
                             <td><a href="/users/by_level/{{ $user->level->id }}">{{ $user->level->name }}</a></td>
                             <td>
+                                @if($user->expire)
+                                До: <span class="toLocalTime">{{ getDateTime($user->expires) }}</span>
+                                @endif
                                 @if($user->status)
                                 <span style="color: #72c01d">Активен</span>
                                 @else
