@@ -139,7 +139,7 @@
                                     <input type="hidden" name="tovar_id" value="">
                                     <input type="hidden" name="form_id" value="26705">
                                     <input type="hidden" name="order_page_referer" id="order_page_referer" value="">
-                                    <input type="hidden" name="pay_mode" value="20">
+                                    <input type="hidden" name="pay_mode" value="26">
                                     <input type="hidden" name="name" value="{{ Auth::guard('backend')->user()->name }}">
                                     <input type="hidden" name="email" value="{{ Auth::guard('backend')->user()->email }}">
                                     <input type="hidden" name="phone" value="{{ Auth::guard('backend')->user()->phone }}">

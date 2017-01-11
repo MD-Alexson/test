@@ -151,7 +151,7 @@
                         <input type="hidden" name="tovar_id" value="">
                         <input type="hidden" name="form_id" value="26705">
                         <input type="hidden" name="order_page_referer" id="order_page_referer" value="">
-                        <input type="hidden" name="pay_mode" value="20">
+                        <input type="hidden" name="pay_mode" value="26">
                         <input type="hidden" name="additional_field1_name" value="partner">
                         <input type="hidden" name="additional_field1" value="{{ \Request::cookie('abc_partner') }}">
                         <input type="hidden" name="additional_field2_name" value="utm">
