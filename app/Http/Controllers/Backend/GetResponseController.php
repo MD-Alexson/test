@@ -172,16 +172,17 @@ class GetResponseController extends Controller {
         ));
         foreach ($level->susers as $user) {
             if (strlen($old_camp_id)) {
-                $old = $getresponse->getContacts(array(
+                $old = (Array) $getresponse->getContacts(array(
                     'query' => array(
                         'email' => $user->email,
                         'campaignId' => $old_camp_id),
                     'fields' => 'contactId'
                 ));
 
-                $old = (Array) $old;
-                $old_contact_id = $old[0]->contactId;
-                $getresponse->deleteContact($old_contact_id);
+                if(isset($old[0]) && !empty($old[0])){
+                    $old_contact_id = $old[0]->contactId;
+                    $getresponse->deleteContact($old_contact_id);
+                }
             }
 
             if (strlen($camp_id)) {
