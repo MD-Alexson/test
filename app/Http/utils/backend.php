@@ -112,9 +112,9 @@ function grUpdateContact($user, $oldCamp) {
     if (!isset($test->accountId) || !strlen($test->accountId)) {
         return false;
     }
-    
+
     $camp_id = $user->level->gr_campaign;
-    if($camp_id === $oldCamp){
+    if ($camp_id === $oldCamp) {
         return false;
     }
 
@@ -125,8 +125,10 @@ function grUpdateContact($user, $oldCamp) {
                 'fields' => 'contactId'
     ));
 
-    $old_contact_id = $old[0]->contactId;
-    $getresponse->deleteContact($old_contact_id);
+    if (isset($old[0]) && !empty($old[0])) {
+        $old_contact_id = $old[0]->contactId;
+        $getresponse->deleteContact($old_contact_id);
+    }
 
     if (strlen($camp_id)) {
         $getresponse->addContact(Array(
@@ -164,7 +166,9 @@ function grDeleteContact($user) {
                     'fields' => 'contactId'
         ));
 
-        $old_contact_id = $old[0]->contactId;
-        $getresponse->deleteContact($old_contact_id);
+        if (isset($old[0]) && !empty($old[0])) {
+            $old_contact_id = $old[0]->contactId;
+            $getresponse->deleteContact($old_contact_id);
+        }
     }
 }
