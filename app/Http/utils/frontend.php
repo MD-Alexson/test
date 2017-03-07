@@ -6,7 +6,7 @@ function frontendSelectLevel($project, $level_id){
         "posts" => []
     ];
 
-    foreach($project->categories()->orderBy('order', 'asc')->get() as $cat){
+    foreach($project->categories()->orderBy('order', 'ASC')->get() as $cat){
         if($cat->status === "published" || ($cat->status === 'scheduled' && $cat->comingsoon) || $cat->status === "scheduled2"){
             foreach($cat->levels as $lvl){
                 if($level_id === $lvl->id){
@@ -19,7 +19,7 @@ function frontendSelectLevel($project, $level_id){
             }
         }
     }
-    foreach($project->posts()->orderBy('order_all', 'asc')->get() as $post){
+    foreach($project->posts()->orderBy('order_all', 'ASC')->get() as $post){
         if($post->status === "published" || ($post->status === 'scheduled' && $post->comingsoon) || $post->status === "scheduled2"){
             foreach($post->levels as $lvl2){
                 if($level_id === $lvl2->id){

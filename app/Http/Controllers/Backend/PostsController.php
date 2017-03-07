@@ -180,6 +180,10 @@ class PostsController extends Controller
         } else {
             $post->stripe = null;
         }
+        
+        if($post->status === "published" && $post->stripe === "soon"){
+            $post->stripe = null;
+        }
 
         if(Request::has('scheduled') && !empty(Request::input('scheduled'))){
             $post->scheduled = strtotime(htmlspecialchars(Request::input('scheduled'))) - (int) htmlspecialchars(Request::input('offset'));
@@ -369,6 +373,10 @@ class PostsController extends Controller
         if(Request::input('stripe') && Request::input('stripe') !== 0 && Request::input('stripe') !== "0"){
             $post->stripe = htmlspecialchars(Request::input('stripe'));
         } else {
+            $post->stripe = null;
+        }
+        
+        if($post->status === "published" && $post->stripe === "soon"){
             $post->stripe = null;
         }
         

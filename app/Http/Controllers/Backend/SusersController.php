@@ -170,6 +170,8 @@ class SusersController extends Controller
         }
         $user->ipr_levels()->sync($user_ipr_levels);
         
+        grAddContact($user);
+        
         if(Request::has('send_data')){
             $this->sendData($project, $user->id);
             return redirect('/users/'.$user->id.'/edit')->with('popup_ok', ['Добавление пользователя', 'Настройки пользователя сохранены успешно! Вы успешно отправили данные доступа пользователю!']);
@@ -202,6 +204,8 @@ class SusersController extends Controller
         if($user->project->user->id !== Auth::guard('backend')->id()){
             return redirect()->back()->with('popup_info', ['Ошибка', 'Это не ваш пользователь']);
         }
+        
+        $grOldCamp = $user->level->gr_campaign;
 
         $old_email = $user->email;
 
@@ -246,6 +250,8 @@ class SusersController extends Controller
         }
         $user->ipr_levels()->sync($user_ipr_levels);
         
+        grUpdateContact($user, $grOldCamp);
+        
         if(Request::has('send_data')){
             $this->sendData($project, $user->id);
             return redirect()->back()->with('popup_ok', ['Данные доступа', 'Настройки пользователя сохранены успешно! Вы успешно отправили данные доступа пользователю!']);
@@ -279,14 +285,17 @@ class SusersController extends Controller
                 foreach($user->comments as $comment){
                     $comment->delete();
                 }
+                grDeleteContact($user);
                 $user->delete();
             } elseif($action === "level"){
                 $level = Level::findOrFail(htmlspecialchars(Request::input('level')));
                 if ($level->project->user->id !== Auth::guard('backend')->id()) {
                     return redirect('/users')->with('popup_info', ['Ошибка', 'Вы выбрали не ваш уровень!']);
                 }
+                $grOdlCamp = $user->level->gr_campaign;
                 $user->level()->associate($level);
                 $user->save();
+                grUpdateContact($user, $grOdlCamp);
             } elseif($action === "status"){
                 $user->status = (int) htmlspecialchars(Request::input('status'));
                 $user->save();
@@ -404,6 +413,7 @@ class SusersController extends Controller
                 $user->expires = getTimePlus();
             }
             $user->save();
+            grAddContact($user);
         }
 
         return redirect('/users/import')->with('popup_ok', ['Импорт пользователей', 'Вы успешно импортировали пользователей! Если вы заметили какие-то ошибки в импорированных пользователях - проверьте файл импорта']);
@@ -472,6 +482,7 @@ class SusersController extends Controller
                 $user->expires = getTimePlus();
             }
             $user->save();
+            grAddContact($user);
         }
         return redirect('/users/import')->with('popup_ok', ['Импорт пользователей', 'Вы успешно импортировали пользователей!']);
     }
@@ -513,6 +524,7 @@ class SusersController extends Controller
         foreach($user->comments as $comment){
             $comment->delete();
         }
+        grDeleteContact($user);
         $user->delete();
         return redirect()->back();
     }

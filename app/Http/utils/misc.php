@@ -13,6 +13,9 @@ function schedule() {
     foreach ($posts as $post) {
         if ($post->status === 'scheduled' && $now >= $post->scheduled) {
             $post->status = 'published';
+            if ($post->stripe === "soon") {
+                $post->stripe = null;
+            }
             $post->save();
         }
     }
@@ -76,5 +79,11 @@ function prep_url($str = '') {
 }
 
 function cmp($a, $b) {
-    return strcmp($a->order, $b->order);
+    if($a->order < $b->order){
+        return -1;
+    } else if ($b->order < $a->order){
+        return 1;
+    } else {
+        return 0;
+    }
 }

@@ -129,4 +129,10 @@ Route::group(['middleware' => ['sid', 'auth:backend', 'csrf'], 'namespace' => 'B
 
     Route::get('/notifications/{not_id}/read', "NotificationsController@read");
     Route::get('/notifications/{not_id}/delete', "NotificationsController@delete");
+    
+    Route::get('/getresponse', "GetResponseController@index")->middleware(['status', 'project']);
+    Route::post('/getresponse/settings', "GetResponseController@settings")->middleware(['status', 'project']);
+    Route::post('/getresponse/campaigns', "GetResponseController@campaigns")->middleware(['status', 'project']);
+    Route::post('/getresponse/test', "GetResponseController@test")->middleware(['status', 'project']);
+    Route::post('/getresponse/sendbylevel', "GetResponseController@sendByLevel")->middleware(['status', 'project']);
 });

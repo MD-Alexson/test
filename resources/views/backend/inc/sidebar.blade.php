@@ -24,8 +24,14 @@
                 <li><a href="/users/export">Экспорт</a></li>
             </ul>
         </li>
-        <li class="side-nav-item nav-item5"><a href="/payments">Настройки оплаты</a></li>
-        <li class="side-nav-item nav-item5"><a href="/ipr">Инфопротектор</a></li>
+        <li class="side-nav-item nav-item5">
+            <a href="" class="side-parent">Интеграции</a>
+            <ul class="side-subnav">
+                <li><a href="/payments">Настройки оплаты</a></li>
+                <li><a href="/getresponse">GetResponse</a></li>
+                <li><a href="/ipr">Инфопротектор</a></li>
+            </ul>
+        </li>
     </ul>
     <a href="/account/faq"><img src="{{ asset('assets/images/faq.png') }}" alt="F.A.Q" style='margin-top: 10px;'>Инструкции по работе</a>
     <a href="#popup_message" class="fancybox message"><img src="{{ asset('assets/images/message.png') }}" alt="message">Написать в поддержку</a>
@@ -34,7 +40,7 @@
     $(document).ready(function(){
         var full_path = window.location.pathname.split("/");
         var path = "";
-        var hrefs = ['projects', 'posts', 'webinars', 'categories', 'comments', 'homeworks', 'import', 'export', 'levels', 'users'];
+        var hrefs = ['projects', 'posts', 'webinars', 'categories', 'comments', 'homeworks', 'import', 'export', 'levels', 'users', 'payments', 'getresponse', 'ipr'];
         var found = false;
         hrefs.forEach(function(val, index){
             if(!found && full_path.indexOf(val) !== -1){

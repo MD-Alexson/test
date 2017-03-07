@@ -205,7 +205,7 @@
             $("p.image_path").text($(this).val());
         });
 
-        $(".add-material #tab1 button[type=submit]").on('click', function(e){
+        $(".add-material #tab2 button[type=submit]").on('click', function(e){
             if(!$('input[name=file]').val().length){
                 e.preventDefault();
                 $.fancybox("#popup_required");

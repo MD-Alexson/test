@@ -148,6 +148,7 @@ class PaymentController extends Controller {
             $check = $project->susers()->where('email', $email)->first();
             if (count($check)) {
                 $user = $check;
+                $grOldCamp = $user->level->gr_campaign;
                 if ($user->expires <= time()) {
                     $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type);
                 } else {
@@ -162,6 +163,7 @@ class PaymentController extends Controller {
                 $user->level()->associate($level);
                 $user->project()->associate($project);
                 $user->save();
+                grUpdateContact($user, $grOldCamp);
 
                 $msg = $payment->message2;
                 $sub = $payment->subject2;
@@ -208,6 +210,8 @@ class PaymentController extends Controller {
                 $user->level()->associate($level);
                 $user->project()->associate($project);
                 $user->save();
+                
+                grAddContact($user);
 
                 $data = new SuserPassword();
                 $data->key = str_random(16);
@@ -296,6 +300,7 @@ class PaymentController extends Controller {
             $check = $project->susers()->where('email', $email)->first();
             if (count($check)) {
                 $user = $check;
+                $grOldCamp = $user->level->gr_campaign;
                 if ($user->expires <= time()) {
                     $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type);
                 } else {
@@ -310,6 +315,7 @@ class PaymentController extends Controller {
                 $user->level()->associate($level);
                 $user->project()->associate($project);
                 $user->save();
+                grUpdateContact($user, $grOldCamp);
 
                 $msg = $payment->message2;
                 $sub = $payment->subject2;
@@ -356,6 +362,7 @@ class PaymentController extends Controller {
                 $user->level()->associate($level);
                 $user->project()->associate($project);
                 $user->save();
+                grAddContact($user);
 
                 $data = new SuserPassword();
                 $data->key = str_random(16);
@@ -438,6 +445,7 @@ class PaymentController extends Controller {
         $check = $project->susers()->where('email', $email)->first();
         if (count($check)) {
             $user = $check;
+            $grOldCamp = $user->level->gr_campaign;
             if ($user->expires <= time()) {
                 $user->expires = strtotime("+" . $payment->membership_num . " " . $payment->membership_type);
             } else {
@@ -452,6 +460,7 @@ class PaymentController extends Controller {
             $user->level()->associate($level);
             $user->project()->associate($project);
             $user->save();
+            grUpdateContact($user, $grOldCamp);
 
             $msg = $payment->message2;
             $sub = $payment->subject2;
@@ -497,6 +506,7 @@ class PaymentController extends Controller {
             $user->level()->associate($level);
             $user->project()->associate($project);
             $user->save();
+            grAddContact($user);
 
             $data = new SuserPassword();
             $data->key = str_random(16);
@@ -534,11 +544,6 @@ class PaymentController extends Controller {
                 });
             }
         }
-
-        Mail::raw($email, function($message) {
-            $message->from('hostmaster@abckabinet.ru', 'ABC Кабинет');
-            $message->to("md.alexson@gmail.com")->subject("FONDY LAST");
-        });
 
         $recurring = Request::get('parent_order_id');
         if (strlen($recurring)) {
