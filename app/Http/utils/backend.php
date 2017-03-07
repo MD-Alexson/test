@@ -70,7 +70,7 @@ function getAvaibleIprKey($ipr_level_id) {
 }
 
 function grAddContact($user) {
-    $project = \App\Project::findOrFail(Session::get('selected_project'));
+    $project = $user->project;
     if (!strlen($project->gr_api_key)) {
         return false;
     }
@@ -98,7 +98,7 @@ function grAddContact($user) {
 }
 
 function grUpdateContact($user, $oldCamp) {
-    $project = \App\Project::findOrFail(Session::get('selected_project'));
+    $project = $user->project;
     if (!strlen($project->gr_api_key)) {
         return false;
     }
